@@ -2,7 +2,7 @@ import NotFoundImage from '../images/not-found.svg';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Image from 'next/image';
 import { Box, Button, Typography } from '@mui/material';
-import Page from '../src/components/Page';
+import Page from '../src/components/common/Page';
 import Link from 'next/link';
 
 export default function NotFound() {

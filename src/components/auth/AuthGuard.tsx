@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import type { InvoiceAppState } from '../../store';
 
 export const AuthGuard = (props: { children: ReactNode }) => {
-  const { token, user } = useSelector((state: InvoiceAppState) => state);
+  const { user } = useSelector((state: InvoiceAppState) => state);
   const router = useRouter();
 
   useEffect(() => {
@@ -14,15 +14,14 @@ export const AuthGuard = (props: { children: ReactNode }) => {
   }, [user]);
 
   useEffect(() => {
-    if (!token) {
+    if (!user) {
       router.push('/login');
     }
-  }, [token]);
+  }, [user]);
 
-  const isLoggedOut = !token;
   const isCompanyDetailsMissed =
-    user && user.companyDetails === null && router.route !== '/company-details';
-  if (isLoggedOut || isCompanyDetailsMissed) {
+    user?.companyDetails === null && router.route !== '/company-details';
+  if (!user || isCompanyDetailsMissed) {
     return null;
   }
 

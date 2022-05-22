@@ -4,16 +4,16 @@ import { useSelector } from 'react-redux';
 import type { InvoiceAppState } from '../../store';
 
 export const NonAuthGuard = (props: { children: ReactNode }) => {
-  const { token } = useSelector((state: InvoiceAppState) => state);
+  const { user } = useSelector((state: InvoiceAppState) => state);
   const router = useRouter();
 
   useEffect(() => {
-    if (token) {
+    if (user) {
       router.push('/');
     }
-  }, [token]);
+  }, [user]);
 
-  if (token) {
+  if (user) {
     return null;
   }
 

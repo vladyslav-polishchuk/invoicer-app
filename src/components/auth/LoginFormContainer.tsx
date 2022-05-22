@@ -1,7 +1,6 @@
 import { Stack } from '@mui/material';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import api from '../../api';
 import AuthPage from './AuthPage';
@@ -10,26 +9,21 @@ import PasswordField from './PasswordField';
 import FormField from '../common/FormField';
 import useAsync from '../../hooks/useAsync';
 import { loginValidationSchema } from '../../utils/formValidationSchema';
-import { setToken, setUser } from '../../store';
-import { setCookies } from 'cookies-next';
 import SubmitButton from './SubmitButton';
-
-//duplicate!!!
-const USER_TOKEN_KEY = 'user_token';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../store';
+import { useAuthContext } from './AuthContext';
 
 export default function LoginFormContainer() {
-  const dispatch = useDispatch();
+  const { setAuthToken } = useAuthContext();
   const router = useRouter();
+  const dispatch = useDispatch();
   const { execute, error, value } = useAsync(api.login);
 
   useEffect(() => {
     if (value) {
+      setAuthToken(value.token);
       dispatch(setUser(value));
-      dispatch(setToken(value.token));
-
-      setCookies(USER_TOKEN_KEY, value.token);
-
-      router.push('/');
     }
   }, [value]);
 

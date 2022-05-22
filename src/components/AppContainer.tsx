@@ -1,23 +1,19 @@
 import { Grid } from '@mui/material';
 import Footer from './Footer';
 import Header from './Header';
-import { ReactNode, useCallback, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import api from '../api';
 import useAsync from '../hooks/useAsync';
 import { useDispatch, useSelector } from 'react-redux';
-import { type InvoiceAppState, setToken, setUser } from '../store';
+import { type InvoiceAppState, setUser } from '../store';
 import Spinner from './common/Spinner';
-import { UserResponse } from '../api/api';
-import { getCookie, removeCookies } from 'cookies-next';
-
-const USER_TOKEN_KEY = 'user_token';
+import { useAuthContext } from './auth/AuthContext';
 
 export default function AppContainer({ children }: { children: ReactNode }) {
-  const { user, token } = useSelector((store: InvoiceAppState) => store);
+  const { userToken } = useAuthContext();
+  const { user } = useSelector((store: InvoiceAppState) => store);
   const dispatch = useDispatch();
-  const { execute, value: userInfo } = useAsync<UserResponse, undefined>(
-    api.getCompanyDetails
-  );
+  const { execute, value: userInfo } = useAsync(api.getCompanyDetails);
 
   useEffect(() => {
     if (userInfo) {
@@ -26,26 +22,14 @@ export default function AppContainer({ children }: { children: ReactNode }) {
   }, [userInfo]);
 
   useEffect(() => {
-    if (token) {
-      api.initApi(token, handleLogout);
+    if (userToken) {
       execute(undefined);
+    } else if (user) {
+      dispatch(setUser(null));
     }
-  }, [token]);
+  }, [userToken]);
 
-  const handleLogout = useCallback(() => {
-    dispatch(setUser(null));
-    dispatch(setToken(null));
-    removeCookies(USER_TOKEN_KEY);
-  }, []);
-
-  useEffect(() => {
-    const cookieToken = getCookie(USER_TOKEN_KEY)?.toString();
-    if (cookieToken) {
-      dispatch(setToken(cookieToken));
-    }
-  }, []);
-
-  if (token && !user) {
+  if (userToken && !user) {
     return <Spinner />;
   }
 

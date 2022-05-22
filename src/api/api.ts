@@ -87,7 +87,7 @@ export default class API {
 
   updateCompanyDetails = async (
     params: CompanyDetails
-  ): Promise<UserResponse> => {
+  ): Promise<{ success: boolean; user: UserResponse }> => {
     return await this.sendRequest('me/company', {
       method: 'PUT',
       body: JSON.stringify(params),

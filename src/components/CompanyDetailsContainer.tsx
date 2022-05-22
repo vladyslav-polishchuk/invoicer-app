@@ -1,14 +1,14 @@
 import { Stack } from '@mui/material';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import api from '../api';
 import AuthPage from './auth/AuthPage';
 import FormField from './common/FormField';
 import useAsync from '../hooks/useAsync';
 import { companyDetailsValidationSchema } from '../utils/formValidationSchema';
-import type { InvoiceAppState } from '../store';
+import { InvoiceAppState, setUser } from '../store';
 import SubmitButton from './auth/SubmitButton';
 
 const companyDetailsFields = [
@@ -45,6 +45,7 @@ const companyDetailsFields = [
 ] as const;
 
 export default function CompanyDetailsContainer() {
+  const dispatch = useDispatch();
   const { user } = useSelector((state: InvoiceAppState) => state);
   const router = useRouter();
   const [success, setSuccess] = useState<string | null>(null);
@@ -52,6 +53,8 @@ export default function CompanyDetailsContainer() {
 
   useEffect(() => {
     if (!value) return;
+
+    dispatch(setUser(value.user));
 
     if (!user?.companyDetails) {
       router.push('/');
@@ -81,7 +84,7 @@ export default function CompanyDetailsContainer() {
 
   return (
     <AuthPage
-      title="Let's get started"
+      title="Invoicer | Company Details"
       error={error}
       success={success}
       info={infoMessage}

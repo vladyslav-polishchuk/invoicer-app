@@ -1,6 +1,6 @@
 import BackgroundImage from '../../../images/auth-background.jpeg';
 import { Alert, Typography, Container, Paper, Box } from '@mui/material';
-import Page from '../Page';
+import Page from '../common/Page';
 import type { ReactNode } from 'react';
 
 interface AuthPageProps {

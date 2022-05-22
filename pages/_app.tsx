@@ -9,6 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { store } from '../src/store';
 import AppContainer from '../src/components/AppContainer';
 import ErrorBoundary from '../src/components/ErrorBoundary';
+import { AuthContextProvider } from '../src/components/auth/AuthContext';
 import type { AppProps } from 'next/app';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -22,11 +23,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Provider store={store}>
-        <AppContainer>
-          <Component {...pageProps} />
-        </AppContainer>{' '}
-      </Provider>
+      <AuthContextProvider>
+        <Provider store={store}>
+          <AppContainer>
+            <Component {...pageProps} />
+          </AppContainer>{' '}
+        </Provider>
+      </AuthContextProvider>
     </ErrorBoundary>
   );
 }

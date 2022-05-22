@@ -1,4 +1,4 @@
-import Page from '../src/components/Page';
+import Page from '../src/components/common/Page';
 import { AuthGuard } from '../src/components/auth/AuthGuard';
 import { Typography } from '@mui/material';
 

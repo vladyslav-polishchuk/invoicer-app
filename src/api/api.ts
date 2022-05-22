@@ -55,6 +55,10 @@ export default class API {
     }
 
     const responseText = await response.text();
+    if (response.status === 401 && responseText === 'Invalid Token') {
+      this.logout();
+    }
+
     throw new Error(responseText);
   };
 

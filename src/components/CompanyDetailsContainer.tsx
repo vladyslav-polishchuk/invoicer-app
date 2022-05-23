@@ -29,6 +29,7 @@ const companyDetailsFields = [
   },
   {
     fieldName: 'company-reg',
+    inputName: 'company-reg-number',
     label: 'Registration number',
     propName: 'registrationNumber',
   },
@@ -42,7 +43,7 @@ const companyDetailsFields = [
     label: 'Swift',
     propName: 'swift',
   },
-] as const;
+];
 
 export default function CompanyDetailsContainer() {
   const dispatch = useDispatch();
@@ -99,6 +100,11 @@ export default function CompanyDetailsContainer() {
                   fieldName={companyInfo.fieldName}
                   label={companyInfo.label}
                   {...getFieldProps(companyInfo.propName)}
+                  inputProps={{
+                    'data-test': companyInfo.inputName
+                      ? companyInfo.inputName
+                      : companyInfo.fieldName,
+                  }}
                   formik={formik}
                 />
               );

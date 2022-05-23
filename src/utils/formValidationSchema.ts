@@ -17,7 +17,7 @@ const confirmPassword = password.oneOf(
 
 export const loginValidationSchema = object({ email, password });
 
-export const registerValidationSchema = object({
+export const signupValidationSchema = object({
   name,
   email,
   password,

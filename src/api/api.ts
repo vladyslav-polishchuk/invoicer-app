@@ -69,7 +69,7 @@ export default class API {
     });
   };
 
-  register = async (params: {
+  signup = async (params: {
     name: string;
     email: string;
     password: string;

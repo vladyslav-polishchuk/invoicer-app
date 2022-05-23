@@ -8,12 +8,12 @@ import AuthRedirect from './AuthRedirect';
 import PasswordField from './PasswordField';
 import FormField from '../common/FormField';
 import useAsync from '../../hooks/useAsync';
-import { registerValidationSchema } from '../../utils/formValidationSchema';
+import { signupValidationSchema } from '../../utils/formValidationSchema';
 import SubmitButton from './SubmitButton';
 
-export default function RegisterFormContainer() {
+export default function SignupFormContainer() {
   const router = useRouter();
-  const { execute, error, value } = useAsync(api.register);
+  const { execute, error, value } = useAsync(api.signup);
 
   useEffect(() => {
     value &&
@@ -33,13 +33,13 @@ export default function RegisterFormContainer() {
       password: '',
       confirmPassword: '',
     },
-    validationSchema: registerValidationSchema,
+    validationSchema: signupValidationSchema,
     onSubmit: execute,
   });
   const { handleSubmit, getFieldProps, isSubmitting } = formik;
 
   return (
-    <AuthPage title="Register" error={error}>
+    <AuthPage title="Sign-up" error={error}>
       <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
           <Stack spacing={3}>

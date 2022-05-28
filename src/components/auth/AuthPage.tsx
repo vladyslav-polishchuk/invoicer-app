@@ -71,7 +71,7 @@ export default function AuthPage({
       </Container>
       <Box
         sx={{
-          position: 'absolute',
+          position: 'fixed',
           height: '100%',
           width: '100%',
           top: 0,

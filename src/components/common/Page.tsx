@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 interface PageProps {
   title: string;
-  children: ReactNode | ReactNode[];
+  children: ReactNode;
 }
 
 export default function Page({ title, children }: PageProps) {

@@ -8,7 +8,7 @@ interface AuthPageProps {
   error?: string | null;
   success?: string | null;
   info?: string | null;
-  children: ReactNode | ReactNode[];
+  children: ReactNode;
 }
 
 export default function AuthPage({

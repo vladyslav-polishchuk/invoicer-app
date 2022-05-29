@@ -69,7 +69,7 @@ export default function LoginFormContainer() {
       <AuthRedirect
         title="No account?"
         linkText="Get started"
-        route="/sign-up"
+        route="/signup"
       />
     </AuthPage>
   );

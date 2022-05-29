@@ -44,7 +44,7 @@ export default function Header({ userInfo }: HeaderProps) {
             <Link href="/login">
               <Button color="inherit">Login</Button>
             </Link>
-            <Link href="/sign-up">
+            <Link href="/signup">
               <Button color="inherit">Sign-up</Button>
             </Link>
             <Link href="/company-details">

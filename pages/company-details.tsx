@@ -1,5 +1,5 @@
 import { AuthGuard } from '../src/components/auth/AuthGuard';
-import CompanyDetailsContainer from '../src/components/CompanyDetailsContainer';
+import CompanyDetailsContainer from '../src/components/CompanyDetailsFormContainer';
 
 export default function CompanyDetailsPage() {
   return (

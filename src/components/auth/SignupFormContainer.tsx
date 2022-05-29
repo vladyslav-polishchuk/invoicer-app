@@ -1,15 +1,10 @@
-import { Button, Stack } from '@mui/material';
-import { useFormik, Form, FormikProvider } from 'formik';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import api from '../../api';
 import AuthPage from './AuthPage';
 import AuthRedirect from './AuthRedirect';
-import PasswordField from './PasswordField';
-import FormField from '../common/FormField';
 import useAsync from '../../hooks/useAsync';
-import { signupValidationSchema } from '../../utils/formValidationSchema';
-import SubmitButton from './SubmitButton';
+import SignupForm from './SignupForm';
 
 export default function SignupFormContainer() {
   const router = useRouter();
@@ -26,56 +21,9 @@ export default function SignupFormContainer() {
       );
   }, [value]);
 
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
-    validationSchema: signupValidationSchema,
-    onSubmit: execute,
-  });
-  const { handleSubmit, getFieldProps, isSubmitting } = formik;
-
   return (
     <AuthPage title="Sign-up" error={error}>
-      <FormikProvider value={formik}>
-        <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-          <Stack spacing={3}>
-            <FormField
-              autoComplete="name"
-              label="Name"
-              {...getFieldProps('name')}
-              formik={formik}
-            />
-
-            <FormField
-              autoComplete="username"
-              type="email"
-              label="Email"
-              {...getFieldProps('email')}
-              formik={formik}
-            />
-
-            <PasswordField {...getFieldProps('password')} formik={formik} />
-
-            <PasswordField
-              fieldName="confirm-password"
-              label="Confirm password"
-              {...getFieldProps('confirmPassword')}
-              formik={formik}
-            />
-
-            <SubmitButton
-              data-test="submit-sign-up"
-              isSubmitting={isSubmitting}
-            >
-              Get started
-            </SubmitButton>
-          </Stack>
-        </Form>
-      </FormikProvider>
+      <SignupForm onSubmit={execute} />
 
       <AuthRedirect
         title="Already have an account?"

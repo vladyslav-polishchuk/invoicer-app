@@ -7,6 +7,7 @@ import {
   useTheme,
   useMediaQuery,
   CircularProgress,
+  Alert,
 } from '@mui/material';
 import { useEffect } from 'react';
 import useAsync from '../../hooks/useAsync';
@@ -41,7 +42,7 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
     fetchMethod,
     ...rest
   } = props;
-  const { execute, value } = useAsync(fetchMethod);
+  const { execute, value, error } = useAsync(fetchMethod);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -50,10 +51,18 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
   }, []);
 
   const loadingPlaceholder = (
-    <CircularProgress size={60} sx={{ alignSelf: 'center' }} />
+    <CircularProgress
+      size={60}
+      sx={{ alignSelf: 'center' }}
+      data-test="loading-overlay"
+    />
   );
   const emptyPlaceholder = (
-    <Typography align="center" sx={{ padding: 5 }}>
+    <Typography
+      align="center"
+      sx={{ padding: 5 }}
+      data-test="empty-placeholder"
+    >
       No Data for display
     </Typography>
   );
@@ -100,7 +109,18 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
           </Button>
         </Grid>
 
-        {content}
+        {error ? (
+          <Alert
+            data-test={`${tableName}-fetch-error`}
+            severity="error"
+            variant="filled"
+            sx={{ mb: 3 }}
+          >
+            {error}
+          </Alert>
+        ) : (
+          content
+        )}
       </Stack>
     </Paper>
   );

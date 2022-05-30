@@ -7,13 +7,13 @@ import type { GridValueGetterParams, GridRow } from '@mui/x-data-grid';
 
 const columns = [
   {
-    field: 'invoice',
+    field: 'number',
     headerName: 'Invoice #',
     minWidth: 100,
     valueGetter: ({ row }: GridValueGetterParams) => row.invoice.invoice_number,
   },
   {
-    field: 'client',
+    field: 'company',
     headerName: 'Company',
     minWidth: 100,
     flex: 1,
@@ -34,13 +34,13 @@ const columns = [
     valueGetter: ({ row }: GridValueGetterParams) => '',
   },
   {
-    field: 'amount',
+    field: 'price',
     headerName: 'Amount',
     minWidth: 100,
     valueGetter: ({ row }: GridValueGetterParams) => `${row.invoice.value}$`,
   },
   {
-    field: 'menu',
+    field: 'actions',
     sortable: false,
     headerName: '',
     width: 54,
@@ -63,10 +63,14 @@ export default function ClientsTableContainer() {
       onViewAllClick={() => router.push('/invoices')}
       onCreateClick={() => {}}
       tableName="invoices"
+      entityName="invoice"
       columns={columns}
       getRowId={({ invoice }: Record<string, unknown>) =>
         (invoice as Record<string, string>).id
       }
+      onRowDoubleClick={({ id }: { id: string }) => {
+        router.push(`/invoice/${id}/view`);
+      }}
     />
   );
 }

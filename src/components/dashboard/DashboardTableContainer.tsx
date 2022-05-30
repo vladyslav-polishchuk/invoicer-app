@@ -3,16 +3,15 @@ import {
   Button,
   Stack,
   Typography,
-  Skeleton,
   Paper,
   useTheme,
   useMediaQuery,
+  CircularProgress,
 } from '@mui/material';
 import { useEffect } from 'react';
 import useAsync from '../../hooks/useAsync';
 import DashboardTable from './DashboardTable';
 import type { GridColumns } from '@mui/x-data-grid';
-import { ClientsResponse, InvoicesResponse } from '../../api/api';
 
 interface FetchParams {
   limit: number;
@@ -21,21 +20,28 @@ interface FetchParams {
 
 interface DashboardTableProps {
   title: string;
-  fetchMethod: (
-    params: FetchParams
-  ) => Promise<ClientsResponse | InvoicesResponse>;
+  fetchMethod: (params: FetchParams) => Promise<Record<string, unknown[]>>;
   onViewAllClick: () => void;
   onCreateClick: () => void;
-  tableName: 'clients' | 'invoices';
+  tableName: string;
+  entityName: string;
   columns: GridColumns;
   getRowId?: (row: Record<string, unknown>) => string;
 }
 
 export default function DashboardTableContainer(props: DashboardTableProps) {
-  const { execute, value } = useAsync<
-    ClientsResponse | InvoicesResponse,
-    FetchParams
-  >(props.fetchMethod);
+  const {
+    title,
+    columns,
+    tableName,
+    entityName,
+    getRowId,
+    onCreateClick,
+    onViewAllClick,
+    fetchMethod,
+    ...rest
+  } = props;
+  const { execute, value } = useAsync(fetchMethod);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -44,20 +50,22 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
   }, []);
 
   const loadingPlaceholder = (
-    <Skeleton variant="rectangular" data-test="loading-overlay" height={400} />
+    <CircularProgress size={60} sx={{ alignSelf: 'center' }} />
   );
   const emptyPlaceholder = (
     <Typography align="center" sx={{ padding: 5 }}>
       No Data for display
     </Typography>
   );
-  const data = value ? value[props.tableName] : null;
+  const data = value ? value[tableName] : null;
   const content = data?.length ? (
     <DashboardTable
       data={data as Record<string, unknown>[]}
-      columns={props.columns}
-      tableName={props.tableName}
-      getRowId={props.getRowId}
+      columns={columns}
+      tableName={tableName}
+      entityName={entityName}
+      getRowId={getRowId}
+      {...rest}
     />
   ) : data ? (
     emptyPlaceholder
@@ -70,21 +78,23 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
       <Stack spacing={2}>
         <Grid container>
           <Typography variant={isMobile ? 'h6' : 'h4'} flexGrow="1">
-            {props.title}
+            {title}
           </Typography>
 
           <Button
             variant="outlined"
             size="small"
             sx={{ mr: 1 }}
-            onClick={props.onCreateClick}
+            onClick={onCreateClick}
+            data-test={`add-${entityName}`}
           >
             Create
           </Button>
           <Button
             variant="outlined"
             size="small"
-            onClick={props.onViewAllClick}
+            onClick={onViewAllClick}
+            data-test={`view-all-${tableName}`}
           >
             View All
           </Button>

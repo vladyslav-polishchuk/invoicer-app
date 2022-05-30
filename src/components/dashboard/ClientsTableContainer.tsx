@@ -8,7 +8,7 @@ import type { GridValueGetterParams } from '@mui/x-data-grid';
 const columns = [
   { field: 'name', headerName: 'Name', minWidth: 100, flex: 1 },
   {
-    field: 'companyDetails',
+    field: 'companyName',
     headerName: 'Company name',
     minWidth: 100,
     flex: 1,
@@ -17,7 +17,7 @@ const columns = [
   { field: 'totalBilled', headerName: 'Total Billed', width: 100 },
   { field: 'invoicesCount', headerName: 'Invoices', width: 100 },
   {
-    field: 'menu',
+    field: 'actions',
     sortable: false,
     headerName: '',
     width: 54,
@@ -40,7 +40,11 @@ export default function ClientsTableContainer() {
       onViewAllClick={() => router.push('/clients')}
       onCreateClick={() => {}}
       tableName="clients"
+      entityName="client"
       columns={columns}
+      onRowDoubleClick={({ id }: { id: string }) => {
+        router.push(`/clients/${id}`);
+      }}
     />
   );
 }

@@ -10,21 +10,22 @@ import {
 interface DashboardTableProps {
   data: Record<string, unknown>[];
   tableName: string;
+  entityName: string;
   columns: GridColumns;
   getRowId?: (row: Record<string, unknown>) => string;
 }
 
-export default function DashboardTable({
-  data,
-  tableName,
-  columns,
-  getRowId,
-}: DashboardTableProps) {
+export default function DashboardTable(props: DashboardTableProps) {
+  const { data, tableName, entityName, columns, getRowId, ...rest } = props;
+  const getGridRowId = getRowId ?? ((row) => row.id as string);
   const Row = (props: GridRowProps) => (
-    <GridRow data-test={`${tableName}-id-${props.row.id}`} {...props} />
+    <GridRow
+      data-test={`${entityName}-row-${getGridRowId(props.row)}`}
+      {...props}
+    />
   );
   const Cell = (props: GridCellProps) => (
-    <GridCell data-test={`${tableName}-${props.field}`} {...props} />
+    <GridCell data-test={`${entityName}-${props.field}`} {...props} />
   );
 
   return (
@@ -36,10 +37,11 @@ export default function DashboardTable({
         components={{ Row, Cell }}
         rows={data}
         columns={columns}
-        getRowId={getRowId ?? ((row) => row.id)}
+        getRowId={getGridRowId}
         hideFooter
         disableColumnMenu
         density="compact"
+        {...rest}
       />
     </div>
   );

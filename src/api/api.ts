@@ -11,11 +11,47 @@ export interface UserResponse {
   companyDetails: CompanyDetails;
 }
 
+export interface ClientResponse {
+  companyDetails: {
+    address: string;
+    name: string;
+    regNumber: string;
+    vatNumber: string;
+  };
+  email: string;
+  id: string;
+  invoicesCount: number;
+  name: string;
+  totalBilled: number;
+}
+
+export interface InvoiceResponse {
+  client_id: string;
+  date: string;
+  dueDate: string;
+  id: string;
+  invoice_number: string;
+  value: number;
+}
+
+export interface ClientsResponse {
+  clients: Array<ClientResponse>;
+  total: number;
+}
+
+export interface InvoicesResponse {
+  invoices: Array<{
+    client: ClientResponse;
+    invoice: InvoiceResponse;
+  }>;
+  total: number;
+}
+
 export interface CompanyDetails {
-  companyName: string;
-  companyAddress: string;
-  vat: string;
-  registrationNumber: string;
+  name: string;
+  address: string;
+  vatNumber: string;
+  regNumber: string;
   iban: string;
   swift: string;
 }
@@ -92,5 +128,27 @@ export default class API {
       method: 'PUT',
       body: JSON.stringify(params),
     });
+  };
+
+  getClients = async (params: {
+    limit: number;
+    sort: Record<string, string>;
+  }) => {
+    const queryParams = JSON.stringify(params);
+
+    return await this.sendRequest<ClientsResponse>(
+      `clients?params=${queryParams}`
+    );
+  };
+
+  getInvoices = async (params: {
+    limit: number;
+    sort: Record<string, string>;
+  }) => {
+    const queryParams = JSON.stringify(params);
+
+    return await this.sendRequest<InvoicesResponse>(
+      `invoices?params=${queryParams}`
+    );
   };
 }

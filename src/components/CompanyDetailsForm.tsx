@@ -5,11 +5,11 @@ import { companyDetailsValidationSchema } from '../utils/formValidationSchema';
 import SubmitButton from './auth/SubmitButton';
 
 interface CompanyDetails {
-  companyName: string;
-  companyAddress: string;
+  name: string;
+  address: string;
   iban: string;
-  vat: string;
-  registrationNumber: string;
+  vatNumber: string;
+  regNumber: string;
   swift: string;
 }
 
@@ -22,23 +22,23 @@ const companyDetailsFields = [
   {
     fieldName: 'company-name',
     label: 'Company Name',
-    propName: 'companyName',
+    propName: 'name',
   },
   {
     fieldName: 'company-address',
     label: 'Company Address',
-    propName: 'companyAddress',
+    propName: 'address',
   },
   {
     fieldName: 'company-vat',
     label: 'VAT number',
-    propName: 'vat',
+    propName: 'vatNumber',
   },
   {
     fieldName: 'company-reg',
     inputName: 'company-reg-number',
     label: 'Registration number',
-    propName: 'registrationNumber',
+    propName: 'regNumber',
   },
   {
     fieldName: 'company-iban',

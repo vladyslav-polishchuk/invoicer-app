@@ -31,11 +31,11 @@ export default function CompanyDetailsFormContainer() {
 
   const companyDetails = user.companyDetails ?? {};
   const initialValues = {
-    companyName: companyDetails.companyName ?? '',
-    companyAddress: companyDetails.companyAddress ?? '',
+    name: companyDetails.name ?? '',
+    address: companyDetails.address ?? '',
     iban: companyDetails.iban ?? '',
-    vat: companyDetails.vat ?? '',
-    registrationNumber: companyDetails.registrationNumber ?? '',
+    vatNumber: companyDetails.vatNumber ?? '',
+    regNumber: companyDetails.regNumber ?? '',
     swift: companyDetails.swift ?? '',
   };
   const infoMessage =

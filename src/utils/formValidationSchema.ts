@@ -25,10 +25,10 @@ export const signupValidationSchema = object({
 });
 
 export const companyDetailsValidationSchema = object({
-  companyName: string().required().min(3).max(16),
-  companyAddress: string().required(),
-  vat: string().required(),
-  registrationNumber: string().required(),
+  name: string().required().min(3).max(16),
+  address: string().required(),
+  vatNumber: string().required(),
+  regNumber: string().required(),
   iban: string(),
   swift: string(),
 });

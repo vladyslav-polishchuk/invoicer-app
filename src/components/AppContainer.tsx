@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { createTheme, Grid, ThemeProvider } from '@mui/material';
 import Footer from './Footer';
 import Header from './Header';
 import { ReactNode, useEffect } from 'react';
@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { type InvoiceAppState, setUser } from '../store';
 import Spinner from './common/Spinner';
 import { useAuthContext } from './auth/AuthContext';
+
+const theme = createTheme({});
 
 export default function AppContainer({ children }: { children: ReactNode }) {
   const { userToken } = useAuthContext();
@@ -34,14 +36,16 @@ export default function AppContainer({ children }: { children: ReactNode }) {
   }
 
   return (
-    <Grid
-      container
-      direction="column"
-      sx={{ minHeight: '100vh', backgroundColor: '#f2f3f4' }}
-    >
-      <Header userInfo={userInfo} />
-      {children}
-      <Footer />
-    </Grid>
+    <ThemeProvider theme={theme}>
+      <Grid
+        container
+        direction="column"
+        sx={{ minHeight: '100vh', backgroundColor: '#f2f3f4' }}
+      >
+        <Header userInfo={userInfo} />
+        {children}
+        <Footer />
+      </Grid>
+    </ThemeProvider>
   );
 }

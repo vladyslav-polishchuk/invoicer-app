@@ -46,8 +46,8 @@ const columns = [
     width: 54,
     renderCell: () => (
       <DropdownMenu>
-        <MenuItem>Add Invoice</MenuItem>
-        <MenuItem>Edit Client</MenuItem>
+        <MenuItem>Print</MenuItem>
+        <MenuItem>Edit</MenuItem>
       </DropdownMenu>
     ),
   },

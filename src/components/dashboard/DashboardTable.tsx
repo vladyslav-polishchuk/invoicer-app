@@ -1,3 +1,4 @@
+import { Grid } from '@mui/material';
 import {
   DataGrid,
   GridCell,
@@ -32,20 +33,19 @@ export default function DashboardTable(props: DashboardTableProps) {
   );
 
   return (
-    <div
-      style={{ height: 70 * data.length, width: '100%' }}
-      data-test={`${tableName}-table`}
-    >
-      <DataGrid
-        components={{ Row, Cell }}
-        rows={data}
-        columns={columns}
-        getRowId={getGridRowId}
-        hideFooter
-        disableColumnMenu
-        density="compact"
-        onRowDoubleClick={onRowDoubleClick}
-      />
-    </div>
+    <Grid container data-test={`${tableName}-table`} sx={{ minHeight: '25vh' }}>
+      <Grid item data-test={`${tableName}-table`} sx={{ flexGrow: 1 }}>
+        <DataGrid
+          components={{ Row, Cell }}
+          rows={data}
+          columns={columns}
+          getRowId={getGridRowId}
+          hideFooter
+          disableColumnMenu
+          density="compact"
+          onRowDoubleClick={onRowDoubleClick}
+        />
+      </Grid>
+    </Grid>
   );
 }

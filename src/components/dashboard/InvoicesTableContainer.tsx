@@ -68,7 +68,7 @@ export default function ClientsTableContainer() {
       getRowId={({ invoice }: Record<string, unknown>) =>
         (invoice as Record<string, string>).id
       }
-      onRowDoubleClick={({ id }: { id: string }) => {
+      onRowDoubleClick={({ id }) => {
         router.push(`/invoice/${id}/view`);
       }}
     />

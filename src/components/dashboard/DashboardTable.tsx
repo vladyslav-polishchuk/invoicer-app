@@ -4,6 +4,7 @@ import {
   GridCellProps,
   GridRow,
   GridRowProps,
+  type GridRowParams,
   type GridColumns,
 } from '@mui/x-data-grid';
 
@@ -13,10 +14,12 @@ interface DashboardTableProps {
   entityName: string;
   columns: GridColumns;
   getRowId?: (row: Record<string, unknown>) => string;
+  onRowDoubleClick: (param: GridRowParams) => void;
 }
 
 export default function DashboardTable(props: DashboardTableProps) {
-  const { data, tableName, entityName, columns, getRowId, ...rest } = props;
+  const { data, tableName, entityName, columns, getRowId, onRowDoubleClick } =
+    props;
   const getGridRowId = getRowId ?? ((row) => row.id as string);
   const Row = (props: GridRowProps) => (
     <GridRow
@@ -41,7 +44,7 @@ export default function DashboardTable(props: DashboardTableProps) {
         hideFooter
         disableColumnMenu
         density="compact"
-        {...rest}
+        onRowDoubleClick={onRowDoubleClick}
       />
     </div>
   );

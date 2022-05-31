@@ -42,7 +42,7 @@ export default function ClientsTableContainer() {
       tableName="clients"
       entityName="client"
       columns={columns}
-      onRowDoubleClick={({ id }: { id: string }) => {
+      onRowDoubleClick={({ id }) => {
         router.push(`/clients/${id}`);
       }}
     />

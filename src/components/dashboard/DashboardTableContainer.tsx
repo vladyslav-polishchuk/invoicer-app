@@ -12,7 +12,7 @@ import {
 import { useEffect } from 'react';
 import useAsync from '../../hooks/useAsync';
 import DashboardTable from './DashboardTable';
-import type { GridColumns } from '@mui/x-data-grid';
+import type { GridColumns, GridRowParams } from '@mui/x-data-grid';
 
 interface FetchParams {
   limit: number;
@@ -21,13 +21,14 @@ interface FetchParams {
 
 interface DashboardTableProps {
   title: string;
-  fetchMethod: (params: FetchParams) => Promise<Record<string, unknown[]>>;
+  fetchMethod: (params: FetchParams) => Promise<unknown>;
   onViewAllClick: () => void;
   onCreateClick: () => void;
   tableName: string;
   entityName: string;
   columns: GridColumns;
   getRowId?: (row: Record<string, unknown>) => string;
+  onRowDoubleClick: (param: GridRowParams) => void;
 }
 
 export default function DashboardTableContainer(props: DashboardTableProps) {
@@ -40,7 +41,7 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
     onCreateClick,
     onViewAllClick,
     fetchMethod,
-    ...rest
+    onRowDoubleClick,
   } = props;
   const { execute, value, error } = useAsync(fetchMethod);
   const theme = useTheme();
@@ -66,7 +67,10 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
       No Data for display
     </Typography>
   );
-  const data = value ? value[tableName] : null;
+  const data =
+    value && typeof value === 'object'
+      ? (value as Record<string, unknown[]>)?.[tableName]
+      : null;
   const content = data?.length ? (
     <DashboardTable
       data={data as Record<string, unknown>[]}
@@ -74,7 +78,7 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
       tableName={tableName}
       entityName={entityName}
       getRowId={getRowId}
-      {...rest}
+      onRowDoubleClick={onRowDoubleClick}
     />
   ) : data ? (
     emptyPlaceholder

@@ -23,7 +23,6 @@ export default function ClientFormContainer(props: { clientId?: string }) {
   } = useAsync(api.getClient);
 
   useEffect(() => {
-    console.log(clientId);
     if (!clientId) return;
 
     getClient(clientId);
@@ -36,14 +35,6 @@ export default function ClientFormContainer(props: { clientId?: string }) {
       setSuccess('Client successfuly updated');
     } else {
       setSuccess('Client successfuly created');
-      router.push('/clients/new', undefined, { shallow: false });
-      /*router.push(
-        {
-          pathname: '/clients/new',
-          query: { successMessage: 'Client successfuly created' },
-        },
-        '/clients/new/a'
-      );*/
     }
   }, [submittedClient]);
 

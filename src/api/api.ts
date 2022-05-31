@@ -11,13 +11,8 @@ export interface UserResponse {
   companyDetails: CompanyDetails;
 }
 
-export interface ClientResponse {
-  companyDetails: {
-    address: string;
-    name: string;
-    regNumber: string;
-    vatNumber: string;
-  };
+export interface Client {
+  companyDetails: CompanyDetails;
   email: string;
   id: string;
   invoicesCount: number;
@@ -35,13 +30,13 @@ export interface InvoiceResponse {
 }
 
 export interface ClientsResponse {
-  clients: Array<ClientResponse>;
+  clients: Array<Client>;
   total: number;
 }
 
 export interface InvoicesResponse {
   invoices: Array<{
-    client: ClientResponse;
+    client: Client;
     invoice: InvoiceResponse;
   }>;
   total: number;
@@ -150,5 +145,25 @@ export default class API {
     return await this.sendRequest<InvoicesResponse>(
       `invoices?params=${queryParams}`
     );
+  };
+
+  getClient = async (clientId: string) => {
+    return await this.sendRequest<{ success: boolean; client: Client }>(
+      `clients/${clientId}`
+    );
+  };
+
+  createClient = async (params: Partial<Client>) => {
+    return await this.sendRequest('clients', {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+  };
+
+  updateClient = async (params: Partial<Client>) => {
+    return await this.sendRequest('clients', {
+      method: 'PUT',
+      body: JSON.stringify(params),
+    });
   };
 }

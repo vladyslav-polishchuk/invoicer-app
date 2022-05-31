@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import api from '../../api';
-import AuthPage from './AuthPage';
+import FormPage from '../common/FormPage';
 import AuthRedirect from './AuthRedirect';
 import useAsync from '../../hooks/useAsync';
 import { useDispatch } from 'react-redux';
@@ -24,7 +24,7 @@ export default function LoginFormContainer() {
   const successMessage = router.query.successMessage ?? '';
 
   return (
-    <AuthPage
+    <FormPage
       title="Login"
       error={error}
       success={
@@ -38,6 +38,6 @@ export default function LoginFormContainer() {
         linkText="Get started"
         route="/signup"
       />
-    </AuthPage>
+    </FormPage>
   );
 }

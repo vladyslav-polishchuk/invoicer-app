@@ -1,8 +1,7 @@
-import { Stack } from '@mui/material';
-import { useFormik, Form, FormikProvider } from 'formik';
+import { useFormik } from 'formik';
 import FormField from './common/FormField';
 import { companyDetailsValidationSchema } from '../utils/formValidationSchema';
-import SubmitButton from './auth/SubmitButton';
+import Form from './common/Form';
 
 interface CompanyDetails {
   name: string;
@@ -61,35 +60,28 @@ export default function CompanyDetailsForm({
     validationSchema: companyDetailsValidationSchema,
     onSubmit,
   });
-  const { handleSubmit, getFieldProps, isSubmitting } = formik;
+  const { getFieldProps } = formik;
 
   return (
-    <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack spacing={3}>
-          {companyDetailsFields.map((companyInfo) => (
-            <FormField
-              key={companyInfo.fieldName}
-              fieldName={companyInfo.fieldName}
-              label={companyInfo.label}
-              {...getFieldProps(companyInfo.propName)}
-              inputProps={{
-                'data-test': companyInfo.inputName
-                  ? companyInfo.inputName
-                  : companyInfo.fieldName,
-              }}
-              formik={formik}
-            />
-          ))}
-
-          <SubmitButton
-            data-test="submit-company-details"
-            isSubmitting={isSubmitting}
-          >
-            Get started
-          </SubmitButton>
-        </Stack>
-      </Form>
-    </FormikProvider>
+    <Form
+      formik={formik}
+      submitText="Get started"
+      submitTestAttribute="submit-company-details"
+    >
+      {companyDetailsFields.map((companyInfo) => (
+        <FormField
+          key={companyInfo.fieldName}
+          fieldName={companyInfo.fieldName}
+          label={companyInfo.label}
+          {...getFieldProps(companyInfo.propName)}
+          inputProps={{
+            'data-test': companyInfo.inputName
+              ? companyInfo.inputName
+              : companyInfo.fieldName,
+          }}
+          formik={formik}
+        />
+      ))}
+    </Form>
   );
 }

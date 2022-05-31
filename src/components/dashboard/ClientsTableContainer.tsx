@@ -38,7 +38,7 @@ export default function ClientsTableContainer() {
       title="Latest Clients"
       fetchMethod={api.getClients}
       onViewAllClick={() => router.push('/clients')}
-      onCreateClick={() => {}}
+      onCreateClick={() => router.push('/clients/new')}
       tableName="clients"
       entityName="client"
       columns={columns}

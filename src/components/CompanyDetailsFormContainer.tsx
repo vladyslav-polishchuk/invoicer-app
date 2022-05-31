@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import api from '../api';
-import AuthPage from './auth/AuthPage';
+import FormPage from './common/FormPage';
 import useAsync from '../hooks/useAsync';
 import { InvoiceAppState, setUser } from '../store';
 import CompanyDetailsForm from './CompanyDetailsForm';
@@ -18,7 +18,7 @@ export default function CompanyDetailsFormContainer() {
 
     dispatch(setUser(value.user));
 
-    if (!user?.companyDetails) {
+    if (!Object.keys(user?.companyDetails ?? {}).length) {
       router.push('/');
     } else {
       setSuccess('Company details updated successfuly');
@@ -38,19 +38,18 @@ export default function CompanyDetailsFormContainer() {
     regNumber: companyDetails.regNumber ?? '',
     swift: companyDetails.swift ?? '',
   };
-  const infoMessage =
-    companyDetails === null
-      ? 'You need to setup company info before you can proceed'
-      : '';
+  const infoMessage = !Object.keys(companyDetails).length
+    ? 'You need to setup company info before you can proceed'
+    : '';
 
   return (
-    <AuthPage
-      title="Invoicer | Company Details"
+    <FormPage
+      title="Company Details"
       error={error}
       success={success}
       info={infoMessage}
     >
       <CompanyDetailsForm onSubmit={execute} initialValues={initialValues} />
-    </AuthPage>
+    </FormPage>
   );
 }

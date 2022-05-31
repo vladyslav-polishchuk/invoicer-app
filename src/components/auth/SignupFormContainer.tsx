@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import api from '../../api';
-import AuthPage from './AuthPage';
+import FormPage from '../common/FormPage';
 import AuthRedirect from './AuthRedirect';
 import useAsync from '../../hooks/useAsync';
 import SignupForm from './SignupForm';
@@ -22,7 +22,7 @@ export default function SignupFormContainer() {
   }, [value]);
 
   return (
-    <AuthPage title="Sign-up" error={error}>
+    <FormPage title="Sign-up" error={error}>
       <SignupForm onSubmit={execute} />
 
       <AuthRedirect
@@ -30,6 +30,6 @@ export default function SignupFormContainer() {
         linkText="Login"
         route="/login"
       />
-    </AuthPage>
+    </FormPage>
   );
 }

@@ -32,3 +32,16 @@ export const companyDetailsValidationSchema = object({
   iban: string(),
   swift: string(),
 });
+
+export const clientFormValidationSchema = object({
+  email,
+  name: name.min(3),
+  companyDetails: object({
+    name: string().required(),
+    address: string().required(),
+    vatNumber: string().required(),
+    regNumber: string().required(),
+    iban: string().required(),
+    swift: string().required(),
+  }),
+});

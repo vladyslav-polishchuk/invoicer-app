@@ -1,9 +1,9 @@
-import BackgroundImage from '../../../images/auth-background.jpeg';
+import BackgroundImage from '../../../images/background.jpeg';
 import { Alert, Typography, Container, Paper, Box } from '@mui/material';
-import Page from '../common/Page';
+import Page from './Page';
 import type { ReactNode } from 'react';
 
-interface AuthPageProps {
+interface FormPageProps {
   title: string;
   error?: string | null;
   success?: string | null;
@@ -11,13 +11,13 @@ interface AuthPageProps {
   children: ReactNode;
 }
 
-export default function AuthPage({
+export default function FormPage({
   children,
   title,
   error,
   success,
   info,
-}: AuthPageProps) {
+}: FormPageProps) {
   return (
     <Page title={title}>
       <Container

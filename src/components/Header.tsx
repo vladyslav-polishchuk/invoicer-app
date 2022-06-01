@@ -41,19 +41,26 @@ export default function Header({ userInfo }: HeaderProps) {
             </Typography>
           </Link>
           <Box sx={{ flexGrow: 0 }}>
-            <Link href="/login">
-              <Button color="inherit">Login</Button>
-            </Link>
-            <Link href="/signup">
-              <Button color="inherit">Sign-up</Button>
-            </Link>
-            <Link href="/company-details">
-              <Button color="inherit">Company Details</Button>
-            </Link>
-
-            <Button color="inherit" onClick={api.logout}>
-              Logout
-            </Button>
+            {!userInfo && (
+              <Link href="/login">
+                <Button color="inherit">Login</Button>
+              </Link>
+            )}
+            {!userInfo && (
+              <Link href="/signup">
+                <Button color="inherit">Sign-up</Button>
+              </Link>
+            )}
+            {userInfo && (
+              <Link href="/company-details">
+                <Button color="inherit">Company Details</Button>
+              </Link>
+            )}
+            {userInfo && (
+              <Button color="inherit" onClick={api.logout}>
+                Logout
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </Container>

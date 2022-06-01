@@ -42,7 +42,7 @@ export default function AppContainer({ children }: { children: ReactNode }) {
         direction="column"
         sx={{ minHeight: '100vh', backgroundColor: '#f2f3f4' }}
       >
-        <Header userInfo={userInfo} />
+        <Header userInfo={user} />
         {children}
         <Footer />
       </Grid>

@@ -3,16 +3,17 @@ import api from '../api';
 import FormPage from './common/FormPage';
 import useAsync from '../hooks/useAsync';
 import ClientForm from './ClientForm';
-import { useRouter } from 'next/router';
 
 export default function ClientFormContainer(props: { clientId?: string }) {
   const { clientId } = props;
 
-  const router = useRouter();
+  const [formikData, setFormikData] = useState<{
+    resetForm: () => void;
+  } | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const formAction = clientId ? api.updateClient : api.createClient;
   const {
-    execute: onSubmit,
+    execute: submitClient,
     error: submitError,
     value: submittedClient,
   } = useAsync(formAction);
@@ -21,6 +22,10 @@ export default function ClientFormContainer(props: { clientId?: string }) {
     error: getClientError,
     value: clientResponse,
   } = useAsync(api.getClient);
+  const onFormSubmit = (args: any, formikData: { resetForm: () => void }) => {
+    setFormikData(formikData);
+    return submitClient(args);
+  };
 
   useEffect(() => {
     if (!clientId) return;
@@ -35,6 +40,7 @@ export default function ClientFormContainer(props: { clientId?: string }) {
       setSuccess('Client successfuly updated');
     } else {
       setSuccess('Client successfuly created');
+      formikData?.resetForm();
     }
   }, [submittedClient]);
 
@@ -63,7 +69,7 @@ export default function ClientFormContainer(props: { clientId?: string }) {
       error={getClientError ?? submitError}
       success={success}
     >
-      <ClientForm onSubmit={onSubmit} initialValues={initialValues} />
+      <ClientForm onSubmit={onFormSubmit} initialValues={initialValues} />
     </FormPage>
   );
 }

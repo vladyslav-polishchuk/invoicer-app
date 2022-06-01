@@ -5,7 +5,10 @@ import Form from './common/Form';
 import type { Client } from '../api/api';
 
 interface ClientFormProps {
-  onSubmit: (values: Partial<Client>) => void;
+  onSubmit: (
+    values: Partial<Client>,
+    formikData: { resetForm: () => void }
+  ) => void;
   initialValues: Partial<Client>;
 }
 

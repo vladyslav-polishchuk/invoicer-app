@@ -33,7 +33,7 @@ export default function DashboardTable(props: DashboardTableProps) {
   );
 
   return (
-    <Grid container data-test={`${tableName}-table`} sx={{ minHeight: '25vh' }}>
+    <Grid container data-test={`${tableName}-table`} sx={{ minHeight: '30vh' }}>
       <Grid item data-test={`${tableName}-table`} sx={{ flexGrow: 1 }}>
         <DataGrid
           components={{ Row, Cell }}

@@ -9,6 +9,7 @@ import {
   Button,
 } from '@mui/material';
 import api from '../api';
+import useScreenSize from '../hooks/useScreenSize';
 import type { UserResponse } from '../api/api';
 
 interface HeaderProps {
@@ -16,6 +17,10 @@ interface HeaderProps {
 }
 
 export default function Header({ userInfo }: HeaderProps) {
+  const { isMobile } = useScreenSize();
+  const logoSize = isMobile ? '28px' : '42px';
+  const buttonSize = isMobile ? 'small' : 'medium';
+
   return (
     <AppBar position="sticky">
       <Container>
@@ -24,15 +29,15 @@ export default function Header({ userInfo }: HeaderProps) {
             <Typography
               component="a"
               href="/"
-              variant="h5"
+              variant={isMobile ? 'h6' : 'h5'}
               color="inherit"
               fontWeight="bold"
               sx={{ textDecoration: 'none', flexGrow: '1' }}
             >
               <HomePageIcon
                 sx={{
-                  width: '42px',
-                  height: '42px',
+                  width: logoSize,
+                  height: logoSize,
                   verticalAlign: 'middle',
                   mr: 2,
                 }}
@@ -43,21 +48,27 @@ export default function Header({ userInfo }: HeaderProps) {
           <Box sx={{ flexGrow: 0 }}>
             {!userInfo && (
               <Link href="/login">
-                <Button color="inherit">Login</Button>
+                <Button color="inherit" size={buttonSize}>
+                  Login
+                </Button>
               </Link>
             )}
             {!userInfo && (
               <Link href="/signup">
-                <Button color="inherit">Sign-up</Button>
+                <Button color="inherit" size={buttonSize}>
+                  Sign-up
+                </Button>
               </Link>
             )}
             {userInfo && (
               <Link href="/company-details">
-                <Button color="inherit">Company Details</Button>
+                <Button color="inherit" size={buttonSize}>
+                  Company Details
+                </Button>
               </Link>
             )}
             {userInfo && (
-              <Button color="inherit" onClick={api.logout}>
+              <Button color="inherit" onClick={api.logout} size={buttonSize}>
                 Logout
               </Button>
             )}

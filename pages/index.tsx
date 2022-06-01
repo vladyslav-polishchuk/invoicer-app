@@ -11,7 +11,7 @@ export default function Home() {
         <Container
           sx={{
             display: 'flex',
-            minHeight: '80vh',
+            minHeight: '85vh',
             flexDirection: 'column',
             justifyContent: 'center',
           }}

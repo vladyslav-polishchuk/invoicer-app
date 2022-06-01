@@ -1,9 +1,18 @@
 import { Container, Typography } from '@mui/material';
+import useScreenSize from '../hooks/useScreenSize';
 
 export default function Footer() {
+  const { isMobile } = useScreenSize();
+  const copyrightTextVariant = isMobile ? 'caption' : 'body2';
+  const padding = isMobile ? 1 : 2;
+
   return (
-    <Container sx={{ py: 2, mt: 'auto' }} component="footer">
-      <Typography variant="body2" align="center" color="text.secondary">
+    <Container sx={{ py: padding, mt: 'auto' }} component="footer">
+      <Typography
+        variant={copyrightTextVariant}
+        align="center"
+        color="text.secondary"
+      >
         © Copyright 2022 Vladyslav Polishchuk. All rights reserved
       </Typography>
     </Container>

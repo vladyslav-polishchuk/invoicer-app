@@ -4,14 +4,13 @@ import {
   Stack,
   Typography,
   Paper,
-  useTheme,
-  useMediaQuery,
   CircularProgress,
   Alert,
 } from '@mui/material';
 import { useEffect } from 'react';
 import useAsync from '../../hooks/useAsync';
 import DashboardTable from './DashboardTable';
+import useScreenSize from '../../hooks/useScreenSize';
 import type { GridColumns, GridRowParams } from '@mui/x-data-grid';
 
 interface FetchParams {
@@ -44,8 +43,7 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
     onRowDoubleClick,
   } = props;
   const { execute, value, error } = useAsync(fetchMethod);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isMobile } = useScreenSize();
 
   useEffect(() => {
     execute({ limit: 10, sort: { creation: 'desc' } });
@@ -87,7 +85,7 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
   );
 
   return (
-    <Paper elevation={5} sx={{ padding: isMobile ? 1 : 2 }}>
+    <Paper elevation={5} sx={{ padding: isMobile ? 1 : 1.5 }}>
       <Stack spacing={2}>
         <Grid container>
           <Typography variant={isMobile ? 'h6' : 'h4'} flexGrow="1">

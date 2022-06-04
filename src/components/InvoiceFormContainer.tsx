@@ -2,35 +2,33 @@ import { useEffect, useState } from 'react';
 import api from '../api';
 import FormPage from './common/FormPage';
 import useAsync from '../hooks/useAsync';
-import useClientFormData from '../hooks/forms/useClientFormData';
 import Spinner from './common/Spinner';
 import FormContainer from './common/FormContainer';
+import useInvoiceFormData from '../hooks/forms/useInvoiceFormData';
 
-interface ClientFormContainerProps {
-  clientId?: string;
-}
-
-export default function ClientFormContainer({
-  clientId,
-}: ClientFormContainerProps) {
+export default function InvoiceFormContainer({
+  invoiceId,
+}: {
+  invoiceId?: string;
+}) {
   const [success, setSuccess] = useState<string | null>(null);
-  const formAction = clientId ? api.updateClient : api.createClient;
+  const formAction = invoiceId ? api.updateClient : api.createClient;
   const {
     execute: onSubmit,
     error: submitError,
     value: submittedClient,
   } = useAsync(formAction);
   const {
-    execute: getClient,
-    error: getClientError,
-    value: clientResponse,
+    execute: getInvoice,
+    error: getInvoiceError,
+    value: invoiceResponse,
   } = useAsync(api.getClient);
-  const formData = useClientFormData({ data: clientResponse, onSubmit });
+  const formData = useInvoiceFormData({ onSubmit, data: invoiceResponse });
 
   useEffect(() => {
-    if (!clientId) return;
+    if (!invoiceId) return;
 
-    getClient(clientId);
+    getInvoice(invoiceId);
   }, []);
 
   useEffect(() => {
@@ -44,14 +42,14 @@ export default function ClientFormContainer({
     }
   }, [submittedClient]);
 
-  if (clientId && !clientResponse) {
+  if (invoiceId && !invoiceResponse) {
     return <Spinner />;
   }
 
   return (
     <FormPage
-      title="Client info"
-      error={getClientError ?? submitError}
+      title="Invoice info"
+      error={getInvoiceError ?? submitError}
       success={success}
     >
       <FormContainer formData={formData} />

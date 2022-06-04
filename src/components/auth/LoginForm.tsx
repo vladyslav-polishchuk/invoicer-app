@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import PasswordField from './PasswordField';
 import FormField from '../common/FormField';
-import { loginValidationSchema } from '../../utils/formValidationSchema';
+import { loginValidationSchema } from '../../common/formValidationSchema';
 import Form from '../common/Form';
 
 interface LoginFormProps {

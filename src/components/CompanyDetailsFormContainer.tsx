@@ -5,7 +5,8 @@ import api from '../api';
 import FormPage from './common/FormPage';
 import useAsync from '../hooks/useAsync';
 import { InvoiceAppState, setUser } from '../store';
-import CompanyDetailsForm from './CompanyDetailsForm';
+import useCompanyDetailsFormData from '../hooks/forms/useCompanyDetailsFormData';
+import FormContainer from './common/FormContainer';
 
 export default function CompanyDetailsFormContainer() {
   const dispatch = useDispatch();
@@ -13,6 +14,8 @@ export default function CompanyDetailsFormContainer() {
   const router = useRouter();
   const [success, setSuccess] = useState<string | null>(null);
   const { execute, error, value } = useAsync(api.updateCompanyDetails);
+  const formData = useCompanyDetailsFormData({ data: user, onSubmit: execute });
+
   useEffect(() => {
     if (!value) return;
 
@@ -23,21 +26,13 @@ export default function CompanyDetailsFormContainer() {
     } else {
       setSuccess('Company details updated successfuly');
     }
-  }, [value, user, dispatch, router]);
+  }, [value, user]);
 
   if (!user) {
     return null;
   }
 
   const companyDetails = user.companyDetails ?? {};
-  const initialValues = {
-    name: companyDetails.name ?? '',
-    address: companyDetails.address ?? '',
-    iban: companyDetails.iban ?? '',
-    vatNumber: companyDetails.vatNumber ?? '',
-    regNumber: companyDetails.regNumber ?? '',
-    swift: companyDetails.swift ?? '',
-  };
   const infoMessage = !Object.keys(companyDetails).length
     ? 'You need to setup company info before you can proceed'
     : '';
@@ -49,7 +44,7 @@ export default function CompanyDetailsFormContainer() {
       success={success}
       info={infoMessage}
     >
-      <CompanyDetailsForm onSubmit={execute} initialValues={initialValues} />
+      <FormContainer formData={formData} />
     </FormPage>
   );
 }

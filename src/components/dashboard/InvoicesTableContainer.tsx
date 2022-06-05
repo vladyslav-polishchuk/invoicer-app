@@ -36,10 +36,10 @@ export default function ClientsTableContainer() {
         new Date(row.invoice.date).toDateString(),
     },
     {
-      field: 'project',
+      field: 'projectCode',
       headerName: 'Project',
       minWidth: 70,
-      valueGetter: ({ row }: GridValueGetterParams) => '',
+      valueGetter: ({ row }: GridValueGetterParams) => row.invoice.projectCode,
     },
     {
       field: 'price',

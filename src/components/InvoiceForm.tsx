@@ -20,27 +20,41 @@ const fields = [
     label: 'Invoice Number',
     propName: 'invoice_number',
   },
+  {
+    fieldName: 'invoice-project-code',
+    label: 'Project Code',
+    propName: 'projectCode',
+  },
 ];
+const requiredErrorText = 'This field is required';
 const validationSchema = object({
-  date: string().required(),
-  dueDate: string().required(),
-  invoice_number: string().required(),
-  client_id: object().required(),
+  date: string().required(requiredErrorText),
+  dueDate: string().required(requiredErrorText),
+  invoice_number: string().required(requiredErrorText),
+  projectCode: string().min(3),
+  client_id: object().required(requiredErrorText),
 });
 
-export default function InvoiceForm({ invoice, clientNames }) {
+export default function InvoiceForm({ invoice, clientNames, onSubmit }) {
   const formik = useFormik({
     initialValues: {
-      date: invoice?.date,
-      dueDate: invoice?.dueDate,
-      invoice_number: invoice?.invoice_number,
-      client_id: clientNames?.find(
-        (option) => invoice?.client_id === option.value
-      ),
+      id: invoice?.id,
+      date: invoice?.date ?? '',
+      dueDate: invoice?.dueDate ?? '',
+      invoice_number: invoice?.invoice_number ?? '',
+      projectCode: invoice?.projectCode ?? '',
+      client_id:
+        clientNames?.find((option) => invoice?.client_id === option.value) ??
+        null,
     },
     validationSchema,
     onSubmit: (props) => {
       console.log(props);
+      onSubmit({
+        ...props,
+        client_id: props.client_id.value,
+        value: 100,
+      });
     },
   });
 
@@ -62,7 +76,7 @@ export default function InvoiceForm({ invoice, clientNames }) {
       <AutocompleteField
         options={clientNames}
         fieldName={'invoice_company_id'}
-        label={'Invoice Client 222'}
+        label={'Invoice Client'}
         {...formik.getFieldProps('client_id')}
       />
     </Form>

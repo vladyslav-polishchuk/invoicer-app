@@ -11,9 +11,8 @@ type AutocompleteFieldProps = FormFieldProps & {
 
 export default function AutocompleteField(props: AutocompleteFieldProps) {
   const { setFieldValue } = useFormikContext();
-  const { options, fieldName, label } = props;
+  const { options, ...rest } = props;
   const [value, setValue] = useState(props.value);
-  const [inputValue, setInputValue] = useState('');
 
   return (
     <Autocomplete
@@ -22,15 +21,11 @@ export default function AutocompleteField(props: AutocompleteFieldProps) {
         setValue(newValue);
         setFieldValue(props.name, newValue);
       }}
-      inputValue={inputValue}
-      onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
       isOptionEqualToValue={(option: Option, value: Option) =>
         option.value === value.value
       }
       options={options}
-      renderInput={(params) => (
-        <FormField {...params} fieldName={fieldName} label={label} />
-      )}
+      renderInput={(params) => <FormField {...params} {...rest} />}
     />
   );
 }

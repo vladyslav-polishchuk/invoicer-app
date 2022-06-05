@@ -23,6 +23,7 @@ export interface Invoice {
   id: string;
   invoice_number: string;
   value: number;
+  projectCode: string;
 }
 
 export interface UserResponse {

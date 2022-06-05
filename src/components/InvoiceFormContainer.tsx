@@ -12,7 +12,7 @@ export default function InvoiceFormContainer({
   invoiceId?: string;
 }) {
   const [success, setSuccess] = useState<string | null>(null);
-  const formAction = invoiceId ? api.updateClient : api.createClient;
+  const formAction = invoiceId ? api.updateInvoice : api.createInvoice;
   const {
     execute: onSubmit,
     error: submitError,
@@ -30,10 +30,11 @@ export default function InvoiceFormContainer({
   } = useAsync(api.getClientNames);
 
   useEffect(() => {
-    if (!invoiceId) return;
-
-    getInvoice(invoiceId);
     getClientNames(undefined);
+
+    if (invoiceId) {
+      getInvoice(invoiceId);
+    }
   }, []);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ export default function InvoiceFormContainer({
     }
   }, [submittedInvoice]);
 
-  if (invoiceId && (!invoiceResponse || !clientNamesResponse)) {
+  if (!clientNamesResponse || (invoiceId && !invoiceResponse)) {
     return <Spinner />;
   }
 
@@ -67,6 +68,7 @@ export default function InvoiceFormContainer({
       <InvoiceForm
         invoice={invoiceResponse?.invoice}
         clientNames={clientNames}
+        onSubmit={onSubmit}
       />
     </FormPage>
   );

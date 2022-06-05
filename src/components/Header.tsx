@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import api from '../api';
 import useScreenSize from '../hooks/useScreenSize';
-import type { UserResponse } from '../api/api';
+import type { UserResponse } from '../api/types';
 
 interface HeaderProps {
   userInfo: UserResponse | null;

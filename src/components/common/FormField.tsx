@@ -3,13 +3,10 @@ import {
   type FormHelperTextProps,
   type TextFieldProps,
 } from '@mui/material';
+import { useFormikContext } from 'formik';
 
 export type FormFieldProps = TextFieldProps & {
   fieldName?: string;
-  // any used as a workaround because formik does not export type for this object
-  // should be updated when corresponding issue is resolved
-  // https://github.com/jaredpalmer/formik/issues/2924
-  formik: any;
 };
 
 const getFormMetadataValue = (
@@ -26,9 +23,9 @@ const getFormMetadataValue = (
 };
 
 export default function FormField(props: FormFieldProps) {
-  const { fieldName, formik, ...fieldProps } = props;
+  const { fieldName, ...fieldProps } = props;
   const name = props.name;
-  const { touched, errors } = formik;
+  const { touched, errors } = useFormikContext();
   const errorMessage =
     name &&
     getFormMetadataValue(name, touched) &&
@@ -37,8 +34,10 @@ export default function FormField(props: FormFieldProps) {
   return (
     <TextField
       fullWidth
+      {...fieldProps}
       inputProps={{
         'data-test': fieldName ?? name,
+        ...fieldProps?.inputProps,
       }}
       FormHelperTextProps={
         {
@@ -47,7 +46,6 @@ export default function FormField(props: FormFieldProps) {
       }
       error={Boolean(errorMessage)}
       helperText={errorMessage}
-      {...fieldProps}
     />
   );
 }

@@ -32,28 +32,21 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
       submitText="Get started"
       submitTestAttribute="submit-sign-up"
     >
-      <FormField
-        autoComplete="name"
-        label="Name"
-        {...getFieldProps('name')}
-        formik={formik}
-      />
+      <FormField autoComplete="name" label="Name" {...getFieldProps('name')} />
 
       <FormField
         autoComplete="username"
         type="email"
         label="Email"
         {...getFieldProps('email')}
-        formik={formik}
       />
 
-      <PasswordField {...getFieldProps('password')} formik={formik} />
+      <PasswordField {...getFieldProps('password')} />
 
       <PasswordField
         fieldName="confirm-password"
         label="Confirm password"
         {...getFieldProps('confirmPassword')}
-        formik={formik}
       />
     </Form>
   );

@@ -1,8 +1,8 @@
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
 import { fieldValidators } from '../../common/formValidation';
-import type { Client } from '../../api/api';
 import type { FormValidationProps } from './common';
+import type { Client } from '../../api/types';
 
 interface UseClientFormDataProps {
   data: {

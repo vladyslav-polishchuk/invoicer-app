@@ -1,54 +1,17 @@
+import type {
+  Client,
+  ClientNamesResponce,
+  ClientsResponse,
+  CompanyDetails,
+  Invoice,
+  InvoicesResponse,
+  UserResponse,
+} from './types';
+
 interface RequestParams {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
   body?: any;
   headers?: any;
-}
-
-export interface UserResponse {
-  name: string;
-  email: string;
-  token: string;
-  companyDetails: CompanyDetails;
-}
-
-export interface Client {
-  companyDetails: CompanyDetails;
-  email: string;
-  id: string;
-  invoicesCount: number;
-  name: string;
-  totalBilled: number;
-}
-
-export interface InvoiceResponse {
-  client_id: string;
-  date: string;
-  dueDate: string;
-  id: string;
-  invoice_number: string;
-  value: number;
-}
-
-export interface ClientsResponse {
-  clients: Array<Client>;
-  total: number;
-}
-
-export interface InvoicesResponse {
-  invoices: Array<{
-    client: Client;
-    invoice: InvoiceResponse;
-  }>;
-  total: number;
-}
-
-export interface CompanyDetails {
-  name: string;
-  address: string;
-  vatNumber: string;
-  regNumber: string;
-  iban: string;
-  swift: string;
 }
 
 export default class API {
@@ -162,6 +125,30 @@ export default class API {
 
   updateClient = async (params: Partial<Client>) => {
     return await this.sendRequest('clients', {
+      method: 'PUT',
+      body: JSON.stringify(params),
+    });
+  };
+
+  getClientNames = async () => {
+    return await this.sendRequest<ClientNamesResponce>(`clients/names`);
+  };
+
+  getIncoice = async (invoiceId: string) => {
+    return await this.sendRequest<{ success: boolean; invoice: Invoice }>(
+      `invoices/${invoiceId}`
+    );
+  };
+
+  createInvoice = async (params: Partial<Invoice>) => {
+    return await this.sendRequest('invoices', {
+      method: 'POST',
+      body: JSON.stringify(params),
+    });
+  };
+
+  updateInvoice = async (params: Partial<Invoice>) => {
+    return await this.sendRequest('invoices', {
       method: 'PUT',
       body: JSON.stringify(params),
     });

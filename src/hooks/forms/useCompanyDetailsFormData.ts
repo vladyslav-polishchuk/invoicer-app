@@ -1,7 +1,7 @@
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
-import type { UserResponse } from '../../api/api';
 import type { FormValidationProps } from './common';
+import type { UserResponse } from '../../api/types';
 
 interface UseCompanyDetailsFormDataProps {
   data: UserResponse | null;

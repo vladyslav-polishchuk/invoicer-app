@@ -1,5 +1,5 @@
 import { createAction, createReducer, configureStore } from '@reduxjs/toolkit';
-import type { UserResponse } from '../api/api';
+import type { UserResponse } from '../api/types';
 
 export interface InvoiceAppState {
   user: null | UserResponse;

@@ -26,10 +26,9 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
         type="email"
         label="Email"
         {...getFieldProps('email')}
-        formik={formik}
       />
 
-      <PasswordField {...getFieldProps('password')} formik={formik} />
+      <PasswordField {...getFieldProps('password')} />
     </Form>
   );
 }

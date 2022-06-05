@@ -24,7 +24,6 @@ export default function FormContainer({ formData }: FormContainerProps) {
           inputProps={{
             'data-test': inputName ? inputName : fieldName,
           }}
-          formik={formik}
         />
       ))}
     </Form>

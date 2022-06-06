@@ -15,12 +15,11 @@ interface DashboardTableProps {
   entityName: string;
   columns: GridColumns;
   getRowId?: (row: Record<string, unknown>) => string;
-  onRowDoubleClick: (param: GridRowParams) => void;
+  onRowClick: (param: GridRowParams) => void;
 }
 
 export default function DashboardTable(props: DashboardTableProps) {
-  const { data, tableName, entityName, columns, getRowId, onRowDoubleClick } =
-    props;
+  const { data, tableName, entityName, columns, getRowId, onRowClick } = props;
   const getGridRowId = getRowId ?? ((row) => row.id as string);
   const Row = (props: GridRowProps) => (
     <GridRow
@@ -43,7 +42,7 @@ export default function DashboardTable(props: DashboardTableProps) {
           hideFooter
           disableColumnMenu
           density="compact"
-          onRowDoubleClick={onRowDoubleClick}
+          onRowClick={onRowClick}
         />
       </Grid>
     </Grid>

@@ -27,7 +27,7 @@ interface DashboardTableProps {
   entityName: string;
   columns: GridColumns;
   getRowId?: (row: Record<string, unknown>) => string;
-  onRowDoubleClick: (param: GridRowParams) => void;
+  onRowClick: (param: GridRowParams) => void;
 }
 
 export default function DashboardTableContainer(props: DashboardTableProps) {
@@ -40,7 +40,7 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
     onCreateClick,
     onViewAllClick,
     fetchMethod,
-    onRowDoubleClick,
+    onRowClick,
   } = props;
   const { execute, value, error } = useAsync(fetchMethod);
   const { isMobile } = useScreenSize();
@@ -76,7 +76,7 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
       tableName={tableName}
       entityName={entityName}
       getRowId={getRowId}
-      onRowDoubleClick={onRowDoubleClick}
+      onRowClick={onRowClick}
     />
   ) : data ? (
     emptyPlaceholder

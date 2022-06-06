@@ -53,6 +53,7 @@ export default function ClientFormContainer({
       title="Client info"
       error={getClientError ?? submitError}
       success={success}
+      successTestAttribute="form-success"
     >
       <FormContainer formData={formData} />
     </FormPage>

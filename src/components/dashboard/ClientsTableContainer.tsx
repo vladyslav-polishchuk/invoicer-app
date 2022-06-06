@@ -46,7 +46,7 @@ export default function ClientsTableContainer() {
       tableName="clients"
       entityName="client"
       columns={columns}
-      onRowDoubleClick={({ id }) => editClient(id)}
+      onRowClick={({ id }) => editClient(id)}
     />
   );
 }

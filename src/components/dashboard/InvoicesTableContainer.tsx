@@ -73,7 +73,7 @@ export default function ClientsTableContainer() {
       getRowId={({ invoice }: Record<string, unknown>) =>
         (invoice as Record<string, string>).id
       }
-      onRowDoubleClick={({ id }) => editInvoice(id)}
+      onRowClick={({ id }) => editInvoice(id)}
     />
   );
 }

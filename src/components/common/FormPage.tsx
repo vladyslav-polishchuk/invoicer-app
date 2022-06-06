@@ -7,6 +7,7 @@ interface FormPageProps {
   title: string;
   error?: string | null;
   success?: string | null;
+  successTestAttribute?: string;
   info?: string | null;
   children: ReactNode;
 }
@@ -16,6 +17,7 @@ export default function FormPage({
   title,
   error,
   success,
+  successTestAttribute,
   info,
 }: FormPageProps) {
   return (
@@ -50,7 +52,11 @@ export default function FormPage({
           )}
 
           {success && (
-            <Alert data-test="success-message" variant="filled" sx={{ mb: 3 }}>
+            <Alert
+              data-test={successTestAttribute ?? 'success-message'}
+              variant="filled"
+              sx={{ mb: 3 }}
+            >
               {success}
             </Alert>
           )}

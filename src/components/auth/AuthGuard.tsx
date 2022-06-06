@@ -8,7 +8,7 @@ export const AuthGuard = (props: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (user && !Object.keys(user.companyDetails).length) {
+    if (user && !Object.keys(user.companyDetails ?? {}).length) {
       router.push('/company-details');
     }
   }, [user]);

@@ -2,6 +2,7 @@ import BackgroundImage from '../../../images/background.jpeg';
 import { Alert, Typography, Container, Paper, Box } from '@mui/material';
 import Page from './Page';
 import type { ReactNode } from 'react';
+import useScreenSize from '../../hooks/useScreenSize';
 
 interface FormPageProps {
   title: string;
@@ -20,6 +21,9 @@ export default function FormPage({
   successTestAttribute,
   info,
 }: FormPageProps) {
+  const { isMobile } = useScreenSize();
+  const padding = isMobile ? 3 : 4;
+
   return (
     <Page title={title}>
       <Container
@@ -30,12 +34,10 @@ export default function FormPage({
           flexDirection: 'column',
           justifyContent: 'center',
           zIndex: 1,
-          padding: 4,
+          padding,
         }}
       >
-        <Paper
-          sx={{ padding: 4, boxShadow: `10px 10px 10px rgb(0 0 0 / 60%)` }}
-        >
+        <Paper sx={{ padding, boxShadow: `10px 10px 10px rgb(0 0 0 / 60%)` }}>
           <Typography variant="h4" gutterBottom sx={{ mb: 4 }} align="center">
             {title}
           </Typography>

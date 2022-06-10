@@ -10,8 +10,8 @@ import type {
 
 interface RequestParams {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
-  body?: any;
-  headers?: any;
+  body?: string;
+  headers?: Record<string, string>;
 }
 
 export default class API {

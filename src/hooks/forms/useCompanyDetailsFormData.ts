@@ -1,12 +1,11 @@
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
-import type { FormValidationProps } from './common';
+import type { FormDataProps, FormProps } from './common';
 import type { UserResponse } from '../../api/types';
 
-interface UseCompanyDetailsFormDataProps {
+type UseCompanyDetailsFormDataProps = FormDataProps & {
   data: UserResponse | null;
-  onSubmit: any;
-}
+};
 
 const submitTestAttribute = 'submit-company-details';
 const submitText = 'Get started';
@@ -53,7 +52,7 @@ export const validationSchema = object({
 
 export default function UseCompanyDetailsFormData(
   props: UseCompanyDetailsFormDataProps
-): FormValidationProps {
+): FormProps {
   const { data: user, onSubmit } = props;
   const companyDetails = user?.companyDetails;
   const initialValues = {

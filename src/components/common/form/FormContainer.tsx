@@ -1,12 +1,12 @@
 import Form from './Form';
 import TextField from './fields/TextField';
 import PasswordField from './fields/PasswordField';
-import AutocompleteField, { type Option } from './fields/AutocompleteField';
-import type { FormValidationProps } from '../../../hooks/forms/common';
+import AutocompleteField from './fields/AutocompleteField';
+import type { FormProps } from '../../../hooks/forms/common';
 import type { ReactNode } from 'react';
 
 interface FormContainerProps {
-  formData: FormValidationProps;
+  formData: FormProps;
   children?: ReactNode;
 }
 

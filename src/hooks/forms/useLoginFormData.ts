@@ -1,10 +1,6 @@
 import { object } from 'yup';
 import { useFormik } from 'formik';
-import { email, FormValidationProps, password } from './common';
-
-interface UseLoginFormDataProps {
-  onSubmit: (params: { email: string; password: string }) => Promise<void>;
-}
+import { email, password, FormDataProps, FormProps } from './common';
 
 const submitTestAttribute = 'submit-login';
 const fields = [
@@ -23,10 +19,9 @@ const fields = [
 ];
 const validationSchema = object({ email, password });
 
-export default function useLoginFormData(
-  props: UseLoginFormDataProps
-): FormValidationProps {
-  const { onSubmit } = props;
+export default function useLoginFormData({
+  onSubmit,
+}: FormDataProps): FormProps {
   const formik = useFormik({
     initialValues: {
       email: '',

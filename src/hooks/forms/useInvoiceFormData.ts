@@ -1,9 +1,9 @@
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
-import type { FormValidationProps } from './common';
+import type { FormDataProps, FormProps } from './common';
 import type { Invoice } from '../../api/types';
 
-interface UseInvoiceFormDataProps {
+type UseInvoiceFormDataProps = FormDataProps & {
   data: {
     success: boolean;
     invoice: Invoice;
@@ -12,8 +12,7 @@ interface UseInvoiceFormDataProps {
     value: string;
     label: string;
   }>;
-  onSubmit: any;
-}
+};
 
 const submitTestAttribute = 'submit-invoice';
 const requiredErrorText = 'This field is required';
@@ -27,7 +26,7 @@ const validationSchema = object({
 
 export default function useInvoiceFormData(
   props: UseInvoiceFormDataProps
-): FormValidationProps {
+): FormProps {
   const { data, clientNames, onSubmit } = props;
   const invoice = data?.invoice;
   const clientId = clientNames?.find(

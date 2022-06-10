@@ -1,15 +1,14 @@
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
-import { name, email, type FormValidationProps } from './common';
+import { name, email, type FormProps, type FormDataProps } from './common';
 import type { Client } from '../../api/types';
 
-interface UseClientFormDataProps {
+type UseClientFormDataProps = FormDataProps & {
   data: {
     success: boolean;
     client: Client;
   } | null;
-  onSubmit: any;
-}
+};
 
 const submitTestAttribute = 'submit-client';
 const fields = [
@@ -69,7 +68,7 @@ const validationSchema = object({
 
 export default function useClientFormData(
   props: UseClientFormDataProps
-): FormValidationProps {
+): FormProps {
   const { data, onSubmit } = props;
   const client = data?.client;
   const companyDetails = client?.companyDetails;

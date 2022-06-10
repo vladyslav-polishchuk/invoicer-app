@@ -6,6 +6,8 @@ import Spinner from './common/Spinner';
 import InvoiceItemsContainer from './InvoiceItemsContainer';
 import FormContainer from './common/form/FormContainer';
 import useInvoiceFormData from '../hooks/forms/useInvoiceFormData';
+import type { Invoice } from '../api/types';
+import type { Option } from './common/form/fields/AutocompleteField';
 
 export default function InvoiceFormContainer({
   invoiceId,
@@ -34,16 +36,14 @@ export default function InvoiceFormContainer({
       value: id,
       label: companyName,
     })) ?? [];
-  const onSubmit = (props: any) => {
-    const items = props.meta.items;
-    const value = items.reduce(
-      (acc: any, item: any) => (acc += parseFloat(item.value)),
-      0
-    );
+  const onSubmit = (invoice: Invoice) => {
+    const items = invoice.meta?.items ?? [];
+    const value = items.reduce((acc, item) => acc + parseFloat(item.value), 0);
+    const client = invoice.client_id as unknown as Option;
 
-    submitForm({
-      ...props,
-      client_id: props.client_id.value,
+    return submitForm({
+      ...invoice,
+      client_id: client.value,
       value,
     });
   };
@@ -83,7 +83,7 @@ export default function InvoiceFormContainer({
       success={success}
     >
       <FormContainer formData={formData}>
-        <InvoiceItemsContainer meta={invoiceResponse?.invoice?.meta} />
+        <InvoiceItemsContainer invoice={invoiceResponse?.invoice} />
       </FormContainer>
     </FormPage>
   );

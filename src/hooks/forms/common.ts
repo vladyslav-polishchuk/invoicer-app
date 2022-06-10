@@ -1,12 +1,11 @@
 import { string } from 'yup';
 import type { FieldInputProps } from 'formik';
 
-interface Formik extends Record<string, unknown> {
-  getFieldProps: (fieldName: string) => FieldInputProps<{}>;
-  resetForm: () => void;
+export interface FormDataProps {
+  onSubmit: (params: any) => Promise<void>;
 }
 
-export interface FormValidationProps {
+export interface FormProps {
   fields: {
     fieldName: string;
     label: string;
@@ -16,7 +15,10 @@ export interface FormValidationProps {
   }[];
   submitTestAttribute: string;
   submitText?: string;
-  formik: Formik;
+  formik: Record<string, unknown> & {
+    getFieldProps: (fieldName: string) => FieldInputProps<{}>;
+    resetForm: () => void;
+  };
 }
 
 const passwordLengthError =

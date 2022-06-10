@@ -3,7 +3,7 @@ import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import TextField, { type TextFieldProps } from './TextField';
 
-export type Option = { label: string; value: unknown };
+export type Option = { label: string; value: string };
 type AutocompleteFieldProps = TextFieldProps & {
   name: string;
   value: Option;

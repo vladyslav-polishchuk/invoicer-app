@@ -25,7 +25,7 @@ export interface Invoice {
   value: number;
   projectCode: string;
   meta?: {
-    items: Array<{ value: number; description: string }>;
+    items: Array<{ value: string; description: string }>;
   };
 }
 

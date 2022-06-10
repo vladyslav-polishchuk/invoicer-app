@@ -3,15 +3,21 @@ import { Box, Button, IconButton, Stack } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import TextField from './common/form/fields/TextField';
+import type { Invoice } from '../api/types';
 
-export default function InvoiceItemsContainer({ meta }: any) {
+interface InvocieItemsContainerProps {
+  invoice?: Invoice;
+}
+
+export default function InvoiceItemsContainer({
+  invoice,
+}: InvocieItemsContainerProps) {
   const formik = useFormikContext();
-  const [invoiceItems, setInvoiceItems] = useState(meta?.items ?? []);
+  const [invoiceItems, setInvoiceItems] = useState(invoice?.meta?.items ?? []);
   const addItemClick = () => {
-    setInvoiceItems([...invoiceItems, {}]);
+    setInvoiceItems([...invoiceItems, { value: '', description: '' }]);
   };
-
-  const invoiceItemNodes = invoiceItems.map((invoiceItem: any, i: number) => {
+  const invoiceItemNodes = invoiceItems.map((invoiceItem, i) => {
     return (
       <Box
         key={invoiceItem.description}

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import api from '../api';
-import FormPage from './common/FormPage';
+import FormPage from './common/form/FormPage';
 import useAsync from '../hooks/useAsync';
 import Spinner from './common/Spinner';
-import InvoiceForm from './InvoiceForm';
-import { object, string } from 'yup';
+import InvoiceItemsContainer from './InvoiceItemsContainer';
+import FormContainer from './common/form/FormContainer';
+import useInvoiceFormData from '../hooks/forms/useInvoiceFormData';
 
 export default function InvoiceFormContainer({
   invoiceId,
@@ -14,7 +15,7 @@ export default function InvoiceFormContainer({
   const [success, setSuccess] = useState<string | null>(null);
   const formAction = invoiceId ? api.updateInvoice : api.createInvoice;
   const {
-    execute: onSubmit,
+    execute: submitForm,
     error: submitError,
     value: submittedInvoice,
   } = useAsync(formAction);
@@ -28,6 +29,29 @@ export default function InvoiceFormContainer({
     error: getClientNamesError,
     value: clientNamesResponse,
   } = useAsync(api.getClientNames);
+  const clientNames =
+    clientNamesResponse?.clients?.map(({ id, companyName }) => ({
+      value: id,
+      label: companyName,
+    })) ?? [];
+  const onSubmit = (props: any) => {
+    const items = props.meta.items;
+    const value = items.reduce(
+      (acc: any, item: any) => (acc += parseFloat(item.value)),
+      0
+    );
+
+    submitForm({
+      ...props,
+      client_id: props.client_id.value,
+      value,
+    });
+  };
+  const formData = useInvoiceFormData({
+    data: invoiceResponse,
+    onSubmit,
+    clientNames,
+  });
 
   useEffect(() => {
     getClientNames(undefined);
@@ -44,7 +68,7 @@ export default function InvoiceFormContainer({
       setSuccess('Invoice successfuly updated');
     } else {
       setSuccess('Invoice successfuly created');
-      //formData.formik.resetForm();
+      formData.formik.resetForm();
     }
   }, [submittedInvoice]);
 
@@ -52,24 +76,15 @@ export default function InvoiceFormContainer({
     return <Spinner />;
   }
 
-  const clientNames = clientNamesResponse?.clients?.map(
-    ({ id, companyName }) => ({
-      value: id,
-      label: companyName,
-    })
-  );
-
   return (
     <FormPage
       title="Invoice info"
       error={getInvoiceError ?? submitError ?? getClientNamesError}
       success={success}
     >
-      <InvoiceForm
-        invoice={invoiceResponse?.invoice}
-        clientNames={clientNames}
-        onSubmit={onSubmit}
-      />
+      <FormContainer formData={formData}>
+        <InvoiceItemsContainer meta={invoiceResponse?.invoice?.meta} />
+      </FormContainer>
     </FormPage>
   );
 }

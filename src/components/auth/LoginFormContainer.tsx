@@ -1,19 +1,20 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import api from '../../api';
-import FormPage from '../common/FormPage';
+import FormPage from '../common/form/FormPage';
 import AuthRedirect from './AuthRedirect';
 import useAsync from '../../hooks/useAsync';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../store';
 import { useAuthContext } from './AuthContext';
-import LoginForm from './LoginForm';
+import FormContainer from '../common/form/FormContainer';
+import useLoginFormData from '../../hooks/forms/useLoginFormData';
 
 export default function LoginFormContainer() {
   const { setAuthToken } = useAuthContext();
   const router = useRouter();
   const dispatch = useDispatch();
-  const { execute, error, value } = useAsync(api.login);
+  const { execute: onSubmit, error, value } = useAsync(api.login);
 
   useEffect(() => {
     if (value) {
@@ -22,6 +23,7 @@ export default function LoginFormContainer() {
     }
   }, [value]);
   const successMessage = router.query.successMessage ?? '';
+  const formData = useLoginFormData({ onSubmit });
 
   return (
     <FormPage
@@ -31,7 +33,7 @@ export default function LoginFormContainer() {
         Array.isArray(successMessage) ? successMessage[0] : successMessage
       }
     >
-      <LoginForm onSubmit={execute} />
+      <FormContainer formData={formData} />
 
       <AuthRedirect
         title="No account?"

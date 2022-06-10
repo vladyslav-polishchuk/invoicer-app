@@ -1,7 +1,6 @@
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
-import { fieldValidators } from '../../common/formValidation';
-import type { FormValidationProps } from './common';
+import { name, email, type FormValidationProps } from './common';
 import type { Client } from '../../api/types';
 
 interface UseClientFormDataProps {
@@ -56,8 +55,8 @@ const fields = [
   },
 ];
 const validationSchema = object({
-  email: fieldValidators.email,
-  name: fieldValidators.name.min(3),
+  email: email,
+  name: name.min(3),
   companyDetails: object({
     name: string().required(),
     address: string().required(),

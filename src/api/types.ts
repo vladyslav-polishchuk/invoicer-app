@@ -24,6 +24,9 @@ export interface Invoice {
   invoice_number: string;
   value: number;
   projectCode: string;
+  meta?: {
+    items: Array<{ value: number; description: string }>;
+  };
 }
 
 export interface UserResponse {

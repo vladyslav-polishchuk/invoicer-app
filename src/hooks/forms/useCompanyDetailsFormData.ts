@@ -27,8 +27,7 @@ const fields = [
     propName: 'vatNumber',
   },
   {
-    fieldName: 'company-reg',
-    inputName: 'company-reg-number',
+    fieldName: 'company-reg-number',
     label: 'Registration number',
     propName: 'regNumber',
   },

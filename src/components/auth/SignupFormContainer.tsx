@@ -1,14 +1,16 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import api from '../../api';
-import FormPage from '../common/FormPage';
+import FormPage from '../common/form/FormPage';
 import AuthRedirect from './AuthRedirect';
 import useAsync from '../../hooks/useAsync';
-import SignupForm from './SignupForm';
+import useSignupFormData from '../../hooks/forms/useSignupFormData';
+import FormContainer from '../common/form/FormContainer';
 
 export default function SignupFormContainer() {
   const router = useRouter();
-  const { execute, error, value } = useAsync(api.signup);
+  const { execute: onSubmit, error, value } = useAsync(api.signup);
+  const formData = useSignupFormData({ onSubmit });
 
   useEffect(() => {
     value &&
@@ -23,7 +25,7 @@ export default function SignupFormContainer() {
 
   return (
     <FormPage title="Sign-up" error={error}>
-      <SignupForm onSubmit={execute} />
+      <FormContainer formData={formData} />
 
       <AuthRedirect
         title="Already have an account?"

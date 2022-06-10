@@ -1,8 +1,8 @@
-import BackgroundImage from '../../../images/background.jpeg';
+import BackgroundImage from '../../../../images/background.jpeg';
 import { Alert, Typography, Container, Paper, Box } from '@mui/material';
-import Page from './Page';
+import Page from '../Page';
 import type { ReactNode } from 'react';
-import useScreenSize from '../../hooks/useScreenSize';
+import useScreenSize from '../../../hooks/useScreenSize';
 
 interface FormPageProps {
   title: string;

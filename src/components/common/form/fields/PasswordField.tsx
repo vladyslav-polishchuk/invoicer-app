@@ -1,9 +1,9 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment } from '@mui/material';
 import { useState } from 'react';
-import FormField, { type FormFieldProps } from '../common/FormField';
+import TextField, { type TextFieldProps } from './TextField';
 
-export default function PasswordField(props: FormFieldProps) {
+export default function PasswordField(props: TextFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const showPasswordButton = (
@@ -15,7 +15,7 @@ export default function PasswordField(props: FormFieldProps) {
   );
 
   return (
-    <FormField
+    <TextField
       autoComplete="current-password"
       type={showPassword ? 'text' : 'password'}
       label="Password"

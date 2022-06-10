@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import api from '../api';
-import FormPage from './common/FormPage';
+import FormPage from './common/form/FormPage';
 import useAsync from '../hooks/useAsync';
 import { InvoiceAppState, setUser } from '../store';
 import useCompanyDetailsFormData from '../hooks/forms/useCompanyDetailsFormData';
-import FormContainer from './common/FormContainer';
+import FormContainer from './common/form/FormContainer';
 
 export default function CompanyDetailsFormContainer() {
   const dispatch = useDispatch();

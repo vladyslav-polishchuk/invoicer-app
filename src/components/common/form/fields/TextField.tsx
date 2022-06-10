@@ -1,11 +1,11 @@
 import {
-  TextField,
+  TextField as MuiTextField,
   type FormHelperTextProps,
-  type TextFieldProps,
+  type TextFieldProps as MuiTextFieldProps,
 } from '@mui/material';
 import { useFormikContext } from 'formik';
 
-export type FormFieldProps = TextFieldProps & {
+export type TextFieldProps = MuiTextFieldProps & {
   fieldName?: string;
 };
 
@@ -22,7 +22,7 @@ const getFormMetadataValue = (
     }, object) as string;
 };
 
-export default function FormField(props: FormFieldProps) {
+export default function TextField(props: TextFieldProps) {
   const { fieldName, ...fieldProps } = props;
   const name = props.name;
   const { touched, errors } = useFormikContext();
@@ -32,7 +32,7 @@ export default function FormField(props: FormFieldProps) {
     getFormMetadataValue(name, errors);
 
   return (
-    <TextField
+    <MuiTextField
       fullWidth
       {...fieldProps}
       inputProps={{
@@ -42,7 +42,7 @@ export default function FormField(props: FormFieldProps) {
       FormHelperTextProps={
         {
           'data-test': `${fieldName ?? name}-error`,
-        } as Partial<FormHelperTextProps>
+        } as FormHelperTextProps
       }
       error={Boolean(errorMessage)}
       helperText={errorMessage}

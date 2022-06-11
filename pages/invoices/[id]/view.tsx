@@ -7,7 +7,7 @@ export default function Invoice() {
 
   return (
     <AuthGuard>
-      <InvoiceFormContainer invoiceId={id} />
+      <InvoiceFormContainer invoiceId={id} viewMode={true} />
     </AuthGuard>
   );
 }

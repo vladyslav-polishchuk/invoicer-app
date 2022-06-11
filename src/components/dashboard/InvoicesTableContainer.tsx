@@ -11,7 +11,13 @@ import type {
 
 export default function ClientsTableContainer() {
   const router = useRouter();
-  const editInvoice = (id: GridRowId) => router.push(`/invoices/${id}/view`);
+  const editInvoice = (id: GridRowId) => router.push(`/invoices/${id}/edit`);
+  const viewInvoice = (id: GridRowId) => router.push(`/invoices/${id}/view`);
+  const printInvoice = (id: GridRowId) =>
+    router.push({
+      pathname: `/invoices/${id}/view`,
+      query: { print: true },
+    });
   const columns = [
     {
       field: 'number',
@@ -54,8 +60,12 @@ export default function ClientsTableContainer() {
       width: 54,
       renderCell: ({ id }: GridRenderCellParams) => (
         <DropdownMenu>
-          <MenuItem>Print</MenuItem>
-          <MenuItem onClick={() => editInvoice(id)}>Edit</MenuItem>
+          <MenuItem onClick={() => printInvoice(id)} data-test="invoice-print">
+            Print
+          </MenuItem>
+          <MenuItem onClick={() => editInvoice(id)} data-test="invoice-edit">
+            Edit
+          </MenuItem>
         </DropdownMenu>
       ),
     },
@@ -73,7 +83,7 @@ export default function ClientsTableContainer() {
       getRowId={({ invoice }: Record<string, unknown>) =>
         (invoice as Record<string, string>).id
       }
-      onRowClick={({ id }) => editInvoice(id)}
+      onRowClick={({ id }) => viewInvoice(id)}
     />
   );
 }

@@ -4,6 +4,7 @@ import type {
   ClientsResponse,
   CompanyDetails,
   Invoice,
+  InvoiceResponse,
   InvoicesResponse,
   UserResponse,
 } from './types';
@@ -135,9 +136,7 @@ export default class API {
   };
 
   getIncoice = async (invoiceId: string) => {
-    return await this.sendRequest<{ success: boolean; invoice: Invoice }>(
-      `invoices/${invoiceId}`
-    );
+    return await this.sendRequest<InvoiceResponse>(`invoices/${invoiceId}`);
   };
 
   createInvoice = async (params: Partial<Invoice>) => {

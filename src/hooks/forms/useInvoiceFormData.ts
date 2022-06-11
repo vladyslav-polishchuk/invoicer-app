@@ -1,13 +1,10 @@
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
 import type { FormDataProps, FormProps } from './common';
-import type { Invoice } from '../../api/types';
+import type { InvoiceResponse } from '../../api/types';
 
 type UseInvoiceFormDataProps = FormDataProps & {
-  data: {
-    success: boolean;
-    invoice: Invoice;
-  } | null;
+  data?: InvoiceResponse | null;
   clientNames: Array<{
     value: string;
     label: string;
@@ -42,7 +39,6 @@ export default function useInvoiceFormData(
     meta: { items: invoice?.meta?.items ?? [] },
   };
   const formik = useFormik({
-    enableReinitialize: true,
     initialValues,
     validationSchema,
     onSubmit,

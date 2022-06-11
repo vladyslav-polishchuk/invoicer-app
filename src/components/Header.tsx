@@ -22,7 +22,7 @@ export default function Header({ userInfo }: HeaderProps) {
   const buttonSize = isMobile ? 'small' : 'medium';
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" sx={{ displayPrint: 'none' }}>
       <Container>
         <Toolbar variant="dense" sx={{ padding: 1 }} disableGutters>
           <Link href="/">

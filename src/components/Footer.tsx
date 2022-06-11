@@ -7,7 +7,10 @@ export default function Footer() {
   const padding = isMobile ? 1 : 2;
 
   return (
-    <Container sx={{ py: padding, mt: 'auto' }} component="footer">
+    <Container
+      sx={{ py: padding, mt: 'auto', displayPrint: 'none' }}
+      component="footer"
+    >
       <Typography
         variant={copyrightTextVariant}
         align="center"

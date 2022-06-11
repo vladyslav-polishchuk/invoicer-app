@@ -8,7 +8,7 @@ export default function InvoiceViewFormContainer({
   invoiceResponse,
 }: {
   invoiceId?: string;
-  invoiceResponse?: InvoiceResponse;
+  invoiceResponse?: InvoiceResponse | null;
 }) {
   const { print } = useRouterQuery();
   const [printTimeoutId, setPrintTimeoutId] = useState<number | null>(null);

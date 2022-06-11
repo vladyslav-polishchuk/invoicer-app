@@ -33,7 +33,7 @@ export default function useInvoiceFormData(
     ({ value }) => invoice?.client_id === value
   );
   const initialValues = {
-    id: invoice?.id ?? '',
+    id: invoice?.id,
     date: invoice?.date ?? '',
     dueDate: invoice?.dueDate ?? '',
     invoice_number: invoice?.invoice_number ?? '',

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import Head from 'next/head';
 import { ReactNode } from 'react';
-import BackgroundImage from './backgroundImage';
+import BackgroundImage from './BackgroundImage';
 
 interface PageProps {
   title: string;

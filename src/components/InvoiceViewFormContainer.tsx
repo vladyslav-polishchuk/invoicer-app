@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react';
-import FormPage from './common/form/FormPage';
+import {
+  Container,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from '@mui/material';
+import Page from './common/Page';
 import useRouterQuery from '../hooks/useRouterQuery';
-import { InvoiceResponse } from '../api/types';
+import type { Invoice } from '../api/types';
 
-export default function InvoiceViewFormContainer({
-  invoiceId,
-  invoiceResponse,
-}: {
-  invoiceId?: string;
-  invoiceResponse?: InvoiceResponse | null;
-}) {
+interface InvoiceViewFormProps {
+  invoice?: Invoice | null;
+}
+
+export default function InvoiceViewFormContainer(props: InvoiceViewFormProps) {
+  const { invoice } = props;
   const { print } = useRouterQuery();
   const [printTimeoutId, setPrintTimeoutId] = useState<number | null>(null);
 
@@ -28,9 +36,86 @@ export default function InvoiceViewFormContainer({
     setPrintTimeoutId(timeoutId as any as number);
   }, [print]);
 
+  const rows = [
+    ['Date', new Date(invoice?.date ?? '').toDateString(), 'invoice-date'],
+    [
+      'Due Date',
+      new Date(invoice?.dueDate ?? '').toDateString(),
+      'invoice-due-date',
+    ],
+    ['Number', invoice?.invoice_number, 'invoice-number'],
+    ['Project Code', invoice?.projectCode, 'invoice-project-code'],
+    ['Total Price', invoice?.value, 'invoice-total'],
+  ];
+
   return (
-    <FormPage title="Invoice info">
-      {invoiceResponse?.invoice?.invoice_number}
-    </FormPage>
+    <Page title="Invoice info">
+      <Container
+        maxWidth="sm"
+        sx={{
+          display: 'flex',
+          minHeight: '80vh',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+      >
+        <Paper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>General Invoice Info</TableCell>
+                <TableCell align="right"></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map(([label, value, dataTest]) => (
+                <TableRow
+                  key={label}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {label}
+                  </TableCell>
+                  <TableCell align="right" data-test={dataTest}>
+                    {value}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+
+        <Paper sx={{ mt: 2 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Invoice Items</TableCell>
+                <TableCell align="right"></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {invoice?.meta?.items?.map(({ description, value }, i) => (
+                <TableRow
+                  key={description}
+                  data-test={`invoice-item-${i + 1}`}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    data-test="invoice-item-description"
+                  >
+                    {description}
+                  </TableCell>
+                  <TableCell align="right" data-test="invoice-item-value">
+                    {value}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      </Container>
+    </Page>
   );
 }

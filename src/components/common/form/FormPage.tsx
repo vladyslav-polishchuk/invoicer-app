@@ -1,5 +1,4 @@
-import BackgroundImage from '../../../../images/background.jpeg';
-import { Alert, Typography, Container, Paper, Box } from '@mui/material';
+import { Alert, Typography, Container, Paper } from '@mui/material';
 import Page from '../Page';
 import type { ReactNode } from 'react';
 import useScreenSize from '../../../hooks/useScreenSize';
@@ -33,7 +32,6 @@ export default function FormPage({
           minHeight: '90vh',
           flexDirection: 'column',
           justifyContent: 'center',
-          zIndex: 1,
           padding,
         }}
       >
@@ -77,18 +75,6 @@ export default function FormPage({
           {children}
         </Paper>
       </Container>
-      <Box
-        sx={{
-          position: 'fixed',
-          height: '100%',
-          width: '100%',
-          top: 0,
-          left: 0,
-          backgroundImage: `url(${BackgroundImage.src})`,
-          backgroundColor: '#efe0cb',
-          filter: 'blur(4px)',
-        }}
-      />
     </Page>
   );
 }

@@ -41,6 +41,11 @@ export interface ClientsResponse {
   total: number;
 }
 
+export interface ClientName {
+  id: string;
+  companyName: string;
+}
+
 export interface InvoicesResponse {
   invoices: Array<{
     client: Client;
@@ -56,5 +61,5 @@ export interface InvoiceResponse {
 
 export interface ClientNamesResponce {
   success: boolean;
-  clients: Array<{ id: string; companyName: string }>;
+  clients: Array<ClientName>;
 }

@@ -1,10 +1,10 @@
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
 import type { FormDataProps, FormProps } from './common';
-import type { InvoiceResponse } from '../../api/types';
+import type { Invoice } from '../../api/types';
 
 type UseInvoiceFormDataProps = FormDataProps & {
-  data?: InvoiceResponse | null;
+  data?: Invoice | null;
   clientNames: Array<{
     value: string;
     label: string;
@@ -24,8 +24,7 @@ const validationSchema = object({
 export default function useInvoiceFormData(
   props: UseInvoiceFormDataProps
 ): FormProps {
-  const { data, clientNames, onSubmit } = props;
-  const invoice = data?.invoice;
+  const { data: invoice, clientNames, onSubmit } = props;
   const clientId = clientNames?.find(
     ({ value }) => invoice?.client_id === value
   );

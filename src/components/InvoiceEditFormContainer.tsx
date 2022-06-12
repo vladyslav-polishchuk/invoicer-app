@@ -5,27 +5,21 @@ import useAsync from '../hooks/useAsync';
 import InvoiceItems from './InvoiceItems';
 import FormContainer from './common/form/FormContainer';
 import useInvoiceFormData from '../hooks/forms/useInvoiceFormData';
-import type {
-  ClientNamesResponce,
-  Invoice,
-  InvoiceResponse,
-} from '../api/types';
+import type { ClientName, Invoice } from '../api/types';
 import type { Option } from './common/form/fields/AutocompleteField';
 
 interface InvoiceEditFormProps {
-  invoiceId?: string;
-  invoiceResponse?: InvoiceResponse | null;
-  clientNamesResponse?: ClientNamesResponce;
+  invoice?: Invoice | null;
+  clientNames?: Array<ClientName>;
   error?: string | null;
 }
 
 export default function InvoiceEditFormContainer(props: InvoiceEditFormProps) {
-  const { invoiceId, invoiceResponse: data, clientNamesResponse } = props;
+  const { invoice: data, clientNames: clients } = props;
   const [success, setSuccess] = useState<string | null>(null);
-  const formAction = invoiceId ? api.updateInvoice : api.createInvoice;
+  const formAction = data ? api.updateInvoice : api.createInvoice;
   const { execute, error, value } = useAsync(formAction);
-  const clients = clientNamesResponse?.clients ?? [];
-  const clientNames = clients.map(({ id, companyName }) => ({
+  const clientNames = (clients ?? []).map(({ id, companyName }) => ({
     value: id,
     label: companyName,
   }));

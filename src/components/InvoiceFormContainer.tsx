@@ -36,16 +36,14 @@ export default function InvoiceFormContainer(props: InoviceFormContainer) {
     return <Spinner />;
   }
 
+  const invoice = invoiceResponse?.invoice;
+  const clientNames = clientNamesResponse.clients;
   return viewMode ? (
-    <InvoiceViewFormContainer
-      invoiceId={invoiceId}
-      invoiceResponse={invoiceResponse}
-    />
+    <InvoiceViewFormContainer invoice={invoice} />
   ) : (
     <InvoiceEditFormContainer
-      invoiceId={invoiceId}
-      invoiceResponse={invoiceResponse}
-      clientNamesResponse={clientNamesResponse}
+      invoice={invoice}
+      clientNames={clientNames}
       error={error}
     />
   );

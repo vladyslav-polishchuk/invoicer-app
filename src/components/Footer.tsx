@@ -8,7 +8,7 @@ export default function Footer() {
 
   return (
     <Container
-      sx={{ py: padding, mt: 'auto', displayPrint: 'none' }}
+      sx={{ py: padding, mt: 'auto', displayPrint: 'none', zIndex: 1 }}
       component="footer"
     >
       <Typography

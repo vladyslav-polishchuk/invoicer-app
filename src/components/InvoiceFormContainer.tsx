@@ -4,6 +4,7 @@ import useAsync from '../hooks/useAsync';
 import Spinner from './common/Spinner';
 import InvoiceViewFormContainer from './InvoiceViewFormContainer';
 import InvoiceEditFormContainer from './InvoiceEditFormContainer';
+import { Alert, Container } from '@mui/material';
 
 interface InoviceFormContainer {
   invoiceId?: string;
@@ -30,7 +31,17 @@ export default function InvoiceFormContainer(props: InoviceFormContainer) {
     if (invoiceId) {
       getInvoice(invoiceId);
     }
-  }, []);
+  }, [invoiceId]);
+
+  if (error === 'Invoice not found') {
+    return (
+      <Container maxWidth="sm" sx={{ mt: 5 }}>
+        <Alert data-test="not-found-message" severity="error" variant="filled">
+          {error}
+        </Alert>
+      </Container>
+    );
+  }
 
   if (!clientNamesResponse || (invoiceId && !invoiceResponse)) {
     return <Spinner />;

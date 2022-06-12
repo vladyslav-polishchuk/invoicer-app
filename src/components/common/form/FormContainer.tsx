@@ -2,6 +2,7 @@ import Form from './Form';
 import TextField from './fields/TextField';
 import PasswordField from './fields/PasswordField';
 import AutocompleteField from './fields/AutocompleteField';
+import DatePickerField from './fields/DatePickerField';
 import type { FormProps } from '../../../hooks/forms/common';
 import type { ReactNode } from 'react';
 
@@ -35,6 +36,9 @@ export default function FormContainer({
           case 'autocomplete':
             // @ts-expect-error
             return <AutocompleteField {...fieldProps} />;
+          case 'date':
+            // @ts-expect-error
+            return <DatePickerField {...fieldProps} />;
           case 'password':
             return <PasswordField {...fieldProps} />;
           default:

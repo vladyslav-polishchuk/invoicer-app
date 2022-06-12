@@ -1,4 +1,4 @@
-import { object, string } from 'yup';
+import { number, object, string } from 'yup';
 import { useFormik } from 'formik';
 import type { FormDataProps, FormProps } from './common';
 import type { Invoice } from '../../api/types';
@@ -15,8 +15,8 @@ type UseInvoiceFormDataProps = FormDataProps & {
 const submitTestAttribute = 'submit-invoice';
 const requiredErrorText = 'This field is required';
 const validationSchema = object({
-  date: string().required(requiredErrorText),
-  dueDate: string().required(requiredErrorText),
+  date: number().required(requiredErrorText),
+  dueDate: number().required(requiredErrorText),
   invoice_number: string().required(requiredErrorText),
   projectCode: string().min(3),
   client_id: object().required(requiredErrorText),
@@ -48,11 +48,13 @@ export default function useInvoiceFormData(
       fieldName: 'invoice-date',
       label: 'Invoice Date',
       propName: 'date',
+      type: 'date',
     },
     {
       fieldName: 'invoice-due-date',
       label: 'Invoice Due Date',
       propName: 'dueDate',
+      type: 'date',
     },
     {
       fieldName: 'invoice-number',

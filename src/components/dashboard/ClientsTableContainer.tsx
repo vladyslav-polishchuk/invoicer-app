@@ -12,6 +12,8 @@ import type {
 export default function ClientsTableContainer() {
   const router = useRouter();
   const editClient = (id: GridRowId) => router.push(`/clients/${id}`);
+  const createInvoice = (id: GridRowId) =>
+    router.push(`/invoices/new?client_id=${id}`);
   const columns = [
     { field: 'name', headerName: 'Name', minWidth: 100, flex: 1 },
     {
@@ -30,7 +32,7 @@ export default function ClientsTableContainer() {
       width: 54,
       renderCell: ({ id }: GridRenderCellParams) => (
         <DropdownMenu>
-          <MenuItem>Add Invoice</MenuItem>
+          <MenuItem onClick={() => createInvoice(id)}>Add Invoice</MenuItem>
           <MenuItem onClick={() => editClient(id)}>Edit Client</MenuItem>
         </DropdownMenu>
       ),

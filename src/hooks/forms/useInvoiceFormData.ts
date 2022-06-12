@@ -2,6 +2,7 @@ import { object, string } from 'yup';
 import { useFormik } from 'formik';
 import type { FormDataProps, FormProps } from './common';
 import type { Invoice } from '../../api/types';
+import useRouterQuery from '../useRouterQuery';
 
 type UseInvoiceFormDataProps = FormDataProps & {
   data?: Invoice | null;
@@ -24,17 +25,17 @@ const validationSchema = object({
 export default function useInvoiceFormData(
   props: UseInvoiceFormDataProps
 ): FormProps {
+  const { client_id } = useRouterQuery();
   const { data: invoice, clientNames, onSubmit } = props;
-  const clientId = clientNames?.find(
-    ({ value }) => invoice?.client_id === value
-  );
+  const clientId = client_id ?? invoice?.client_id;
+  const clientMenuOption = clientNames?.find(({ value }) => clientId === value);
   const initialValues = {
     id: invoice?.id,
     date: invoice?.date ?? '',
     dueDate: invoice?.dueDate ?? '',
     invoice_number: invoice?.invoice_number ?? '',
     projectCode: invoice?.projectCode ?? '',
-    client_id: clientId ?? null,
+    client_id: clientMenuOption ?? null,
     meta: { items: invoice?.meta?.items ?? [] },
   };
   const formik = useFormik({

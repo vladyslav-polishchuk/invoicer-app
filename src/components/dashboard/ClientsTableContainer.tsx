@@ -1,6 +1,6 @@
 import api from '../../api';
 import { useRouter } from 'next/router';
-import DashboardTableContainer from './DashboardTableContainer';
+import GenericTableContainer from './GenericTableContainer';
 import DropdownMenu from '../common/DropdownMenu';
 import { MenuItem } from '@mui/material';
 import type {
@@ -40,7 +40,7 @@ export default function ClientsTableContainer() {
   ];
 
   return (
-    <DashboardTableContainer
+    <GenericTableContainer
       title="Latest Clients"
       fetchMethod={api.getClients}
       onViewAllClick={() => router.push('/clients')}

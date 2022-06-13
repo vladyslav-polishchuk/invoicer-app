@@ -20,6 +20,7 @@ interface FetchParams {
 
 interface DashboardTableProps {
   title: string;
+  sx?: Record<string, string>;
   fetchMethod: (params: FetchParams) => Promise<unknown>;
   onViewAllClick: () => void;
   onCreateClick: () => void;
@@ -30,7 +31,7 @@ interface DashboardTableProps {
   onRowClick: (param: GridRowParams) => void;
 }
 
-export default function DashboardTableContainer(props: DashboardTableProps) {
+export default function GenericTableContainer(props: DashboardTableProps) {
   const {
     title,
     columns,
@@ -67,11 +68,12 @@ export default function DashboardTableContainer(props: DashboardTableProps) {
   );
   const data =
     value && typeof value === 'object'
-      ? (value as Record<string, unknown[]>)?.[tableName]
+      ? (value as Record<string, Record<string, unknown>[]>)?.[tableName]
       : null;
   const content = data?.length ? (
     <DashboardTable
-      data={data as Record<string, unknown>[]}
+      sx={props.sx}
+      data={data}
       columns={columns}
       tableName={tableName}
       entityName={entityName}

@@ -1,6 +1,6 @@
 import api from '../../api';
 import { useRouter } from 'next/router';
-import DashboardTableContainer from './DashboardTableContainer';
+import GenericTableContainer from './GenericTableContainer';
 import DropdownMenu from '../common/DropdownMenu';
 import { MenuItem } from '@mui/material';
 import type {
@@ -9,7 +9,13 @@ import type {
   GridRenderCellParams,
 } from '@mui/x-data-grid';
 
-export default function InvoicesTableContainer() {
+interface InvoicesTableProps {
+  title?: string;
+  sx?: Record<string, string>;
+}
+
+export default function InvoicesTableContainer(props: InvoicesTableProps) {
+  const { title = 'Latest Invoices' } = props;
   const router = useRouter();
   const editInvoice = (id: GridRowId) => router.push(`/invoices/${id}/edit`);
   const viewInvoice = (id: GridRowId) => router.push(`/invoices/${id}/view`);
@@ -42,6 +48,13 @@ export default function InvoicesTableContainer() {
         new Date(row.invoice.date).toDateString(),
     },
     {
+      field: 'dueDate',
+      headerName: 'Due Date',
+      minWidth: 140,
+      valueGetter: ({ row }: GridValueGetterParams) =>
+        new Date(row.invoice.dueDate).toDateString(),
+    },
+    {
       field: 'projectCode',
       headerName: 'Project',
       minWidth: 70,
@@ -72,8 +85,9 @@ export default function InvoicesTableContainer() {
   ];
 
   return (
-    <DashboardTableContainer
-      title="Latest Invoices"
+    <GenericTableContainer
+      title={title}
+      sx={props.sx}
       fetchMethod={api.getInvoices}
       onViewAllClick={() => router.push('/invoices')}
       onCreateClick={() => router.push('/invoices/new')}

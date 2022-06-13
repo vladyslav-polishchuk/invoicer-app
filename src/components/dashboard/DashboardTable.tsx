@@ -7,6 +7,7 @@ import {
   GridRowProps,
   type GridRowParams,
   type GridColumns,
+  type GridSortModel,
 } from '@mui/x-data-grid';
 
 interface DashboardTableProps {
@@ -17,10 +18,21 @@ interface DashboardTableProps {
   columns: GridColumns;
   getRowId?: (row: Record<string, unknown>) => string;
   onRowClick: (param: GridRowParams) => void;
+  sortModel?: GridSortModel;
+  onSortModelChange?: (model: GridSortModel) => void;
 }
 
 export default function DashboardTable(props: DashboardTableProps) {
-  const { data, tableName, entityName, columns, getRowId, onRowClick } = props;
+  const {
+    data,
+    tableName,
+    entityName,
+    columns,
+    getRowId,
+    onRowClick,
+    onSortModelChange,
+    sortModel,
+  } = props;
   const getGridRowId = getRowId ?? ((row) => row.id as string);
   const Row = (props: GridRowProps) => (
     <GridRow
@@ -28,9 +40,17 @@ export default function DashboardTable(props: DashboardTableProps) {
       {...props}
     />
   );
-  const Cell = (props: GridCellProps) => (
-    <GridCell data-test={`${entityName}-${props.field}`} {...props} />
+  const Cell = (props: GridCellProps) => {
+    const dataTest = `${entityName}-${props.field}`;
+    return (
+    <GridCell
+        data-test={
+          dataTest === 'invoice-companyName' ? 'invoice-company' : dataTest
+        }
+      {...props}
+    />
   );
+  };
 
   return (
     <Grid
@@ -48,6 +68,9 @@ export default function DashboardTable(props: DashboardTableProps) {
           disableColumnMenu
           density="compact"
           onRowClick={onRowClick}
+          sortingMode="server"
+          sortModel={sortModel}
+          onSortModelChange={onSortModelChange}
         />
       </Grid>
     </Grid>

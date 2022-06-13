@@ -4,6 +4,7 @@ import GenericTableContainer from './GenericTableContainer';
 import DropdownMenu from '../common/DropdownMenu';
 import { MenuItem } from '@mui/material';
 import type {
+  GridSortModel,
   GridValueGetterParams,
   GridRowId,
   GridRenderCellParams,
@@ -12,6 +13,7 @@ import type {
 interface InvoicesTableProps {
   title?: string;
   sx?: Record<string, string>;
+  onSortModelChange?: (model: GridSortModel) => void;
 }
 
 export default function InvoicesTableContainer(props: InvoicesTableProps) {
@@ -29,11 +31,12 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       field: 'number',
       headerName: 'Invoice #',
       minWidth: 100,
+      sortable: false,
       valueGetter: ({ row }: GridValueGetterParams) =>
         row.invoice.invoice_number,
     },
     {
-      field: 'company',
+      field: 'companyName',
       headerName: 'Company',
       minWidth: 100,
       flex: 1,
@@ -58,6 +61,7 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       field: 'projectCode',
       headerName: 'Project',
       minWidth: 70,
+      sortable: false,
       valueGetter: ({ row }: GridValueGetterParams) => row.invoice.projectCode,
     },
     {
@@ -98,6 +102,7 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
         (invoice as Record<string, string>).id
       }
       onRowClick={({ id }) => viewInvoice(id)}
+      onSortModelChange={props.onSortModelChange}
     />
   );
 }

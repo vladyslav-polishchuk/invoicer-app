@@ -11,7 +11,12 @@ import { useEffect } from 'react';
 import useAsync from '../../hooks/useAsync';
 import DashboardTable from './DashboardTable';
 import useScreenSize from '../../hooks/useScreenSize';
-import type { GridColumns, GridRowParams } from '@mui/x-data-grid';
+import useRouterQuery from '../../hooks/useRouterQuery';
+import type {
+  GridColumns,
+  GridRowParams,
+  GridSortModel,
+} from '@mui/x-data-grid';
 
 interface FetchParams {
   limit: number;
@@ -29,6 +34,7 @@ interface DashboardTableProps {
   columns: GridColumns;
   getRowId?: (row: Record<string, unknown>) => string;
   onRowClick: (param: GridRowParams) => void;
+  onSortModelChange?: (model: GridSortModel) => void;
 }
 
 export default function GenericTableContainer(props: DashboardTableProps) {
@@ -42,13 +48,19 @@ export default function GenericTableContainer(props: DashboardTableProps) {
     onViewAllClick,
     fetchMethod,
     onRowClick,
+    onSortModelChange,
   } = props;
   const { execute, value, error } = useAsync(fetchMethod);
   const { isMobile } = useScreenSize();
+  const { sortBy, sortOrder } = useRouterQuery();
+  const sort =
+    sortBy && sortOrder ? { [sortBy]: sortOrder } : { creation: 'desc' };
+  const sortModel =
+    sortBy && sortOrder ? [{ field: sortBy, sort: sortOrder }] : [];
 
   useEffect(() => {
-    execute({ limit: 10, sort: { creation: 'desc' } });
-  }, []);
+    execute({ limit: 10, sort });
+  }, [sortBy, sortOrder]);
 
   const loadingPlaceholder = (
     <CircularProgress
@@ -79,6 +91,8 @@ export default function GenericTableContainer(props: DashboardTableProps) {
       entityName={entityName}
       getRowId={getRowId}
       onRowClick={onRowClick}
+      sortModel={sortModel as GridSortModel}
+      onSortModelChange={onSortModelChange}
     />
   ) : data ? (
     emptyPlaceholder

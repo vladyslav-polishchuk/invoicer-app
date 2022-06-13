@@ -9,7 +9,7 @@ import type {
   GridRenderCellParams,
 } from '@mui/x-data-grid';
 
-export default function ClientsTableContainer() {
+export default function InvoicesTableContainer() {
   const router = useRouter();
   const editInvoice = (id: GridRowId) => router.push(`/invoices/${id}/edit`);
   const viewInvoice = (id: GridRowId) => router.push(`/invoices/${id}/view`);

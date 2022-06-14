@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "jest": "jest",
-    "jest-dev": "jest --watch"
+    "jest-dev": "jest --watch",
+    "cypress": "cypress open",
+    "cypress-cli": "cypress run"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -34,6 +36,7 @@
     "@types/node": "17.0.32",
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.3",
+    "cypress": "^10.1.0",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6",
     "jest": "^28.1.1",

@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "jest": "jest",
+    "jest-dev": "jest --watch"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -27,11 +29,15 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
     "@types/node": "17.0.32",
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.3",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6",
+    "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
     "typescript": "4.6.4"
   }
 }

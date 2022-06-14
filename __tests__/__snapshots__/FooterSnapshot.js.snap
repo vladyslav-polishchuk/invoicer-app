@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render footer 1`] = `
+<div>
+  <footer
+    class="MuiContainer-root MuiContainer-maxWidthLg css-1rloke0-MuiContainer-root"
+  >
+    <p
+      class="MuiTypography-root MuiTypography-body2 MuiTypography-alignCenter css-1vl95ex-MuiTypography-root"
+    >
+      © Copyright 2022 Vladyslav Polishchuk. All rights reserved
+    </p>
+  </footer>
+</div>
+`;

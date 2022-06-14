@@ -14,6 +14,8 @@ interface InvoicesTableProps {
   title?: string;
   sx?: Record<string, string>;
   onSortModelChange?: (model: GridSortModel) => void;
+  onPageSizeChange?: (pageSize: number) => void;
+  onPageChange?: (page: number) => void;
 }
 
 export default function InvoicesTableContainer(props: InvoicesTableProps) {
@@ -103,6 +105,8 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       }
       onRowClick={({ id }) => viewInvoice(id)}
       onSortModelChange={props.onSortModelChange}
+      onPageSizeChange={props.onPageSizeChange}
+      onPageChange={props.onPageChange}
     />
   );
 }

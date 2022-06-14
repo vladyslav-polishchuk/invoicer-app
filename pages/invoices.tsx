@@ -20,6 +20,14 @@ export default function Invoices() {
 
     router.replace({ query: router.query });
   };
+  const onPageSizeChange = (pageSize: number) => {
+    router.query.pageSize = pageSize.toString();
+    router.replace({ query: router.query });
+  };
+  const onPageChange = (page: number) => {
+    router.query.page = page.toString();
+    router.replace({ query: router.query });
+  };
 
   return (
     <AuthGuard>
@@ -37,6 +45,8 @@ export default function Invoices() {
               title="All Invoices"
               sx={{ minHeight: '70vh' }}
               onSortModelChange={onSortModelChange}
+              onPageSizeChange={onPageSizeChange}
+              onPageChange={onPageChange}
             />
           </Container>
         </Page>

@@ -17,24 +17,28 @@ import type {
   GridRowParams,
   GridSortModel,
 } from '@mui/x-data-grid';
-
-interface FetchParams {
-  limit: number;
-  sort: Record<string, string>;
-}
+import type {
+  ClientsResponse,
+  InvoicesResponse,
+  TableFilterParams,
+} from '../../api/types';
 
 interface DashboardTableProps {
   title: string;
   sx?: Record<string, string>;
-  fetchMethod: (params: FetchParams) => Promise<unknown>;
+  fetchMethod: (
+    params: TableFilterParams
+  ) => Promise<InvoicesResponse | ClientsResponse>;
   onViewAllClick: () => void;
   onCreateClick: () => void;
-  tableName: string;
+  tableName: 'clients' | 'invoices';
   entityName: string;
   columns: GridColumns;
   getRowId?: (row: Record<string, unknown>) => string;
   onRowClick: (param: GridRowParams) => void;
   onSortModelChange?: (model: GridSortModel) => void;
+  onPageSizeChange?: (pageSize: number) => void;
+  onPageChange?: (page: number) => void;
 }
 
 export default function GenericTableContainer(props: DashboardTableProps) {
@@ -49,18 +53,26 @@ export default function GenericTableContainer(props: DashboardTableProps) {
     fetchMethod,
     onRowClick,
     onSortModelChange,
+    onPageSizeChange,
+    onPageChange,
   } = props;
-  const { execute, value, error } = useAsync(fetchMethod);
+  const { execute, value, error } = useAsync<
+    InvoicesResponse | ClientsResponse,
+    TableFilterParams
+  >(fetchMethod);
   const { isMobile } = useScreenSize();
-  const { sortBy, sortOrder } = useRouterQuery();
+  const { sortBy, sortOrder, pageSize, page } = useRouterQuery();
   const sort =
     sortBy && sortOrder ? { [sortBy]: sortOrder } : { creation: 'desc' };
   const sortModel =
     sortBy && sortOrder ? [{ field: sortBy, sort: sortOrder }] : [];
+  const limit = parseInt(pageSize ?? '10') || 10;
+  const currentPage = parseInt(page ?? '0') || 0;
+  const offset = currentPage * limit;
 
   useEffect(() => {
-    execute({ limit: 10, sort });
-  }, [sortBy, sortOrder]);
+    execute({ limit, offset, sort });
+  }, [sortBy, sortOrder, pageSize, page]);
 
   const loadingPlaceholder = (
     <CircularProgress
@@ -78,10 +90,10 @@ export default function GenericTableContainer(props: DashboardTableProps) {
       No Data for display
     </Typography>
   );
-  const data =
-    value && typeof value === 'object'
-      ? (value as Record<string, Record<string, unknown>[]>)?.[tableName]
-      : null;
+
+  // @ts-expect-error
+  const data = value?.[tableName];
+  const rowCount = value?.total ?? 0;
   const content = data?.length ? (
     <DashboardTable
       sx={props.sx}
@@ -93,6 +105,11 @@ export default function GenericTableContainer(props: DashboardTableProps) {
       onRowClick={onRowClick}
       sortModel={sortModel as GridSortModel}
       onSortModelChange={onSortModelChange}
+      pageSize={limit}
+      onPageSizeChange={onPageSizeChange}
+      page={currentPage}
+      onPageChange={onPageChange}
+      rowCount={rowCount}
     />
   ) : data ? (
     emptyPlaceholder

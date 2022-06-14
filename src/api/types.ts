@@ -63,3 +63,9 @@ export interface ClientNamesResponce {
   success: boolean;
   clients: Array<ClientName>;
 }
+
+export interface TableFilterParams {
+  limit: number;
+  offset: number;
+  sort: Record<string, string>;
+}

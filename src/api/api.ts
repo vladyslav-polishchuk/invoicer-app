@@ -6,6 +6,7 @@ import type {
   Invoice,
   InvoiceResponse,
   InvoicesResponse,
+  TableFilterParams,
   UserResponse,
 } from './types';
 
@@ -89,10 +90,7 @@ export default class API {
     });
   };
 
-  getClients = async (params: {
-    limit: number;
-    sort: Record<string, string>;
-  }) => {
+  getClients = async (params: TableFilterParams) => {
     const queryParams = JSON.stringify(params);
 
     return await this.sendRequest<ClientsResponse>(
@@ -100,10 +98,7 @@ export default class API {
     );
   };
 
-  getInvoices = async (params: {
-    limit: number;
-    sort: Record<string, string>;
-  }) => {
+  getInvoices = async (params: TableFilterParams) => {
     const queryParams = JSON.stringify(params);
 
     return await this.sendRequest<InvoicesResponse>(

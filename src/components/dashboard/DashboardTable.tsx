@@ -20,6 +20,11 @@ interface DashboardTableProps {
   onRowClick: (param: GridRowParams) => void;
   sortModel?: GridSortModel;
   onSortModelChange?: (model: GridSortModel) => void;
+  pageSize?: number;
+  onPageSizeChange?: (pageSize: number) => void;
+  page?: number;
+  onPageChange?: (page: number) => void;
+  rowCount?: number;
 }
 
 export default function DashboardTable(props: DashboardTableProps) {
@@ -32,6 +37,11 @@ export default function DashboardTable(props: DashboardTableProps) {
     onRowClick,
     onSortModelChange,
     sortModel,
+    pageSize,
+    onPageSizeChange,
+    page,
+    onPageChange,
+    rowCount,
   } = props;
   const getGridRowId = getRowId ?? ((row) => row.id as string);
   const Row = (props: GridRowProps) => (
@@ -43,13 +53,13 @@ export default function DashboardTable(props: DashboardTableProps) {
   const Cell = (props: GridCellProps) => {
     const dataTest = `${entityName}-${props.field}`;
     return (
-    <GridCell
+      <GridCell
         data-test={
           dataTest === 'invoice-companyName' ? 'invoice-company' : dataTest
         }
-      {...props}
-    />
-  );
+        {...props}
+      />
+    );
   };
 
   return (
@@ -64,13 +74,21 @@ export default function DashboardTable(props: DashboardTableProps) {
           rows={data}
           columns={columns}
           getRowId={getGridRowId}
-          hideFooter
+          hideFooter={!onSortModelChange}
           disableColumnMenu
           density="compact"
           onRowClick={onRowClick}
           sortingMode="server"
+          paginationMode="server"
           sortModel={sortModel}
           onSortModelChange={onSortModelChange}
+          pageSize={pageSize}
+          onPageSizeChange={onPageSizeChange}
+          rowsPerPageOptions={[10, 25, 50]}
+          page={page}
+          onPageChange={onPageChange}
+          rowCount={rowCount}
+          pagination
         />
       </Grid>
     </Grid>

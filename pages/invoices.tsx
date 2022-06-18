@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Container, TextField } from '@mui/material';
 import { useRouter } from 'next/router';
 import { AuthGuard } from '../src/components/auth/AuthGuard';
 import Page from '../src/components/common/Page';
@@ -28,6 +28,20 @@ export default function Invoices() {
     router.query.page = page.toString();
     router.replace({ query: router.query });
   };
+  const onCompanyFilterChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    router.query.companyFilter = event.target.value;
+    router.replace({ query: router.query });
+  };
+  const companyFilterField = (
+    <TextField
+      sx={{ alignSelf: 'center' }}
+      size="small"
+      value={router.query.companyFilter ?? ''}
+      onChange={onCompanyFilterChange}
+    />
+  );
 
   return (
     <AuthGuard>
@@ -47,6 +61,7 @@ export default function Invoices() {
               onSortModelChange={onSortModelChange}
               onPageSizeChange={onPageSizeChange}
               onPageChange={onPageChange}
+              companyFilterField={companyFilterField}
             />
           </Container>
         </Page>

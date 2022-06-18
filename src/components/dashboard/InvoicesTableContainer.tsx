@@ -4,18 +4,14 @@ import GenericTableContainer from './GenericTableContainer';
 import DropdownMenu from '../common/DropdownMenu';
 import { MenuItem } from '@mui/material';
 import type {
-  GridSortModel,
   GridValueGetterParams,
   GridRowId,
   GridRenderCellParams,
 } from '@mui/x-data-grid';
 
-interface InvoicesTableProps {
+interface InvoicesTableProps extends Record<string, unknown> {
   title?: string;
   sx?: Record<string, string>;
-  onSortModelChange?: (model: GridSortModel) => void;
-  onPageSizeChange?: (pageSize: number) => void;
-  onPageChange?: (page: number) => void;
 }
 
 export default function InvoicesTableContainer(props: InvoicesTableProps) {
@@ -92,6 +88,7 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
 
   return (
     <GenericTableContainer
+      {...props}
       title={title}
       sx={props.sx}
       fetchMethod={api.getInvoices}
@@ -104,9 +101,6 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
         (invoice as Record<string, string>).id
       }
       onRowClick={({ id }) => viewInvoice(id)}
-      onSortModelChange={props.onSortModelChange}
-      onPageSizeChange={props.onPageSizeChange}
-      onPageChange={props.onPageChange}
     />
   );
 }

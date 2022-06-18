@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
+import { Alert, Container } from '@mui/material';
+import { useSelector } from 'react-redux';
 import api from '../api';
 import useAsync from '../hooks/useAsync';
 import Spinner from './common/Spinner';
 import InvoiceViewFormContainer from './InvoiceViewFormContainer';
 import InvoiceEditFormContainer from './InvoiceEditFormContainer';
-import { Alert, Container } from '@mui/material';
+import type { InvoiceAppState } from '../store';
 
 interface InoviceFormContainer {
   invoiceId?: string;
@@ -13,24 +15,11 @@ interface InoviceFormContainer {
 
 export default function InvoiceFormContainer(props: InoviceFormContainer) {
   const { invoiceId, viewMode } = props;
-  const {
-    execute: getInvoice,
-    error: getInvoiceError,
-    value: invoiceResponse,
-  } = useAsync(api.getIncoice);
-  const {
-    execute: getClientNames,
-    error: getClientNamesError,
-    value: clientNamesResponse,
-  } = useAsync(api.getClientNames);
-  const error = getInvoiceError ?? getClientNamesError;
+  const { clientNames } = useSelector((state: InvoiceAppState) => state);
+  const { execute, value, error } = useAsync(api.getIncoice);
 
   useEffect(() => {
-    getClientNames(undefined);
-
-    if (invoiceId) {
-      getInvoice(invoiceId);
-    }
+    invoiceId && execute(invoiceId);
   }, [invoiceId]);
 
   if (error === 'Invoice not found') {
@@ -43,12 +32,11 @@ export default function InvoiceFormContainer(props: InoviceFormContainer) {
     );
   }
 
-  if (!clientNamesResponse || (invoiceId && !invoiceResponse)) {
+  if (!clientNames || (invoiceId && !value)) {
     return <Spinner />;
   }
 
-  const invoice = invoiceResponse?.invoice;
-  const clientNames = clientNamesResponse.clients;
+  const invoice = value?.invoice;
   return viewMode ? (
     <InvoiceViewFormContainer invoice={invoice} />
   ) : (

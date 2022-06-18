@@ -68,4 +68,5 @@ export interface TableFilterParams {
   limit: number;
   offset: number;
   sort: Record<string, string>;
+  filter: Record<string, unknown>;
 }

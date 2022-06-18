@@ -8,6 +8,7 @@ import {
   Alert,
 } from '@mui/material';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import useAsync from '../../hooks/useAsync';
 import DashboardTable from './DashboardTable';
 import useScreenSize from '../../hooks/useScreenSize';
@@ -22,8 +23,9 @@ import type {
   InvoicesResponse,
   TableFilterParams,
 } from '../../api/types';
+import type { InvoiceAppState } from '../../store';
 
-interface DashboardTableProps {
+interface DashboardTableProps extends Record<string, unknown> {
   title: string;
   sx?: Record<string, string>;
   fetchMethod: (
@@ -34,34 +36,28 @@ interface DashboardTableProps {
   tableName: 'clients' | 'invoices';
   entityName: string;
   columns: GridColumns;
-  getRowId?: (row: Record<string, unknown>) => string;
   onRowClick: (param: GridRowParams) => void;
-  onSortModelChange?: (model: GridSortModel) => void;
-  onPageSizeChange?: (pageSize: number) => void;
-  onPageChange?: (page: number) => void;
+  companyFilterField?: any;
 }
 
 export default function GenericTableContainer(props: DashboardTableProps) {
   const {
     title,
-    columns,
     tableName,
     entityName,
-    getRowId,
     onCreateClick,
     onViewAllClick,
     fetchMethod,
     onRowClick,
-    onSortModelChange,
-    onPageSizeChange,
-    onPageChange,
+    companyFilterField,
   } = props;
   const { execute, value, error } = useAsync<
     InvoicesResponse | ClientsResponse,
     TableFilterParams
   >(fetchMethod);
+  const { clientNames } = useSelector((state: InvoiceAppState) => state);
   const { isMobile } = useScreenSize();
-  const { sortBy, sortOrder, pageSize, page } = useRouterQuery();
+  const { sortBy, sortOrder, pageSize, page, companyFilter } = useRouterQuery();
   const sort =
     sortBy && sortOrder ? { [sortBy]: sortOrder } : { creation: 'desc' };
   const sortModel =
@@ -69,10 +65,20 @@ export default function GenericTableContainer(props: DashboardTableProps) {
   const limit = parseInt(pageSize ?? '10') || 10;
   const currentPage = parseInt(page ?? '0') || 0;
   const offset = currentPage * limit;
+  const filter = companyFilter
+    ? {
+        clientId:
+          clientNames?.find((client) =>
+            client.companyName
+              .toLowerCase()
+              .startsWith(companyFilter.toLowerCase())
+          )?.id ?? 'unknown',
+      }
+    : {};
 
   useEffect(() => {
-    execute({ limit, offset, sort });
-  }, [sortBy, sortOrder, pageSize, page]);
+    execute({ limit, offset, sort, filter });
+  }, [sortBy, sortOrder, pageSize, page, companyFilter]);
 
   const loadingPlaceholder = (
     <CircularProgress
@@ -91,24 +97,21 @@ export default function GenericTableContainer(props: DashboardTableProps) {
     </Typography>
   );
 
+  if (!clientNames) return null;
+
   // @ts-expect-error
   const data = value?.[tableName];
   const rowCount = value?.total ?? 0;
   const content = data?.length ? (
     <DashboardTable
-      sx={props.sx}
+      {...props}
       data={data}
-      columns={columns}
       tableName={tableName}
       entityName={entityName}
-      getRowId={getRowId}
       onRowClick={onRowClick}
       sortModel={sortModel as GridSortModel}
-      onSortModelChange={onSortModelChange}
       pageSize={limit}
-      onPageSizeChange={onPageSizeChange}
       page={currentPage}
-      onPageChange={onPageChange}
       rowCount={rowCount}
     />
   ) : data ? (
@@ -125,10 +128,12 @@ export default function GenericTableContainer(props: DashboardTableProps) {
             {title}
           </Typography>
 
+          {companyFilterField}
+
           <Button
             variant="outlined"
             size="small"
-            sx={{ mr: 1 }}
+            sx={{ mx: 1 }}
             onClick={onCreateClick}
             data-test={`add-${entityName}`}
           >

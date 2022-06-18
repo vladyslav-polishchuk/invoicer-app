@@ -12,5 +12,5 @@ Status of the application:
 - Homework #1 - done, reviewed and fixed comments.
 - Homework #2 - done, waiting review.
 - Homework #3 - done, waiting review.
-- Homework #4 - started, ~60% done.
+- Homework #4 - started, ~70% done.
 - Homework #5 - started, ~10% done.

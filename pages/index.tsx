@@ -21,7 +21,7 @@ export default function Home() {
               <ClientsTableContainer />
             </Grid>
             <Grid item xs={12} lg={6}>
-              <InvoicesTableContainer />
+              <InvoicesTableContainer title="Latest Invoices" />
             </Grid>
           </Grid>
         </Container>

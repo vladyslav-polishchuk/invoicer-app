@@ -21,7 +21,7 @@ interface DashboardTableProps {
   onRowClick: (param: GridRowParams) => void;
   sortModel?: GridSortModel;
   onSortModelChange?: (model: GridSortModel) => void;
-  pageSize?: number;
+  pageSize: number;
   page?: number;
   rowCount: number;
 }
@@ -46,8 +46,7 @@ export default function DashboardTable(props: DashboardTableProps) {
       />
     );
   };
-  const hideFooter =
-    !props.onSortModelChange || (rowCount ?? 0) <= (pageSize ?? 0);
+  const hideFooter = !props.onSortModelChange || rowCount <= pageSize;
 
   return (
     <Grid container sx={{ minHeight: '30vh', ...props.sx }}>
@@ -59,7 +58,6 @@ export default function DashboardTable(props: DashboardTableProps) {
           sortingMode="server"
           paginationMode="server"
           components={{ Row, Cell, Pagination }}
-          getRowId={getGridRowId}
           hideFooter={hideFooter}
           rowsPerPageOptions={[10, 25, 50]}
         />

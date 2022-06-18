@@ -10,12 +10,10 @@ import type {
 } from '@mui/x-data-grid';
 
 interface InvoicesTableProps extends Record<string, unknown> {
-  title?: string;
-  sx?: Record<string, string>;
+  title: string;
 }
 
 export default function InvoicesTableContainer(props: InvoicesTableProps) {
-  const { title = 'Latest Invoices' } = props;
   const router = useRouter();
   const editInvoice = (id: GridRowId) => router.push(`/invoices/${id}/edit`);
   const viewInvoice = (id: GridRowId) => router.push(`/invoices/${id}/view`);
@@ -97,8 +95,6 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
   return (
     <GenericTableContainer
       {...props}
-      title={title}
-      sx={props.sx}
       fetchMethod={api.getInvoices}
       onViewAllClick={() => router.push('/invoices')}
       onCreateClick={() => router.push('/invoices/new')}

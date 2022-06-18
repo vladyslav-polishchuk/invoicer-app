@@ -27,7 +27,6 @@ import type { InvoiceAppState } from '../../store';
 
 interface DashboardTableProps extends Record<string, unknown> {
   title: string;
-  sx?: Record<string, string>;
   fetchMethod: (
     params: TableFilterParams
   ) => Promise<InvoicesResponse | ClientsResponse>;

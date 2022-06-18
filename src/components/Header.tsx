@@ -1,15 +1,8 @@
 import HomePageIcon from '@mui/icons-material/CurrencyExchange';
-import Link from 'next/link';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Container,
-  Box,
-  Button,
-} from '@mui/material';
+import { AppBar, Toolbar, Container, Button, Stack } from '@mui/material';
 import api from '../api';
 import useScreenSize from '../hooks/useScreenSize';
+import HeaderLink from './common/HeaderLink';
 import type { UserResponse } from '../api/types';
 
 interface HeaderProps {
@@ -20,61 +13,59 @@ export default function Header({ userInfo }: HeaderProps) {
   const { isMobile } = useScreenSize();
   const logoSize = isMobile ? '28px' : '42px';
   const buttonSize = isMobile ? 'small' : 'medium';
+  const spacing = isMobile ? 1 : 3;
+  const iconMargin = isMobile ? 1 : 2;
 
   return (
-    <AppBar position="sticky" sx={{ displayPrint: 'none' }}>
-      <Container>
-        <Toolbar variant="dense" sx={{ padding: 1 }} disableGutters>
-          <Link href="/">
-            <Typography
-              component="a"
-              href="/"
-              variant={isMobile ? 'h6' : 'h5'}
-              color="inherit"
-              fontWeight="bold"
-              sx={{ textDecoration: 'none', flexGrow: '1' }}
-            >
-              <HomePageIcon
-                sx={{
-                  width: logoSize,
-                  height: logoSize,
-                  verticalAlign: 'middle',
-                  mr: 2,
-                }}
-              />
-              Invoicer
-            </Typography>
-          </Link>
-          <Box sx={{ flexGrow: 0 }}>
-            {!userInfo && (
-              <Link href="/login">
-                <Button color="inherit" size={buttonSize}>
-                  Login
-                </Button>
-              </Link>
-            )}
-            {!userInfo && (
-              <Link href="/signup">
-                <Button color="inherit" size={buttonSize}>
-                  Sign-up
-                </Button>
-              </Link>
-            )}
-            {userInfo && (
-              <Link href="/company-details">
-                <Button color="inherit" size={buttonSize}>
-                  Company Details
-                </Button>
-              </Link>
-            )}
-            {userInfo && (
-              <Button color="inherit" onClick={api.logout} size={buttonSize}>
-                Logout
-              </Button>
-            )}
-          </Box>
-        </Toolbar>
-      </Container>
+    <AppBar position="sticky" sx={{ displayPrint: 'none' }} data-test="nav-bar">
+      <Toolbar
+        variant="dense"
+        sx={{ padding: 1 }}
+        disableGutters
+        component={Container}
+      >
+        <Stack
+          sx={{ flexGrow: 1, alignItems: 'center' }}
+          direction="row"
+          spacing={spacing}
+        >
+          <HeaderLink href="/" variant={isMobile ? 'h6' : 'h5'}>
+            <HomePageIcon
+              sx={{
+                width: logoSize,
+                height: logoSize,
+                verticalAlign: 'middle',
+                mr: iconMargin,
+              }}
+            />
+            Invoicer
+          </HeaderLink>
+          <HeaderLink
+            href="/clients"
+            variant={isMobile ? 'subtitle2' : 'subtitle1'}
+          >
+            Clients
+          </HeaderLink>
+          <HeaderLink
+            href="/invoices"
+            variant={isMobile ? 'subtitle2' : 'subtitle1'}
+          >
+            Invoices
+          </HeaderLink>
+        </Stack>
+
+        {userInfo && (
+          <Button
+            color="inherit"
+            onClick={api.logout}
+            size={buttonSize}
+            sx={{ flexGrow: 0 }}
+            data-test="logout-button"
+          >
+            Logout
+          </Button>
+        )}
+      </Toolbar>
     </AppBar>
   );
 }

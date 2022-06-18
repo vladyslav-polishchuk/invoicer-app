@@ -40,6 +40,9 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       flex: 1,
       valueGetter: ({ row }: GridValueGetterParams) =>
         row.client.companyDetails.name,
+      renderHeader: () => (
+        <strong data-test="company-name-header">Company</strong>
+      ),
     },
     {
       field: 'date',
@@ -47,6 +50,9 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       minWidth: 140,
       valueGetter: ({ row }: GridValueGetterParams) =>
         new Date(row.invoice.date).toDateString(),
+      renderHeader: () => (
+        <strong data-test="creation-date-header">Date</strong>
+      ),
     },
     {
       field: 'dueDate',
@@ -54,6 +60,7 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       minWidth: 140,
       valueGetter: ({ row }: GridValueGetterParams) =>
         new Date(row.invoice.dueDate).toDateString(),
+      renderHeader: () => <strong data-test="due-date-header">Due Date</strong>,
     },
     {
       field: 'projectCode',
@@ -67,6 +74,7 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       headerName: 'Amount',
       minWidth: 100,
       valueGetter: ({ row }: GridValueGetterParams) => `${row.invoice.value}$`,
+      renderHeader: () => <strong data-test="total-header">Amount</strong>,
     },
     {
       field: 'actions',

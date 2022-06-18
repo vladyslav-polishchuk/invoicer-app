@@ -1,8 +1,8 @@
 import { ReactNode, useEffect } from 'react';
 import api from '../api';
 import useAsync from '../hooks/useAsync';
-import { useDispatch } from 'react-redux';
-import { setClientNames } from '../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { InvoiceAppState, setClientNames } from '../store';
 import Spinner from './common/Spinner';
 import { useAuthContext } from './auth/AuthContext';
 
@@ -15,6 +15,7 @@ export default function ClientNamesFetchContainer({
 }: ClientNamesFetchContainerProps) {
   const { userToken } = useAuthContext();
   const dispatch = useDispatch();
+  const { clientNames } = useSelector((state: InvoiceAppState) => state);
   const { execute, value } = useAsync(api.getClientNames);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function ClientNamesFetchContainer({
     }
   }, [value]);
 
-  if (userToken && !value) {
+  if (userToken && !clientNames) {
     return <Spinner />;
   }
 

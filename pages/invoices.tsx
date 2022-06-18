@@ -28,18 +28,18 @@ export default function Invoices() {
     router.query.page = page.toString();
     router.replace({ query: router.query });
   };
-  const onCompanyFilterChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const onCompanyFilterChange = (event: React.FocusEvent<HTMLInputElement>) => {
     router.query.companyFilter = event.target.value;
     router.replace({ query: router.query });
   };
   const companyFilterField = (
     <TextField
+      label="Company filter"
       sx={{ alignSelf: 'center' }}
       size="small"
-      value={router.query.companyFilter ?? ''}
-      onChange={onCompanyFilterChange}
+      defaultValue={router.query.companyFilter ?? ''}
+      onBlur={onCompanyFilterChange}
+      data-test="company-filter"
     />
   );
 

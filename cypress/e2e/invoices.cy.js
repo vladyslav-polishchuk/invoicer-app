@@ -54,9 +54,7 @@ describe('/invoices', () => {
 
   it('Should by default show first page with 10 invoices per page', () => {
     cy.get(`[data-test*="invoice-row"]`).should('have.length', 10);
-    cy.get(`[data-test="invoices-table"] .MuiTablePagination-displayedRows`)
-      .contains('1–10 of 43')
-      .should('be.visible');
+    cy.get(`[data-test*="page-"]`).should('have.length', 5);
   });
 
   it('Should sort invoices by client in asc and desc orders when header colum clicked', () => {
@@ -165,6 +163,19 @@ describe('/invoices', () => {
 
     cy.get(`[data-test="invoice-number"]`)
       .contains('1234-ms-12')
+      .should('be.visible');
+  });
+
+  it('Should reload next page when pagination is clicked', () => {
+    cy.intercept({ method: 'GET', url: '**/invoices?**' }).as('apiInvoicesGet');
+
+    cy.get(`[data-test="page-2"]`).click();
+    cy.location('search').should('eq', '?page=1');
+
+    cy.wait('@apiInvoicesGet');
+
+    cy.get(`[data-test="invoice-number"]`)
+      .contains('1234-ap-13')
       .should('be.visible');
   });
 });

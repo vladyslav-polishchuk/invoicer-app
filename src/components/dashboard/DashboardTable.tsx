@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+import Pagination from './CustomPagination';
 import {
   DataGrid,
   GridCell,
@@ -70,7 +71,7 @@ export default function DashboardTable(props: DashboardTableProps) {
     >
       <Grid item data-test={`${tableName}-table`} sx={{ flexGrow: 1 }}>
         <DataGrid
-          components={{ Row, Cell }}
+          components={{ Row, Cell, Pagination }}
           rows={data}
           columns={columns}
           getRowId={getGridRowId}

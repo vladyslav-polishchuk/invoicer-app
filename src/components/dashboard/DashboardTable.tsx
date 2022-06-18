@@ -13,7 +13,7 @@ import {
 
 interface DashboardTableProps {
   sx?: Record<string, string>;
-  data: Record<string, unknown>[];
+  rows: Record<string, unknown>[];
   tableName: string;
   entityName: string;
   columns: GridColumns;
@@ -22,28 +22,12 @@ interface DashboardTableProps {
   sortModel?: GridSortModel;
   onSortModelChange?: (model: GridSortModel) => void;
   pageSize?: number;
-  onPageSizeChange?: (pageSize: number) => void;
   page?: number;
-  onPageChange?: (page: number) => void;
-  rowCount?: number;
+  rowCount: number;
 }
 
 export default function DashboardTable(props: DashboardTableProps) {
-  const {
-    data,
-    tableName,
-    entityName,
-    columns,
-    getRowId,
-    onRowClick,
-    onSortModelChange,
-    sortModel,
-    pageSize,
-    onPageSizeChange,
-    page,
-    onPageChange,
-    rowCount,
-  } = props;
+  const { tableName, entityName, getRowId, rowCount, pageSize } = props;
   const getGridRowId = getRowId ?? ((row) => row.id as string);
   const Row = (props: GridRowProps) => (
     <GridRow
@@ -62,34 +46,22 @@ export default function DashboardTable(props: DashboardTableProps) {
       />
     );
   };
+  const hideFooter =
+    !props.onSortModelChange || (rowCount ?? 0) <= (pageSize ?? 0);
 
   return (
-    <Grid
-      container
-      data-test={`${tableName}-table`}
-      sx={{ minHeight: '30vh', ...props.sx }}
-    >
+    <Grid container sx={{ minHeight: '30vh', ...props.sx }}>
       <Grid item data-test={`${tableName}-table`} sx={{ flexGrow: 1 }}>
         <DataGrid
-          components={{ Row, Cell, Pagination }}
-          rows={data}
-          columns={columns}
-          getRowId={getGridRowId}
-          hideFooter={!onSortModelChange}
+          {...props}
           disableColumnMenu
           density="compact"
-          onRowClick={onRowClick}
           sortingMode="server"
           paginationMode="server"
-          sortModel={sortModel}
-          onSortModelChange={onSortModelChange}
-          pageSize={pageSize}
-          onPageSizeChange={onPageSizeChange}
+          components={{ Row, Cell, Pagination }}
+          getRowId={getGridRowId}
+          hideFooter={hideFooter}
           rowsPerPageOptions={[10, 25, 50]}
-          page={page}
-          onPageChange={onPageChange}
-          rowCount={rowCount}
-          pagination
         />
       </Grid>
     </Grid>

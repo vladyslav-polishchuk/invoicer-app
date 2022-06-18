@@ -105,7 +105,7 @@ export default function GenericTableContainer(props: DashboardTableProps) {
   const content = data?.length ? (
     <DashboardTable
       {...props}
-      data={data}
+      rows={data}
       tableName={tableName}
       entityName={entityName}
       onRowClick={onRowClick}

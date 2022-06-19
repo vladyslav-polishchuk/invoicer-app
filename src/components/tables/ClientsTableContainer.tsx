@@ -22,16 +22,39 @@ export default function ClientsTableContainer(props: ClientsTableProps) {
   const createInvoice = (id: GridRowId) =>
     router.push(`/invoices/new?client_id=${id}`);
   const columns = [
-    { field: 'name', headerName: 'Name', minWidth: 100, flex: 1 },
+    {
+      field: 'name',
+      headerName: 'Name',
+      minWidth: 100,
+      flex: 1,
+      renderHeader: () => <strong data-test="client-name-header">Name</strong>,
+    },
     {
       field: 'companyName',
       headerName: 'Company name',
       minWidth: 100,
       flex: 1,
       valueGetter: ({ row }: GridValueGetterParams) => row.companyDetails.name,
+      renderHeader: () => (
+        <strong data-test="company-name-header">Company name</strong>
+      ),
     },
-    { field: 'totalBilled', headerName: 'Total Billed', width: 100 },
-    { field: 'invoicesCount', headerName: 'Invoices', width: 100 },
+    {
+      field: 'totalBilled',
+      headerName: 'Total Billed',
+      width: 100,
+      renderHeader: () => (
+        <strong data-test="total-billed-header">Total Billed</strong>
+      ),
+    },
+    {
+      field: 'invoicesCount',
+      headerName: 'Invoices',
+      width: 100,
+      renderHeader: () => (
+        <strong data-test="invoices-count-header">Invoices</strong>
+      ),
+    },
     {
       field: 'actions',
       sortable: false,

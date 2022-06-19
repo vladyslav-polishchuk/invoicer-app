@@ -12,12 +12,12 @@ Status of the application:
 - Homework #1 - done, reviewed and fixed comments.
 - Homework #2 - done, waiting review.
 - Homework #3 - done, waiting review.
-- Homework #4 - started, ~95% done.
-- Homework #5 - started, ~40% done.
+- Homework #4 - done, waiting review.
+- Homework #5 - started, ~60% done.
 
 Plans for neares future:
 
-- complete homeword
+- complete homework
 - refactor for better separation of concerns
 - refactor type issues
 - implement one page using SSR

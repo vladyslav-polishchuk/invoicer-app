@@ -5,7 +5,7 @@ import FormPage from '../common/form/FormPage';
 import AuthRedirect from './AuthRedirect';
 import useAsync from '../../hooks/useAsync';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../store';
+import { setUser } from '../../redux';
 import { useAuthContext } from './AuthContext';
 import FormContainer from '../common/form/FormContainer';
 import useLoginFormData from '../../hooks/forms/useLoginFormData';

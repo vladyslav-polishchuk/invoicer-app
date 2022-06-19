@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchInvoices, InvoiceAppState } from '../../store';
+import { fetchInvoices, InvoiceAppState } from '../../redux';
 import Spinner from '../common/Spinner';
 import useRouterQuery from '../../hooks/useRouterQuery';
 

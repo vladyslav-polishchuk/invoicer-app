@@ -8,9 +8,9 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import Page from './common/Page';
-import useRouterQuery from '../hooks/useRouterQuery';
-import type { Invoice } from '../api/types';
+import Page from '../common/Page';
+import useRouterQuery from '../../hooks/useRouterQuery';
+import type { Invoice } from '../../api/types';
 
 interface InvoiceViewFormProps {
   invoice?: Invoice | null;

@@ -1,8 +1,8 @@
 import { Container } from '@mui/material';
 import { AuthGuard } from '../src/components/auth/AuthGuard';
 import Page from '../src/components/common/Page';
-import ClientsTableContainer from '../src/components/dashboard/ClientsTableContainer';
-import ClientsTableFetchContainer from '../src/components/dashboard/ClientsTableFetchContainer';
+import ClientsTableContainer from '../src/components/tables/ClientsTableContainer';
+import ClientsTableFetchContainer from '../src/components/tables/ClientsTableFetchContainer';
 import useGridQueryParamsHandlers from '../src/hooks/useGridQueryParamsHandlers';
 
 export default function Clients() {

@@ -1,10 +1,10 @@
 import Page from '../src/components/common/Page';
 import { AuthGuard } from '../src/components/auth/AuthGuard';
 import { Container, Grid } from '@mui/material';
-import ClientsTableContainer from '../src/components/dashboard/ClientsTableContainer';
-import ClientsTableFetchContainer from '../src/components/dashboard/ClientsTableFetchContainer';
-import InvoicesTableContainer from '../src/components/dashboard/InvoicesTableContainer';
-import InvoicesTableFetchContainer from '../src/components/dashboard/InvoicesTableFetchContainer';
+import ClientsTableContainer from '../src/components/tables/ClientsTableContainer';
+import ClientsTableFetchContainer from '../src/components/tables/ClientsTableFetchContainer';
+import InvoicesTableContainer from '../src/components/tables/InvoicesTableContainer';
+import InvoicesTableFetchContainer from '../src/components/tables/InvoicesTableFetchContainer';
 
 export default function Home() {
   return (

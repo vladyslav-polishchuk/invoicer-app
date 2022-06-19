@@ -1,5 +1,5 @@
 import { AuthGuard } from '../../src/components/auth/AuthGuard';
-import ClientFormContainer from '../../src/components/ClientFormContainer';
+import ClientFormContainer from '../../src/components/forms/ClientFormContainer';
 import useRouterQuery from '../../src/hooks/useRouterQuery';
 
 export default function Client() {

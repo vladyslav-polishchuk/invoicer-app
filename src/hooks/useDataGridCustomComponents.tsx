@@ -7,7 +7,7 @@ import {
   GridRowProps,
 } from '@mui/x-data-grid';
 import { Alert, LinearProgress } from '@mui/material';
-import Pagination from '../components/dashboard/CustomPagination';
+import Pagination from '../components/tables/CustomPagination';
 
 export default function useDataGridCustomComponents(
   entityName: string,

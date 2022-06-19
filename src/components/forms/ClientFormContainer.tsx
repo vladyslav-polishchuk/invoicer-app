@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import api from '../api';
-import FormPage from './common/form/FormPage';
-import useAsync from '../hooks/useAsync';
-import useClientFormData from '../hooks/forms/useClientFormData';
-import Spinner from './common/Spinner';
-import FormContainer from './common/form/FormContainer';
+import api from '../../api';
+import FormPage from '../common/form/FormPage';
+import useAsync from '../../hooks/useAsync';
+import useClientFormData from '../../hooks/forms/useClientFormData';
+import Spinner from '../common/Spinner';
+import FormContainer from '../common/form/FormContainer';
 
 interface ClientFormContainerProps {
   clientId?: string;

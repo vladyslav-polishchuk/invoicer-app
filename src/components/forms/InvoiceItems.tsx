@@ -1,8 +1,8 @@
 import { Delete } from '@mui/icons-material';
 import { Box, Button, IconButton, Stack } from '@mui/material';
 import { FieldArray, useFormikContext } from 'formik';
-import TextField from './common/form/fields/TextField';
-import type { Invoice } from '../api/types';
+import TextField from '../common/form/fields/TextField';
+import type { Invoice } from '../../api/types';
 
 export default function InvoiceItems() {
   const formik = useFormikContext();

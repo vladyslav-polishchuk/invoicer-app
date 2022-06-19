@@ -2,8 +2,8 @@ import { Container, TextField } from '@mui/material';
 import { useRouter } from 'next/router';
 import { AuthGuard } from '../src/components/auth/AuthGuard';
 import Page from '../src/components/common/Page';
-import InvoicesTableContainer from '../src/components/dashboard/InvoicesTableContainer';
-import InvoicesTableFetchContainer from '../src/components/dashboard/InvoicesTableFetchContainer';
+import InvoicesTableContainer from '../src/components/tables/InvoicesTableContainer';
+import InvoicesTableFetchContainer from '../src/components/tables/InvoicesTableFetchContainer';
 import useGridQueryParamsHandlers from '../src/hooks/useGridQueryParamsHandlers';
 
 export default function Invoices() {

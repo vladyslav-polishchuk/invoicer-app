@@ -6,7 +6,7 @@ import '@fontsource/roboto/700.css';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 import CssBaseline from '@mui/material/CssBaseline';
-import { store } from '../src/store';
+import { store } from '../src/redux';
 import AppContainer from '../src/components/AppContainer';
 import ErrorBoundary from '../src/components/ErrorBoundary';
 import { AuthContextProvider } from '../src/components/auth/AuthContext';

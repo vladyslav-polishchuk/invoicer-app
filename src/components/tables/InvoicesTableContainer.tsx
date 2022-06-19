@@ -9,7 +9,7 @@ import type {
   GridRenderCellParams,
   GridRowParams,
 } from '@mui/x-data-grid';
-import { InvoiceAppState } from '../../store';
+import { InvoiceAppState } from '../../redux';
 import { useSelector } from 'react-redux';
 
 interface InvoicesTableProps extends Record<string, unknown> {

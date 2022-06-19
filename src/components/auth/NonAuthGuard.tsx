@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import type { InvoiceAppState } from '../../store';
+import type { InvoiceAppState } from '../../redux';
 
 export const NonAuthGuard = (props: { children: ReactNode }) => {
   const { user } = useSelector((state: InvoiceAppState) => state);

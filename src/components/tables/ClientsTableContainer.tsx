@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import TablePageContainer from './TablePageContainer';
 import DropdownMenu from '../common/DropdownMenu';
 import { MenuItem } from '@mui/material';
-import { InvoiceAppState } from '../../store';
+import { InvoiceAppState } from '../../redux';
 import type {
   GridRenderCellParams,
   GridRowId,

@@ -1,17 +1,14 @@
 import { ReactNode, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import api from '../../api';
-import useAsync from '../../hooks/useAsync';
-import { InvoiceAppState, setClients } from '../../store';
+import { fetchClients, InvoiceAppState } from '../../store';
 import Spinner from '../common/Spinner';
 import useRouterQuery from '../../hooks/useRouterQuery';
 
 export default function ClientsTableFetchContainer(props: {
   children: ReactNode;
 }) {
-  const { execute, value, error } = useAsync(api.getClients);
   const dispatch = useDispatch();
-  const { clients, clientNames } = useSelector(
+  const { clients, error, clientNames } = useSelector(
     (state: InvoiceAppState) => state
   );
   const {
@@ -37,12 +34,9 @@ export default function ClientsTableFetchContainer(props: {
     : {};
 
   useEffect(() => {
-    execute({ limit, offset, sort, filter });
+    // @ts-expect-error
+    dispatch(fetchClients({ limit, offset, sort, filter }));
   }, [sortBy, sortOrder, limit, offset, companyFilter]);
-
-  useEffect(() => {
-    value && dispatch(setClients(value));
-  }, [value]);
 
   if (!error && !clients) {
     return <Spinner />;

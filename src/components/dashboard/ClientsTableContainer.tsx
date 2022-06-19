@@ -1,16 +1,16 @@
 import api from '../../api';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import TablePageContainer from './TablePageContainer';
 import DropdownMenu from '../common/DropdownMenu';
 import { MenuItem } from '@mui/material';
+import { InvoiceAppState } from '../../store';
 import type {
   GridRenderCellParams,
   GridRowId,
   GridRowParams,
   GridValueGetterParams,
 } from '@mui/x-data-grid';
-import { useSelector } from 'react-redux';
-import { InvoiceAppState } from '../../store';
 
 interface ClientsTableProps extends Record<string, unknown> {
   title: string;
@@ -46,14 +46,17 @@ export default function ClientsTableContainer(props: ClientsTableProps) {
     },
   ];
 
-  const { clients } = useSelector((state: InvoiceAppState) => state);
-  if (!clients) return null;
+  const { clients, error, loading } = useSelector(
+    (state: InvoiceAppState) => state
+  );
 
   return (
     <TablePageContainer
       {...props}
-      rows={clients.clients as any as Record<string, unknown>[]}
-      rowCount={clients.total}
+      rows={(clients?.clients ?? []) as any as Record<string, unknown>[]}
+      rowCount={clients?.total ?? 0}
+      error={error}
+      loading={loading}
       fetchMethod={api.getClients}
       onViewAllClick={() => router.push('/clients')}
       onCreateClick={() => router.push('/clients/new')}

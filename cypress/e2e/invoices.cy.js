@@ -64,16 +64,16 @@ describe('/invoices', () => {
     cy.wait('@apiInvoicesGet');
 
     cy.location('search').should('eq', '?sortBy=companyName&sortOrder=asc');
-    cy.get(`[data-test="invoice-row-ap23"] [data-test="invoice-company"]`)
-      .contains('Apple')
-      .should('be.visible');
+    cy.get(
+      `[data-test="invoice-row-ap23"] [data-test="invoice-company"]`
+    ).contains('Apple');
 
     cy.get(`[data-test="company-name-header"]`).click();
     cy.wait('@apiInvoicesGet');
     cy.location('search').should('eq', '?sortBy=companyName&sortOrder=desc');
-    cy.get(`[data-test="invoice-row-ms1"] [data-test="invoice-company"]`)
-      .contains('Microsoft')
-      .should('be.visible');
+    cy.get(
+      `[data-test="invoice-row-ms1"] [data-test="invoice-company"]`
+    ).contains('Microsoft');
   });
 
   it('Should sort invoices by creation date in asc and desc orders when header colum clicked', () => {
@@ -83,16 +83,16 @@ describe('/invoices', () => {
     cy.wait('@apiInvoicesGet');
 
     cy.location('search').should('eq', '?sortBy=date&sortOrder=asc');
-    cy.get(`[data-test="invoice-row-ms1"] [data-test="invoice-date"]`)
-      .contains('Sun Apr 24 2022')
-      .should('be.visible');
+    cy.get(`[data-test="invoice-row-ms1"] [data-test="invoice-date"]`).contains(
+      'Sun Apr 24 2022'
+    );
 
     cy.get(`[data-test="creation-date-header"]`).click();
     cy.wait('@apiInvoicesGet');
     cy.location('search').should('eq', '?sortBy=date&sortOrder=desc');
-    cy.get(`[data-test="invoice-row-ap23"] [data-test="invoice-date"]`)
-      .contains('Mon May 16 2022')
-      .should('be.visible');
+    cy.get(
+      `[data-test="invoice-row-ap23"] [data-test="invoice-date"]`
+    ).contains('Mon May 16 2022');
   });
 
   it('Should sort invoices by due date in asc and desc orders when header colum clicked', () => {
@@ -102,16 +102,16 @@ describe('/invoices', () => {
     cy.wait('@apiInvoicesGet');
 
     cy.location('search').should('eq', '?sortBy=dueDate&sortOrder=asc');
-    cy.get(`[data-test="invoice-row-ms1"] [data-test="invoice-dueDate"]`)
-      .contains('Tue May 24 2022')
-      .should('be.visible');
+    cy.get(
+      `[data-test="invoice-row-ms1"] [data-test="invoice-dueDate"]`
+    ).contains('Tue May 24 2022');
 
     cy.get(`[data-test="due-date-header"]`).click();
     cy.wait('@apiInvoicesGet');
     cy.location('search').should('eq', '?sortBy=dueDate&sortOrder=desc');
-    cy.get(`[data-test="invoice-row-ap23"] [data-test="invoice-dueDate"]`)
-      .contains('Wed Jun 15 2022')
-      .should('be.visible');
+    cy.get(
+      `[data-test="invoice-row-ap23"] [data-test="invoice-dueDate"]`
+    ).contains('Wed Jun 15 2022');
   });
 
   it('Should sort invoices by price in asc and desc orders when header colum clicked', () => {
@@ -121,16 +121,16 @@ describe('/invoices', () => {
     cy.wait('@apiInvoicesGet');
 
     cy.location('search').should('eq', '?sortBy=price&sortOrder=asc');
-    cy.get(`[data-test="invoice-row-ms10"] [data-test="invoice-price"]`)
-      .contains('4008$')
-      .should('be.visible');
+    cy.get(
+      `[data-test="invoice-row-ms10"] [data-test="invoice-price"]`
+    ).contains('4008$');
 
     cy.get(`[data-test="total-header"]`).click();
     cy.wait('@apiInvoicesGet');
     cy.location('search').should('eq', '?sortBy=price&sortOrder=desc');
-    cy.get(`[data-test="invoice-row-ap7"] [data-test="invoice-price"]`)
-      .contains('8108$')
-      .should('be.visible');
+    cy.get(
+      `[data-test="invoice-row-ap7"] [data-test="invoice-price"]`
+    ).contains('8108$');
   });
 
   it('Should filter company by name when filter is valid', () => {
@@ -140,9 +140,8 @@ describe('/invoices', () => {
     cy.location('search').should('eq', '?companyFilter=Micros');
     cy.wait('@apiInvoicesGet');
 
-    cy.get(`[data-test="invoice-company"]`)
-      .contains('Microsoft')
-      .should('be.visible');
+    cy.get(`[data-test="loading-overlay"]`).should('not.exist');
+    cy.get(`[data-test="invoice-company"]`).contains('Microsoft');
   });
 
   it('Should show empty grid if company is invalid', () => {
@@ -161,21 +160,19 @@ describe('/invoices', () => {
       'http://localhost:3000/invoices?companyFilter=M&sortBy=date&sortOrder=asc&page=1'
     );
 
-    cy.get(`[data-test="invoice-number"]`)
-      .contains('1234-ms-12')
-      .should('be.visible');
+    cy.get(`[data-test="invoice-number"]`).contains('1234-ms-12');
   });
 
   it('Should reload next page when pagination is clicked', () => {
     cy.intercept({ method: 'GET', url: '**/invoices?**' }).as('apiInvoicesGet');
 
     cy.get(`[data-test="page-2"]`).click();
-    cy.location('search').should('eq', '?page=1');
+    cy.get(`[data-test="loading-overlay"]`).should('be.visible');
 
+    cy.location('search').should('eq', '?page=1');
     cy.wait('@apiInvoicesGet');
 
-    cy.get(`[data-test="invoice-number"]`)
-      .contains('1234-ap-13')
-      .should('be.visible');
+    cy.get(`[data-test="loading-overlay"]`).should('not.exist');
+    cy.get(`[data-test="invoice-number"]`).contains('1234-ap-13');
   });
 });

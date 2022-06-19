@@ -95,14 +95,17 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
     },
   ];
 
-  const { invoices } = useSelector((state: InvoiceAppState) => state);
-  if (!invoices) return null;
+  const { invoices, error, loading } = useSelector(
+    (state: InvoiceAppState) => state
+  );
 
   return (
     <TablePageContainer
       {...props}
-      rows={invoices.invoices}
-      rowCount={invoices.total}
+      rows={invoices?.invoices ?? []}
+      rowCount={invoices?.total ?? 0}
+      error={error}
+      loading={loading}
       fetchMethod={api.getInvoices}
       onViewAllClick={() => router.push('/invoices')}
       onCreateClick={() => router.push('/invoices/new')}

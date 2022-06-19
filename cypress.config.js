@@ -8,5 +8,6 @@ export default defineConfig({
     video: false,
     execTimeout: 10000,
     taskTimeout: 10000,
+    defaultCommandTimeout: 10000,
   },
 });

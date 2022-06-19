@@ -7,12 +7,12 @@ import {
   CircularProgress,
   Alert,
 } from '@mui/material';
-import DashboardTable from './DashboardTable';
+import DataTable from './DataTable';
 import useScreenSize from '../../hooks/useScreenSize';
 import useRouterQuery from '../../hooks/useRouterQuery';
 import type { GridColumns } from '@mui/x-data-grid';
 
-interface DashboardTableProps extends Record<string, unknown> {
+interface TablePageProps extends Record<string, unknown> {
   title: string;
   rows: Record<string, unknown>[];
   rowCount: number;
@@ -37,7 +37,7 @@ const emptyPlaceholder = (
   </Typography>
 );
 
-export default function GenericTableContainer(props: DashboardTableProps) {
+export default function TablePageContainer(props: TablePageProps) {
   const {
     title,
     tableName,
@@ -69,7 +69,7 @@ export default function GenericTableContainer(props: DashboardTableProps) {
     );
   } else if (rows?.length) {
     content = (
-      <DashboardTable
+      <DataTable
         {...props}
         sortModel={sortModel}
         pageSize={limit}

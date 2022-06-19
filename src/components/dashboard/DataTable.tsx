@@ -10,7 +10,7 @@ import {
   type GridSortModel,
 } from '@mui/x-data-grid';
 
-interface DashboardTableProps extends Record<string, unknown> {
+interface DataTableProps extends Record<string, unknown> {
   sx?: Record<string, string>;
   rows: Record<string, unknown>[];
   tableName: string;
@@ -23,7 +23,7 @@ interface DashboardTableProps extends Record<string, unknown> {
   rowCount: number;
 }
 
-export default function DashboardTable(props: DashboardTableProps) {
+export default function DataTable(props: DataTableProps) {
   const { tableName, entityName, getRowId, rowCount, pageSize } = props;
   const getGridRowId = getRowId ?? ((row) => row.id as string);
   const Row = (props: GridRowProps) => (

@@ -1,6 +1,6 @@
 import api from '../../api';
 import { useRouter } from 'next/router';
-import GenericTableContainer from './GenericTableContainer';
+import TablePageContainer from './TablePageContainer';
 import DropdownMenu from '../common/DropdownMenu';
 import { MenuItem } from '@mui/material';
 import type {
@@ -99,7 +99,7 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
   if (!invoices) return null;
 
   return (
-    <GenericTableContainer
+    <TablePageContainer
       {...props}
       rows={invoices.invoices}
       rowCount={invoices.total}

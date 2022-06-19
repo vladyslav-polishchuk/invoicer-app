@@ -65,8 +65,8 @@ export interface ClientNamesResponce {
 }
 
 export interface TableFilterParams {
-  limit: number;
-  offset: number;
-  sort: Record<string, string>;
-  filter: Record<string, unknown>;
+  limit?: number;
+  offset?: number;
+  sort?: Record<string, string>;
+  filter?: Record<string, unknown>;
 }

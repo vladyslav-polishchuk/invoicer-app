@@ -6,20 +6,17 @@ import {
   GridCellProps,
   GridRow,
   GridRowProps,
-  type GridRowParams,
   type GridColumns,
   type GridSortModel,
 } from '@mui/x-data-grid';
 
-interface DashboardTableProps {
+interface DashboardTableProps extends Record<string, unknown> {
   sx?: Record<string, string>;
   rows: Record<string, unknown>[];
   tableName: string;
   entityName: string;
   columns: GridColumns;
   getRowId?: (row: Record<string, unknown>) => string;
-  onRowClick: (param: GridRowParams) => void;
-  sortModel?: GridSortModel;
   onSortModelChange?: (model: GridSortModel) => void;
   pageSize: number;
   page?: number;

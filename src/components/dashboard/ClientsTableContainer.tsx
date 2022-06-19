@@ -6,10 +6,17 @@ import { MenuItem } from '@mui/material';
 import type {
   GridRenderCellParams,
   GridRowId,
+  GridRowParams,
   GridValueGetterParams,
 } from '@mui/x-data-grid';
+import { useSelector } from 'react-redux';
+import { InvoiceAppState } from '../../store';
 
-export default function ClientsTableContainer() {
+interface ClientsTableProps extends Record<string, unknown> {
+  title: string;
+}
+
+export default function ClientsTableContainer(props: ClientsTableProps) {
   const router = useRouter();
   const editClient = (id: GridRowId) => router.push(`/clients/${id}`);
   const createInvoice = (id: GridRowId) =>
@@ -39,16 +46,21 @@ export default function ClientsTableContainer() {
     },
   ];
 
+  const { clients } = useSelector((state: InvoiceAppState) => state);
+  if (!clients) return null;
+
   return (
     <GenericTableContainer
-      title="Latest Clients"
+      {...props}
+      rows={clients.clients as any as Record<string, unknown>[]}
+      rowCount={clients.total}
       fetchMethod={api.getClients}
       onViewAllClick={() => router.push('/clients')}
       onCreateClick={() => router.push('/clients/new')}
       tableName="clients"
       entityName="client"
       columns={columns}
-      onRowClick={({ id }) => editClient(id)}
+      onRowClick={({ id }: GridRowParams) => editClient(id)}
     />
   );
 }

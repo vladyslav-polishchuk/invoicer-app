@@ -7,7 +7,10 @@ import type {
   GridValueGetterParams,
   GridRowId,
   GridRenderCellParams,
+  GridRowParams,
 } from '@mui/x-data-grid';
+import { InvoiceAppState } from '../../store';
+import { useSelector } from 'react-redux';
 
 interface InvoicesTableProps extends Record<string, unknown> {
   title: string;
@@ -92,9 +95,14 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
     },
   ];
 
+  const { invoices } = useSelector((state: InvoiceAppState) => state);
+  if (!invoices) return null;
+
   return (
     <GenericTableContainer
       {...props}
+      rows={invoices.invoices}
+      rowCount={invoices.total}
       fetchMethod={api.getInvoices}
       onViewAllClick={() => router.push('/invoices')}
       onCreateClick={() => router.push('/invoices/new')}
@@ -104,7 +112,7 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       getRowId={({ invoice }: Record<string, unknown>) =>
         (invoice as Record<string, string>).id
       }
-      onRowClick={({ id }) => viewInvoice(id)}
+      onRowClick={({ id }: GridRowParams) => viewInvoice(id)}
     />
   );
 }

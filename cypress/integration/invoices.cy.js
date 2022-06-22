@@ -9,7 +9,9 @@ describe('/invoices', () => {
     cy.get('[data-test="email"]').should('be.visible');
     cy.get('[data-test="email"]').type(`${TEST_USER_EMAIL}`);
     cy.get('[data-test="password"]').type(`${TEST_USER_PASSWORD}`);
+    cy.intercept({ method: 'POST', url: '/login' }).as('login');
     cy.get('[data-test="submit-login"]').click();
+    cy.wait('@login');
 
     cy.intercept({ method: 'GET', url: '**/invoices?**' }).as('apiInvoicesGet');
     cy.visit('http://localhost:3000/invoices');
@@ -157,7 +159,7 @@ describe('/invoices', () => {
 
   it('Should keep criteria after page is reloaded', () => {
     cy.visit(
-      'http://localhost:3000/invoices?companyFilter=M&sortBy=date&sortOrder=asc&page=1'
+      'http://localhost:3000/invoices?companyFilter=M&sortBy=date&sortOrder=asc&page=2'
     );
 
     cy.get(`[data-test="invoice-number"]`).contains('1234-ms-12');
@@ -169,7 +171,7 @@ describe('/invoices', () => {
     cy.get(`[data-test="page-2"]`).click();
     cy.get(`[data-test="loading-overlay"]`).should('be.visible');
 
-    cy.location('search').should('eq', '?page=1');
+    cy.location('search').should('eq', '?page=2');
     cy.wait('@apiInvoicesGet');
 
     cy.get(`[data-test="loading-overlay"]`).should('not.exist');

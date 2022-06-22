@@ -15,12 +15,12 @@ export default function ClientsTableFetchContainer(props: {
     sortBy = 'creation',
     sortOrder = 'desc',
     pageSize = '10',
-    page = '0',
+    page = '1',
     companyFilter,
   } = useRouterQuery();
   const sort = { [sortBy]: sortOrder };
   const limit = parseInt(pageSize);
-  const currentPage = parseInt(page);
+  const currentPage = parseInt(page) - 1;
   const offset = currentPage * limit;
   const filter = companyFilter
     ? {

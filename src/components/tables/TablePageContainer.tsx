@@ -28,7 +28,7 @@ export default function TablePageContainer(props: TablePageProps) {
   const customComponents = useDataGridCustomComponents(entityName, tableName);
   const sortModel = sortBy ? [{ field: sortBy, sort: sortOrder }] : [];
   const limit = parseInt(pageSize ?? '10') || 10;
-  const currentPage = parseInt(page ?? '0') || 0;
+  const currentPage = parseInt(page ?? '1') || 1;
   const hideFooter = !props.onSortModelChange || props.rowCount <= limit;
 
   return (
@@ -73,7 +73,7 @@ export default function TablePageContainer(props: TablePageProps) {
               hideFooter={hideFooter}
               sortModel={sortModel as GridSortModel}
               pageSize={limit}
-              page={currentPage}
+              page={currentPage - 1}
               loading={props.loading}
               error={props.error}
             />

@@ -21,7 +21,7 @@ export default function useGridQueryParamsHandlers() {
     router.replace({ query: router.query });
   };
   const onPageChange = (page: number) => {
-    router.query.page = page.toString();
+    router.query.page = (page + 1).toString();
     router.replace({ query: router.query });
   };
 

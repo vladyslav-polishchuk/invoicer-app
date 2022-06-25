@@ -3,11 +3,8 @@ import { AuthGuard } from '../src/components/auth/AuthGuard';
 import Page from '../src/components/common/Page';
 import ClientsTableContainer from '../src/components/tables/ClientsTableContainer';
 import ClientsTableFetchContainer from '../src/components/tables/ClientsTableFetchContainer';
-import useGridQueryParamsHandlers from '../src/hooks/useGridQueryParamsHandlers';
 
 export default function Clients() {
-  const paramHandlers = useGridQueryParamsHandlers();
-
   return (
     <AuthGuard>
       <Page title="Clients">
@@ -20,11 +17,7 @@ export default function Clients() {
           }}
         >
           <ClientsTableFetchContainer>
-            <ClientsTableContainer
-              title="All Clients"
-              sx={{ minHeight: '70vh' }}
-              {...paramHandlers}
-            />
+            <ClientsTableContainer title="All Clients" sx={{ mh: '70vh' }} />
           </ClientsTableFetchContainer>
         </Container>
       </Page>

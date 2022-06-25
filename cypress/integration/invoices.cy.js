@@ -141,7 +141,7 @@ describe('/invoices', () => {
     cy.get(`[data-test="company-filter"] input`).type(
       'Micros{downArrow}{enter}'
     );
-    cy.location('search').should('eq', '?companyFilter=Microsoft');
+    cy.location('search').should('eq', '?page=1&companyFilter=Microsoft');
     cy.wait('@apiInvoicesGet');
 
     cy.get(`[data-test="loading-overlay"]`).should('not.exist');
@@ -150,7 +150,7 @@ describe('/invoices', () => {
 
   it('Should show empty grid if company is invalid', () => {
     cy.intercept({ method: 'GET', url: '**/invoices?**' }).as('apiInvoicesGet');
-    cy.visit('http://localhost:3000?companyFilter=unknown');
+    cy.visit('http://localhost:3000/invoices?companyFilter=unknown');
     cy.wait('@apiInvoicesGet');
 
     cy.get(`[data-test="empty-placeholder"]`).should('be.visible');

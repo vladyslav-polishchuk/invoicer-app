@@ -13,11 +13,11 @@ Status of the application:
 - Homework #2 - done, waiting review.
 - Homework #3 - done, waiting review.
 - Homework #4 - done, waiting review.
-- Homework #5 - started, ~60% done.
+- Homework #5 - done, waiting review.
 
-Plans for neares future:
+Plans for nearest future:
 
-- complete homework
 - refactor for better separation of concerns
 - refactor type issues
 - implement one page using SSR
+- play around with bundle size and other optimizations

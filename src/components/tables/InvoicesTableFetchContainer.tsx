@@ -1,16 +1,13 @@
 import { ReactNode, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchInvoices, InvoiceAppState } from '../../redux';
-import Spinner from '../common/Spinner';
 import useRouterQuery from '../../hooks/useRouterQuery';
 
 export default function InvoicesTableFetchContainer(props: {
   children: ReactNode;
 }) {
   const dispatch = useDispatch();
-  const { invoices, error, clientNames } = useSelector(
-    (state: InvoiceAppState) => state
-  );
+  const { clientNames } = useSelector((state: InvoiceAppState) => state);
   const {
     sortBy = 'creation',
     sortOrder = 'desc',
@@ -37,10 +34,6 @@ export default function InvoicesTableFetchContainer(props: {
     // @ts-expect-error
     dispatch(fetchInvoices({ limit, offset, sort, filter }));
   }, [sortBy, sortOrder, limit, offset, companyFilter]);
-
-  if (!error && !invoices) {
-    return <Spinner />;
-  }
 
   return <>{props.children}</>;
 }

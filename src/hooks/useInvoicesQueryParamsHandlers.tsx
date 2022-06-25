@@ -23,6 +23,7 @@ export default function useInvoicesQueryParamsHandlers() {
     value: string | null
   ) => {
     if (value) {
+      router.query.page = '1';
       router.query.companyFilter = value;
     } else {
       delete router.query.companyFilter;

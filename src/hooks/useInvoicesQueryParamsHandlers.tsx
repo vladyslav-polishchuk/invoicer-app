@@ -14,6 +14,10 @@ export default function useInvoicesQueryParamsHandlers() {
   const { clientNames } = useSelector((state: InvoiceAppState) => state);
   const { companyFilter } = useRouterQuery();
 
+  if (router.pathname !== '/invoices') {
+    return baseHandlers;
+  }
+
   const onCompanyFilterChange = (
     event: SyntheticEvent<Element, Event>,
     value: string | null

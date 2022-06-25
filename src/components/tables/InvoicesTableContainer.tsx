@@ -18,6 +18,7 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
     (state: InvoiceAppState) => state
   );
   const viewInvoice = (id: GridRowId) => router.push(`/invoices/${id}/view`);
+  const rowCount = router.pathname === '/' ? 10 : invoices?.total;
 
   return (
     <TablePageContainer
@@ -25,7 +26,7 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       {...paramHandlers}
       {...tableSchema}
       rows={invoices?.invoices ?? []}
-      rowCount={invoices?.total ?? 0}
+      rowCount={rowCount ?? 0}
       error={error}
       loading={loading}
       onViewAllClick={() => router.push('/invoices')}

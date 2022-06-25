@@ -7,7 +7,6 @@ import {
 import api from '../api';
 import type {
   ClientName,
-  ClientsResponse,
   InvoicesResponse,
   TableFilterParams,
   UserResponse,
@@ -16,7 +15,6 @@ import type {
 export interface InvoiceAppState {
   user: null | UserResponse;
   invoices: null | InvoicesResponse;
-  clients: null | ClientsResponse;
   error: null | string;
   loading: boolean;
   clientNames: null | Array<ClientName>;
@@ -25,7 +23,6 @@ export interface InvoiceAppState {
 const initialState = {
   user: null,
   invoices: null,
-  clients: null,
   error: '',
   loading: false,
   clientNames: null,
@@ -42,12 +39,6 @@ export const fetchInvoices = createAsyncThunk(
     return await api.getInvoices(params);
   }
 );
-export const fetchClients = createAsyncThunk(
-  'fetchClients',
-  async (params: TableFilterParams) => {
-    return await api.getClients(params);
-  }
-);
 
 const invoiceReducer = createReducer(initialState, (builder) => {
   builder
@@ -56,22 +47,6 @@ const invoiceReducer = createReducer(initialState, (builder) => {
     })
     .addCase(setClientNames, (state, action) => {
       state.clientNames = action.payload;
-    });
-
-  builder
-    .addCase(fetchClients.pending, (state, action) => {
-      state.loading = true;
-      state.error = null;
-    })
-    .addCase(fetchClients.fulfilled, (state, action) => {
-      state.clients = action.payload;
-      state.error = null;
-      state.loading = false;
-    })
-    .addCase(fetchClients.rejected, (state, action) => {
-      state.clients = null;
-      state.error = action.error.message ?? null;
-      state.loading = false;
     });
 
   builder

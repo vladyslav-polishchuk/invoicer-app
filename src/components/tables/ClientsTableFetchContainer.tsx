@@ -1,12 +1,12 @@
 import { ReactNode, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchClients } from '../../redux';
+import { useMobXStore } from '../../mobx';
 import useRouterQuery from '../../hooks/useRouterQuery';
+import api from '../../api';
 
 export default function ClientsTableFetchContainer(props: {
   children: ReactNode;
 }) {
-  const dispatch = useDispatch();
+  const store = useMobXStore();
   const {
     sortBy = 'creation',
     sortOrder = 'desc',
@@ -19,8 +19,12 @@ export default function ClientsTableFetchContainer(props: {
   const offset = currentPage * limit;
 
   useEffect(() => {
-    // @ts-expect-error
-    dispatch(fetchClients({ limit, offset, sort }));
+    store.setLoading(true);
+
+    api
+      .getClients({ limit, offset, sort })
+      .then((res) => store.setClients(res))
+      .catch(({ message }: Error) => store.setError(message));
   }, [sortBy, sortOrder, limit, offset]);
 
   return <>{props.children}</>;

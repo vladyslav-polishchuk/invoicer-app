@@ -4,12 +4,13 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import Head from 'next/head';
-import { Provider } from 'react-redux';
+import { Provider as ReduxStoreProvider } from 'react-redux';
 import CssBaseline from '@mui/material/CssBaseline';
-import { store } from '../src/redux';
+import { store as reduxStore } from '../src/redux';
 import AppContainer from '../src/components/AppContainer';
 import ErrorBoundary from '../src/components/ErrorBoundary';
 import { AuthContextProvider } from '../src/components/auth/AuthContext';
+import { MobXStoreProvider, mobxStore } from '../src/mobx';
 import type { AppProps } from 'next/app';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -24,11 +25,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <AuthContextProvider>
-        <Provider store={store}>
-          <AppContainer>
-            <Component {...pageProps} />
-          </AppContainer>{' '}
-        </Provider>
+        <ReduxStoreProvider store={reduxStore}>
+          <MobXStoreProvider store={mobxStore}>
+            <AppContainer>
+              <Component {...pageProps} />
+            </AppContainer>
+          </MobXStoreProvider>
+        </ReduxStoreProvider>
       </AuthContextProvider>
     </ErrorBoundary>
   );

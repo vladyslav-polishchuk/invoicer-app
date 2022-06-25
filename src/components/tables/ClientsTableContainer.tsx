@@ -1,10 +1,10 @@
 import api from '../../api';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { MenuItem } from '@mui/material';
+import { observer } from 'mobx-react-lite';
+import { useMobXStore } from '../../mobx';
 import TablePageContainer from './TablePageContainer';
 import DropdownMenu from '../common/DropdownMenu';
-import { MenuItem } from '@mui/material';
-import { InvoiceAppState } from '../../redux';
 import type {
   GridRenderCellParams,
   GridRowId,
@@ -16,7 +16,9 @@ interface ClientsTableProps extends Record<string, unknown> {
   title: string;
 }
 
-export default function ClientsTableContainer(props: ClientsTableProps) {
+export default observer(function ClientsTableContainer(
+  props: ClientsTableProps
+) {
   const router = useRouter();
   const editClient = (id: GridRowId) => router.push(`/clients/${id}`);
   const createInvoice = (id: GridRowId) =>
@@ -69,15 +71,14 @@ export default function ClientsTableContainer(props: ClientsTableProps) {
     },
   ];
 
-  const { clients, error, loading } = useSelector(
-    (state: InvoiceAppState) => state
-  );
+  const store = useMobXStore();
+  const { clients, total, error, loading } = store.getState();
 
   return (
     <TablePageContainer
       {...props}
-      rows={(clients?.clients ?? []) as any as Record<string, unknown>[]}
-      rowCount={clients?.total ?? 0}
+      rows={clients as any as Record<string, unknown>[]}
+      rowCount={total}
       error={error}
       loading={loading}
       fetchMethod={api.getClients}
@@ -89,4 +90,4 @@ export default function ClientsTableContainer(props: ClientsTableProps) {
       onRowClick={({ id }: GridRowParams) => editClient(id)}
     />
   );
-}
+});

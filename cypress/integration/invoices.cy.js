@@ -84,14 +84,14 @@ describe('/invoices', () => {
     cy.get(`[data-test="creation-date-header"]`).click();
     cy.wait('@apiInvoicesGet');
 
-    cy.location('search').should('eq', '?sortBy=date&sortOrder=asc');
+    cy.location('search').should('eq', '?sortBy=creationDate&sortOrder=asc');
     cy.get(`[data-test="invoice-row-ms1"] [data-test="invoice-date"]`).contains(
       'Sun Apr 24 2022'
     );
 
     cy.get(`[data-test="creation-date-header"]`).click();
     cy.wait('@apiInvoicesGet');
-    cy.location('search').should('eq', '?sortBy=date&sortOrder=desc');
+    cy.location('search').should('eq', '?sortBy=creationDate&sortOrder=desc');
     cy.get(
       `[data-test="invoice-row-ap23"] [data-test="invoice-date"]`
     ).contains('Mon May 16 2022');
@@ -122,14 +122,14 @@ describe('/invoices', () => {
     cy.get(`[data-test="total-header"]`).click();
     cy.wait('@apiInvoicesGet');
 
-    cy.location('search').should('eq', '?sortBy=price&sortOrder=asc');
+    cy.location('search').should('eq', '?sortBy=total&sortOrder=asc');
     cy.get(
       `[data-test="invoice-row-ms10"] [data-test="invoice-price"]`
     ).contains('4008$');
 
     cy.get(`[data-test="total-header"]`).click();
     cy.wait('@apiInvoicesGet');
-    cy.location('search').should('eq', '?sortBy=price&sortOrder=desc');
+    cy.location('search').should('eq', '?sortBy=total&sortOrder=desc');
     cy.get(
       `[data-test="invoice-row-ap7"] [data-test="invoice-price"]`
     ).contains('8108$');

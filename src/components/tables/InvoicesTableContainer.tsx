@@ -1,4 +1,3 @@
-import api from '../../api';
 import { useRouter } from 'next/router';
 import TablePageContainer from './TablePageContainer';
 import DropdownMenu from '../common/DropdownMenu';
@@ -46,13 +45,16 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       ),
     },
     {
-      field: 'date',
+      field: 'creationDate',
       headerName: 'Date',
       minWidth: 140,
       valueGetter: ({ row }: GridValueGetterParams) =>
         new Date(row.invoice.date).toDateString(),
       renderHeader: () => (
         <strong data-test="creation-date-header">Date</strong>
+      ),
+      renderCell: ({ value }: GridRenderCellParams) => (
+        <div data-test="invoice-date">{value}</div>
       ),
     },
     {
@@ -71,11 +73,14 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       valueGetter: ({ row }: GridValueGetterParams) => row.invoice.projectCode,
     },
     {
-      field: 'price',
-      headerName: 'Amount',
+      field: 'total',
+      headerName: 'Total',
       minWidth: 100,
       valueGetter: ({ row }: GridValueGetterParams) => `${row.invoice.value}$`,
-      renderHeader: () => <strong data-test="total-header">Amount</strong>,
+      renderHeader: () => <strong data-test="total-header">Total</strong>,
+      renderCell: ({ value }: GridRenderCellParams) => (
+        <div data-test="invoice-price">{value}</div>
+      ),
     },
     {
       field: 'actions',
@@ -106,7 +111,6 @@ export default function InvoicesTableContainer(props: InvoicesTableProps) {
       rowCount={invoices?.total ?? 0}
       error={error}
       loading={loading}
-      fetchMethod={api.getInvoices}
       onViewAllClick={() => router.push('/invoices')}
       onCreateClick={() => router.push('/invoices/new')}
       tableName="invoices"

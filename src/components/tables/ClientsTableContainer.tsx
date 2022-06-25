@@ -1,4 +1,3 @@
-import api from '../../api';
 import { useRouter } from 'next/router';
 import { MenuItem } from '@mui/material';
 import { observer } from 'mobx-react-lite';
@@ -85,7 +84,6 @@ export default observer(function ClientsTableContainer(
       rowCount={total}
       error={error}
       loading={loading}
-      fetchMethod={api.getClients}
       onViewAllClick={() => router.push('/clients')}
       onCreateClick={() => router.push('/clients/new')}
       tableName="clients"

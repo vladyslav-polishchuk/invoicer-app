@@ -3,6 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchInvoices, InvoiceAppState } from '../../redux';
 import useRouterQuery from '../../hooks/useRouterQuery';
 
+const urlSortParamToServerMap = new Map([
+  ['total', 'price'],
+  ['creationDate', 'date'],
+]);
+
 export default function InvoicesTableFetchContainer(props: {
   children: ReactNode;
 }) {
@@ -15,7 +20,8 @@ export default function InvoicesTableFetchContainer(props: {
     page = '1',
     companyFilter,
   } = useRouterQuery();
-  const sort = { [sortBy]: sortOrder };
+  const mappedSortBy = urlSortParamToServerMap.get(sortBy) ?? sortBy;
+  const sort = { [mappedSortBy]: sortOrder };
   const limit = parseInt(pageSize);
   const currentPage = parseInt(page) - 1;
   const offset = currentPage * limit;

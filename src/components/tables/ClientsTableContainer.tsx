@@ -25,11 +25,15 @@ export default observer(function ClientsTableContainer(
     router.push(`/invoices/new?client_id=${id}`);
   const columns = [
     {
-      field: 'name',
+      field: 'clientName',
       headerName: 'Name',
       minWidth: 100,
       flex: 1,
+      valueGetter: ({ row }: GridValueGetterParams) => row.name,
       renderHeader: () => <strong data-test="client-name-header">Name</strong>,
+      renderCell: (cell: GridRenderCellParams) => (
+        <div data-test="client-name">{cell.value}</div>
+      ),
     },
     {
       field: 'companyName',

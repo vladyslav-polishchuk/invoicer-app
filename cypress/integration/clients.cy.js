@@ -60,14 +60,14 @@ describe('/clients', () => {
     cy.get(`[data-test="client-name-header"]`).click();
     cy.wait('@apiClientsGet');
 
-    cy.location('search').should('eq', '?sortBy=name&sortOrder=asc');
+    cy.location('search').should('eq', '?sortBy=clientName&sortOrder=asc');
     cy.get(
       `[data-test="client-row-ap123456"] [data-test="client-name"]`
     ).contains('Tim Cook');
 
     cy.get(`[data-test="client-name-header"]`).click();
     cy.wait('@apiClientsGet');
-    cy.location('search').should('eq', '?sortBy=name&sortOrder=desc');
+    cy.location('search').should('eq', '?sortBy=clientName&sortOrder=desc');
     cy.get(
       `[data-test="client-row-ms123456"] [data-test="client-name"]`
     ).contains('Satya Nadella');

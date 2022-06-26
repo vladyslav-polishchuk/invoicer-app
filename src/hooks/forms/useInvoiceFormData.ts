@@ -1,4 +1,4 @@
-import { number, object, string } from 'yup';
+import { array, object, number, string } from 'yup';
 import { useFormik } from 'formik';
 import type { FormDataProps, FormProps } from './common';
 import type { Invoice } from '../../api/types';
@@ -20,6 +20,17 @@ const validationSchema = object({
   invoice_number: string().required(requiredErrorText),
   projectCode: string().min(3),
   client_id: object().required(requiredErrorText).nullable(),
+  meta: object({
+    items: array(
+      object({
+        value: number()
+          .positive('This fild must be a valid positive number')
+          .typeError('This field must be a number')
+          .required(requiredErrorText),
+        description: string().required(requiredErrorText),
+      }).required()
+    ),
+  }),
 });
 
 export default function useInvoiceFormData(

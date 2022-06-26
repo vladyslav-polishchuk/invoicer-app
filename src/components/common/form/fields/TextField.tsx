@@ -14,12 +14,14 @@ const getFormMetadataValue = (
   object: Record<string, unknown>
 ) => {
   return propName
-    .split('.')
-    .reduce((acc: unknown, nestedPropertyName: string) => {
-      if (acc && typeof acc === 'object') {
-        return (acc = (acc as Record<string, unknown>)[nestedPropertyName]);
-      }
-    }, object) as string;
+    .split(/[\.\[\]]/)
+    .reduce(
+      (acc: unknown, nestedPropertyName: string) =>
+        acc && typeof acc === 'object' && nestedPropertyName
+          ? (acc = (acc as Record<string, unknown>)[nestedPropertyName])
+          : acc,
+      object
+    ) as string;
 };
 
 export default function TextField(props: TextFieldProps) {

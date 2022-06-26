@@ -1,5 +1,6 @@
 import { ReactNode, useEffect } from 'react';
 import { useMobXStore } from '../../mobx';
+import { useRouter } from 'next/router';
 import useRouterQuery from '../../hooks/useRouterQuery';
 import api from '../../api';
 
@@ -7,13 +8,14 @@ export default function ClientsTableFetchContainer(props: {
   children: ReactNode;
 }) {
   const store = useMobXStore();
+  const router = useRouter();
   const {
-    sortBy = 'creation',
+    sortBy = router.pathname === '/' ? 'creation' : '',
     sortOrder = 'desc',
     pageSize = '10',
     page = '1',
   } = useRouterQuery();
-  const sort = { [sortBy]: sortOrder };
+  const sort = sortBy ? { [sortBy]: sortOrder } : undefined;
   const limit = parseInt(pageSize);
   const currentPage = parseInt(page) - 1;
   const offset = currentPage * limit;

@@ -174,6 +174,6 @@ describe('/invoices', () => {
     cy.wait('@apiInvoicesGet');
 
     cy.get(`[data-test="loading-overlay"]`).should('not.exist');
-    cy.get(`[data-test="invoice-number"]`).contains('1234-ap-13');
+    cy.get(`[data-test="invoice-number"]`).contains('1234-ms-11');
   });
 });

@@ -1,5 +1,5 @@
-import RouterLink from 'next/link';
-import { Link, Typography } from '@mui/material';
+import Link from 'next/link';
+import { Typography } from '@mui/material';
 
 interface AuthRedirectProps {
   title: string;
@@ -15,11 +15,17 @@ export default function AuthRedirect({
   return (
     <Typography variant="body2" align="center" sx={{ mt: 3 }}>
       {title}{' '}
-      <RouterLink href={route}>
-        <Link underline="hover" variant="subtitle2" sx={{ cursor: 'pointer' }}>
+      <Link href={route}>
+        <Typography
+          component="a"
+          href={route}
+          color="primary"
+          variant="subtitle2"
+          sx={{ cursor: 'pointer', textDecoration: 'none' }}
+        >
           {linkText}
-        </Link>
-      </RouterLink>
+        </Typography>
+      </Link>
     </Typography>
   );
 }

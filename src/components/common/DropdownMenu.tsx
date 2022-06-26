@@ -4,9 +4,13 @@ import { useState, type ReactNode } from 'react';
 
 interface DropdownMenuProps {
   children: ReactNode;
+  ariaLabel: string;
 }
 
-export default function DropdownMenu({ children }: DropdownMenuProps) {
+export default function DropdownMenu({
+  children,
+  ariaLabel,
+}: DropdownMenuProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -18,7 +22,7 @@ export default function DropdownMenu({ children }: DropdownMenuProps) {
 
   return (
     <>
-      <IconButton onClick={handleClick} size="small">
+      <IconButton onClick={handleClick} size="small" aria-label={ariaLabel}>
         <MoreVert />
       </IconButton>
 

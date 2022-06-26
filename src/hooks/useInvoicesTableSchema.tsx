@@ -85,7 +85,7 @@ export default function useInvoicesTableSchema() {
       headerName: '',
       width: 54,
       renderCell: ({ id }: GridRenderCellParams) => (
-        <DropdownMenu>
+        <DropdownMenu ariaLabel="Invoice row actions">
           <MenuItem onClick={() => printInvoice(id)} data-test="invoice-print">
             Print
           </MenuItem>

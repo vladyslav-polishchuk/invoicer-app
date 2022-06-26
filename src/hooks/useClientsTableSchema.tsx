@@ -61,7 +61,7 @@ export default function useClientsTableSchema() {
       headerName: '',
       width: 54,
       renderCell: ({ id }: GridRenderCellParams) => (
-        <DropdownMenu>
+        <DropdownMenu ariaLabel="Client row actions">
           <MenuItem onClick={() => createInvoice(id)}>Add Invoice</MenuItem>
           <MenuItem onClick={() => editClient(id)}>Edit Client</MenuItem>
         </DropdownMenu>

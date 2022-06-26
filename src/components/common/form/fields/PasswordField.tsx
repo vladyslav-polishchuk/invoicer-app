@@ -8,7 +8,11 @@ export default function PasswordField(props: TextFieldProps) {
 
   const showPasswordButton = (
     <InputAdornment position="end">
-      <IconButton onClick={() => setShowPassword((show) => !show)} edge="end">
+      <IconButton
+        onClick={() => setShowPassword((show) => !show)}
+        edge="end"
+        aria-label={showPassword ? 'Hide password' : 'Show password'}
+      >
         {showPassword ? <Visibility /> : <VisibilityOff />}
       </IconButton>
     </InputAdornment>

@@ -1,10 +1,10 @@
 import {
   GridCell,
-  GridCellProps,
   GridOverlay,
   GridNoRowsOverlay,
   GridRow,
-  GridRowProps,
+  type GridCellProps,
+  type GridRowProps,
 } from '@mui/x-data-grid';
 import { Alert, LinearProgress } from '@mui/material';
 import Pagination from '../components/tables/CustomPagination';

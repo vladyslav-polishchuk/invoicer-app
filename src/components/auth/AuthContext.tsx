@@ -11,7 +11,7 @@ import { getCookie, removeCookies, setCookies } from 'cookies-next';
 import api from '../../api';
 import Spinner from '../common/Spinner';
 
-const USER_TOKEN_KEY = 'user_token';
+export const USER_TOKEN_KEY = 'user_token';
 
 export const AuthContext = createContext<null | {
   userToken: null | string;

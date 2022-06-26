@@ -9,16 +9,15 @@ import {
   TableRow,
 } from '@mui/material';
 import Page from '../common/Page';
-import useRouterQuery from '../../hooks/useRouterQuery';
 import type { Invoice } from '../../api/types';
 
 interface InvoiceViewFormProps {
   invoice?: Invoice | null;
+  print: boolean;
 }
 
 export default function InvoiceViewFormContainer(props: InvoiceViewFormProps) {
-  const { invoice } = props;
-  const { print } = useRouterQuery();
+  const { invoice, print } = props;
   const [printTimeoutId, setPrintTimeoutId] = useState<number | null>(null);
 
   useEffect(() => {

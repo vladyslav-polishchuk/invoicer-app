@@ -4,17 +4,15 @@ import { useSelector } from 'react-redux';
 import api from '../../api';
 import useAsync from '../../hooks/useAsync';
 import Spinner from '../common/Spinner';
-import InvoiceViewFormContainer from './InvoiceViewFormContainer';
 import InvoiceEditFormContainer from './InvoiceEditFormContainer';
 import type { InvoiceAppState } from '../../redux';
 
 interface InoviceFormContainer {
   invoiceId?: string;
-  viewMode?: boolean;
 }
 
 export default function InvoiceFormContainer(props: InoviceFormContainer) {
-  const { invoiceId, viewMode } = props;
+  const { invoiceId } = props;
   const { clientNames } = useSelector((state: InvoiceAppState) => state);
   const { execute, value, error } = useAsync(api.getIncoice);
 
@@ -32,17 +30,15 @@ export default function InvoiceFormContainer(props: InoviceFormContainer) {
     );
   }
 
-  if ((!viewMode && !clientNames) || (invoiceId && !value)) {
+  if (!clientNames || (invoiceId && !value)) {
     return <Spinner />;
   }
 
   const invoice = value?.invoice;
-  return viewMode ? (
-    <InvoiceViewFormContainer invoice={invoice} />
-  ) : (
+  return (
     <InvoiceEditFormContainer
       invoice={invoice}
-      clientNames={clientNames ?? []}
+      clientNames={clientNames}
       error={error}
     />
   );

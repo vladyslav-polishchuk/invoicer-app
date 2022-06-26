@@ -19,7 +19,7 @@ const validationSchema = object({
   dueDate: number().required(requiredErrorText),
   invoice_number: string().required(requiredErrorText),
   projectCode: string().min(3),
-  client_id: object().required(requiredErrorText),
+  client_id: object().required(requiredErrorText).nullable(),
 });
 
 export default function useInvoiceFormData(

@@ -32,7 +32,10 @@ export default function AutocompleteField(props: AutocompleteFieldProps) {
         <TextField
           {...params}
           {...rest}
-          inputProps={{ ...params.inputProps, value: value?.label ?? '' }}
+          inputProps={{
+            ...params.inputProps,
+            value: typeof value === 'string' ? value : value?.label ?? '',
+          }}
         />
       )}
     />

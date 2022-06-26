@@ -9,6 +9,7 @@ import type {
 
 export default function useClientsTableSchema() {
   const router = useRouter();
+  const sortable = router.pathname !== '/';
   const editClient = (id: GridRowId) => router.push(`/clients/${id}`);
   const createInvoice = (id: GridRowId) =>
     router.push(`/invoices/new?client_id=${id}`);
@@ -18,6 +19,7 @@ export default function useClientsTableSchema() {
       headerName: 'Name',
       minWidth: 100,
       flex: 1,
+      sortable,
       valueGetter: ({ row }: GridValueGetterParams) => row.name,
       renderHeader: () => <strong data-test="client-name-header">Name</strong>,
       renderCell: (cell: GridRenderCellParams) => (
@@ -29,6 +31,7 @@ export default function useClientsTableSchema() {
       headerName: 'Company name',
       minWidth: 100,
       flex: 1,
+      sortable,
       valueGetter: ({ row }: GridValueGetterParams) => row.companyDetails.name,
       renderHeader: () => (
         <strong data-test="company-name-header">Company name</strong>
@@ -38,6 +41,7 @@ export default function useClientsTableSchema() {
       field: 'totalBilled',
       headerName: 'Total Billed',
       width: 100,
+      sortable,
       renderHeader: () => (
         <strong data-test="total-billed-header">Total Billed</strong>
       ),
@@ -46,6 +50,7 @@ export default function useClientsTableSchema() {
       field: 'invoicesCount',
       headerName: 'Invoices',
       width: 100,
+      sortable,
       renderHeader: () => (
         <strong data-test="invoices-count-header">Invoices</strong>
       ),

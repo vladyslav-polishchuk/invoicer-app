@@ -9,6 +9,7 @@ import type {
 
 export default function useInvoicesTableSchema() {
   const router = useRouter();
+  const sortable = router.pathname !== '/';
   const editInvoice = (id: GridRowId) => router.push(`/invoices/${id}/edit`);
   const printInvoice = (id: GridRowId) =>
     router.push({
@@ -30,6 +31,7 @@ export default function useInvoicesTableSchema() {
       headerName: 'Company',
       minWidth: 100,
       flex: 1,
+      sortable,
       valueGetter: ({ row }: GridValueGetterParams) =>
         row.client.companyDetails.name,
       renderHeader: () => (
@@ -40,6 +42,7 @@ export default function useInvoicesTableSchema() {
       field: 'creationDate',
       headerName: 'Date',
       minWidth: 140,
+      sortable,
       valueGetter: ({ row }: GridValueGetterParams) =>
         new Date(row.invoice.date).toDateString(),
       renderHeader: () => (
@@ -53,6 +56,7 @@ export default function useInvoicesTableSchema() {
       field: 'dueDate',
       headerName: 'Due Date',
       minWidth: 140,
+      sortable,
       valueGetter: ({ row }: GridValueGetterParams) =>
         new Date(row.invoice.dueDate).toDateString(),
       renderHeader: () => <strong data-test="due-date-header">Due Date</strong>,
@@ -68,6 +72,7 @@ export default function useInvoicesTableSchema() {
       field: 'total',
       headerName: 'Total',
       minWidth: 100,
+      sortable,
       valueGetter: ({ row }: GridValueGetterParams) => `${row.invoice.value}$`,
       renderHeader: () => <strong data-test="total-header">Total</strong>,
       renderCell: ({ value }: GridRenderCellParams) => (

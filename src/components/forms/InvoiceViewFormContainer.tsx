@@ -47,6 +47,9 @@ export default function InvoiceViewFormContainer(props: InvoiceViewFormProps) {
     ['Project Code', invoice?.projectCode, 'invoice-project-code'],
     ['Total Price', invoice?.value, 'invoice-total'],
   ];
+  const invoiceItems = invoice?.meta?.items ?? [
+    { description: 'No Invoice Items', value: '-' },
+  ];
 
   return (
     <Page title="Invoice info">
@@ -94,7 +97,7 @@ export default function InvoiceViewFormContainer(props: InvoiceViewFormProps) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {invoice?.meta?.items?.map(({ description, value }, i) => (
+              {invoiceItems.map(({ description, value }, i) => (
                 <TableRow
                   key={description}
                   data-test={`invoice-item-${i + 1}`}

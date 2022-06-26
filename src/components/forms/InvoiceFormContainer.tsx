@@ -32,7 +32,7 @@ export default function InvoiceFormContainer(props: InoviceFormContainer) {
     );
   }
 
-  if (!clientNames || (invoiceId && !value)) {
+  if ((!viewMode && !clientNames) || (invoiceId && !value)) {
     return <Spinner />;
   }
 
@@ -42,7 +42,7 @@ export default function InvoiceFormContainer(props: InoviceFormContainer) {
   ) : (
     <InvoiceEditFormContainer
       invoice={invoice}
-      clientNames={clientNames}
+      clientNames={clientNames ?? []}
       error={error}
     />
   );

@@ -1,5 +1,6 @@
 import { Container } from '@mui/material';
 import { AuthGuard } from '../src/components/auth/AuthGuard';
+import ClientNamesFetchContainer from '../src/components/ClientNamesFetchContainer';
 import Page from '../src/components/common/Page';
 import InvoicesTableContainer from '../src/components/tables/InvoicesTableContainer';
 import InvoicesTableFetchContainer from '../src/components/tables/InvoicesTableFetchContainer';
@@ -16,12 +17,14 @@ export default function Invoices() {
             justifyContent: 'center',
           }}
         >
-          <InvoicesTableFetchContainer>
-            <InvoicesTableContainer
-              title="All Invoices"
-              sx={{ minHeight: '70vh' }}
-            />
-          </InvoicesTableFetchContainer>
+          <ClientNamesFetchContainer>
+            <InvoicesTableFetchContainer>
+              <InvoicesTableContainer
+                title="All Invoices"
+                sx={{ minHeight: '70vh' }}
+              />
+            </InvoicesTableFetchContainer>
+          </ClientNamesFetchContainer>
         </Container>
       </Page>
     </AuthGuard>

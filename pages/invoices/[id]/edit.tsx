@@ -1,4 +1,5 @@
 import { AuthGuard } from '../../../src/components/auth/AuthGuard';
+import ClientNamesFetchContainer from '../../../src/components/ClientNamesFetchContainer';
 import InvoiceFormContainer from '../../../src/components/forms/InvoiceFormContainer';
 import useRouterQuery from '../../../src/hooks/useRouterQuery';
 
@@ -7,7 +8,9 @@ export default function Invoice() {
 
   return (
     <AuthGuard>
-      <InvoiceFormContainer invoiceId={id} />
+      <ClientNamesFetchContainer>
+        <InvoiceFormContainer invoiceId={id} />
+      </ClientNamesFetchContainer>
     </AuthGuard>
   );
 }

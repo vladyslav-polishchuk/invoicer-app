@@ -17,7 +17,10 @@ export default function Clients() {
           }}
         >
           <ClientsTableFetchContainer>
-            <ClientsTableContainer title="All Clients" sx={{ mh: '70vh' }} />
+            <ClientsTableContainer
+              title="All Clients"
+              sx={{ minHeight: '70vh' }}
+            />
           </ClientsTableFetchContainer>
         </Container>
       </Page>

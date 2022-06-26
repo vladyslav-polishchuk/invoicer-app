@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { type InvoiceAppState, setUser } from '../redux';
 import Spinner from './common/Spinner';
 import { useAuthContext } from './auth/AuthContext';
-import ClientNamesFetchContainer from './ClientNamesFetchContainer';
 
 const theme = createTheme({});
 
@@ -44,7 +43,7 @@ export default function AppContainer({ children }: { children: ReactNode }) {
         sx={{ minHeight: '100vh', backgroundColor: '#f2f3f4' }}
       >
         <Header userInfo={user} />
-        <ClientNamesFetchContainer>{children}</ClientNamesFetchContainer>
+        {children}
         <Footer />
       </Grid>
     </ThemeProvider>

@@ -17,17 +17,8 @@ interface RequestParams {
 }
 
 export default class API {
-  declare serverUrl;
   declare token: string | null;
   declare logout: () => void;
-
-  constructor(serverUrl: string | undefined) {
-    if (!serverUrl) {
-      throw new Error('Valid string with server URL should be privied');
-    }
-
-    this.serverUrl = serverUrl;
-  }
 
   initApi = (token: string, logout: () => void) => {
     this.token = token;
@@ -37,7 +28,7 @@ export default class API {
   sendRequest = async <T>(url: string, params?: RequestParams): Promise<T> => {
     const { method = 'GET', body, headers } = params ?? {};
     const token = this.token ? { 'x-access-token': this.token } : null;
-    const response = await fetch(`${this.serverUrl}/${url}`, {
+    const response = await fetch(`../../api/${url}`, {
       method,
       body,
       headers: {
@@ -51,7 +42,7 @@ export default class API {
     }
 
     const responseText = await response.text();
-    if (response.status === 401 && responseText === 'Invalid Token') {
+    if (/*response.status === 401 && */ responseText === 'Invalid Token') {
       this.logout();
     }
 
@@ -84,25 +75,45 @@ export default class API {
   updateCompanyDetails = async (
     params: CompanyDetails
   ): Promise<{ success: boolean; user: UserResponse }> => {
-    return await this.sendRequest('me/company', {
+    return await this.sendRequest('me', {
       method: 'PUT',
       body: JSON.stringify(params),
     });
   };
 
   getClients = async (params: TableFilterParams) => {
-    const queryParams = JSON.stringify(params);
+    const url = new URLSearchParams();
 
-    return await this.sendRequest<ClientsResponse>(
-      `clients?params=${queryParams}`
-    );
+    if (typeof params.sort === 'object') {
+      url.append('sortBy', Object.keys(params.sort)[0]);
+      url.append('sort', Object.values(params.sort)[0]);
+    }
+    if (params.offset) {
+      url.append('offset', `${params.offset}`);
+    }
+    if (params.limit) {
+      url.append('limit', `${params.limit}`);
+    }
+
+    return await this.sendRequest<ClientsResponse>(`clients?${url.toString()}`);
   };
 
   getInvoices = async (params: TableFilterParams) => {
-    const queryParams = JSON.stringify(params);
+    const url = new URLSearchParams();
+
+    if (typeof params.sort === 'object') {
+      url.append('sortBy', Object.keys(params.sort)[0]);
+      url.append('sort', Object.values(params.sort)[0]);
+    }
+    if (params.offset) {
+      url.append('offset', `${params.offset}`);
+    }
+    if (params.limit) {
+      url.append('limit', `${params.limit}`);
+    }
 
     return await this.sendRequest<InvoicesResponse>(
-      `invoices?params=${queryParams}`
+      `invoices?${url.toString()}`
     );
   };
 
